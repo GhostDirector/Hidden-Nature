@@ -77,7 +77,7 @@ public class LevelSelect implements Screen{
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
-            case 0: Gdx.app.log("entity", "no actions");
+            case 0: //Gdx.app.log("entity", "no actions");
                 entity.resetAction();
                 break;
 
