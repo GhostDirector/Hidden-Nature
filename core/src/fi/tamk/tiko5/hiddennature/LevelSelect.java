@@ -31,17 +31,17 @@ public class LevelSelect implements Screen{
     public LevelSelect(HiddenNature hiddenNature) {
         currentLevel = 0;
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("background.png"));
+        background = new Texture(Gdx.files.internal("background.jpeg"));
         batch = hn.getBatch();
         levels = new ArrayList<Level>();
         loadLevels();
 
 
-        entity1 = new Entity("doge.png", 20f, hn.getWORLD_HEIGHT() / 2, 1);
-        entity2 = new Entity("doge.png", 750f, hn.getWORLD_HEIGHT() / 2, 2);
+        entity1 = new Entity("previous.png", "previouspressed.png", 20f, 210, 1, true);
+        entity2 = new Entity("next.png", "nextpressed.png", 690f, 210, 2, true);
 
-        quit = new Entity("doge.png", 750f, 420f, 3);
-        start = new Entity("doge.png", 750f, 60f, 4);
+        quit = new Entity("return.png", "returnpressed.png", 690f, 390f, 3, true);
+        start = new Entity("accept.png", "acceptpressed.png", 690f, 20f, 4, true);
 
         level = new Level(1, "mutsis", "kuva.jpg", 2, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
 
@@ -77,25 +77,27 @@ public class LevelSelect implements Screen{
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
-            case 0: //Gdx.app.log("entity", "no actions");
+            case 0: //Gdx.app.log("LevelSelect", "no actions");
                 entity.resetAction();
                 break;
 
-            case 1: Gdx.app.log("entity", "previous level");
+            case 1: Gdx.app.log("LevelSelect", "previous level");
                 setLevel(-1);
                 entity.resetAction();
                 break;
 
-            case 2: Gdx.app.log("entity", "next level");
+            case 2: Gdx.app.log("LevelSelect", "next level");
                 setLevel(1);
                 entity.resetAction();
                 break;
 
-            case 3: hn.setScreen(new MainMenu(hn));
+            case 3: Gdx.app.log("LevelSelect", "Quit");
+                hn.setScreen(new MainMenu(hn));
                 entity.resetAction();
                 break;
 
-            case 4: hn.setScreen(new GameScreen(hn, levels.get(currentLevel)));
+            case 4: Gdx.app.log("LevelSelect", "Start");
+                hn.setScreen(new GameScreen(hn, levels.get(currentLevel)));
                 entity.resetAction();
                 break;
         }

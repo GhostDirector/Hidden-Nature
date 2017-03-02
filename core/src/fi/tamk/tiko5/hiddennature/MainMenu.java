@@ -25,16 +25,16 @@ public class MainMenu implements Screen {
 
     public MainMenu(HiddenNature hiddenNature){
 
-        background = new Texture(Gdx.files.internal("background.png"));
+        background = new Texture(Gdx.files.internal("background.jpeg"));
 
         hn = hiddenNature;
 
         batch = hn.getBatch();
 
-        entity1 = new Entity("button.png", 520f, 350f, 1);
-        entity2 = new Entity("button.png", 520f, 250f, 2);
-        entity3 = new Entity("button.png", 520f, 150f, 3);
-        entity4 = new Entity("doge.png", 30, 420f, 4);
+        entity1 = new Entity("startbutton.png", "startbuttonpressed.png", 510f, 350f, 1, true);
+        entity2 = new Entity("creditsbutton.png", "creditsbuttonpressed.png" ,510f, 250f, 2, true);
+        entity3 = new Entity("quitbutton.png", "quitbuttonpressed.png", 510f, 150f, 3, true);
+        entity4 = new Entity("sound.png", "mute.png", 30, 380f, 4, true);
 
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
@@ -49,20 +49,24 @@ public class MainMenu implements Screen {
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
-            case 0: Gdx.app.log("entity", "no actions");
+            case 0: //Gdx.app.log("MainMenu", "no actions");
                 break;
 
-            case 1: hn.setScreen(new LevelSelect(hn));
+            case 1:Gdx.app.log("MainMenu", "Start");
+                hn.setScreen(new LevelSelect(hn));
                 entity.resetAction();
                 break;
 
-            case 2:Gdx.app.log("entity", "credits screen");
+            case 2:Gdx.app.log("MainMenu", "credits screen");
+                hn.setScreen(new Credits(hn));
+                entity.resetAction();
                 break;
 
-            case 3:Gdx.app.log("entity", "quit game");
+            case 3:Gdx.app.log("MainMenu", "quit game");
+                System.exit(0);
                 break;
 
-            case 4:Gdx.app.log("entity", "Mute");
+            case 4:Gdx.app.log("MainMenu", "Mute");
                 break;
         }
     }

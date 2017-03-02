@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.BooleanArray;
 
 
 public class Entity extends Actor {
@@ -17,17 +18,25 @@ public class Entity extends Actor {
     private SequenceAction animation;
     private int action;
     private int buttonID;
+    private boolean isButton;
+    private String original, pressed;
 
-    public Entity(String file, float x, float y , int buttonID) {
-        texture = new Texture(Gdx.files.internal(file));
+    public Entity(String file, String filePressed, float x, float y , int buttonID, boolean isbutton) {
+        original = file;
+        pressed = filePressed;
+        texture = new Texture(Gdx.files.internal(original));
+
+
+        this.isButton = isbutton;
         setBounds(x, y, texture.getWidth(), texture.getHeight());
         this.buttonID = buttonID;
 
         addListener(new InputListener() {
 
+            @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                action = ((Entity)event.getTarget()).buttonID;
 
+                pressedTexture();
 
                 scaleDown = new ScaleToAction();
                 scaleDown.setScale(0.5f);
@@ -45,12 +54,34 @@ public class Entity extends Actor {
 
                 return true;
             }
+
+            public void pressedTexture(){
+                texture = new Texture(pressed);
+            }
+
+            public void releasedTexture(){
+                texture = new Texture(original);
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                releasedTexture();
+                action = ((Entity)event.getTarget()).buttonID;
+            }
         });
+
+
+    }
+
+    public Texture getTexture(){
+        return texture;
     }
 
     public int getAction(){
         return action;
     }
+
+
+
     public void resetAction(){
         if (action != 0) {
             this.action = 0;
