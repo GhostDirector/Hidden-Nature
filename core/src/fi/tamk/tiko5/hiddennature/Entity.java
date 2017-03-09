@@ -38,19 +38,19 @@ public class Entity extends Actor {
 
                 pressedTexture();
 
-                scaleDown = new ScaleToAction();
-                scaleDown.setScale(0.5f);
-                scaleDown.setDuration(1f);
-
-                scaleUp = new ScaleToAction();
-                scaleUp.setScale(1f);
-                scaleUp.setDuration(1f);
-
-                animation = new SequenceAction();
-                animation.addAction(scaleDown);
-                animation.addAction(scaleUp);
-
-                Entity.this.addAction(animation);
+                //scaleDown = new ScaleToAction();
+                //scaleDown.setScale(0.5f);
+                //scaleDown.setDuration(1f);
+//
+                //scaleUp = new ScaleToAction();
+                //scaleUp.setScale(1f);
+                //scaleUp.setDuration(1f);
+//
+                //animation = new SequenceAction();
+                //animation.addAction(scaleDown);
+                //animation.addAction(scaleUp);
+//
+                //Entity.this.addAction(animation);
 
                 return true;
             }

@@ -18,36 +18,56 @@ public class GameScreen extends MyAdapter implements Screen{
 
     private HiddenNature hn;
     private Texture diorama;
-    private Stage gameStage;
-    private SpriteBatch batch;
+    private Texture background;
+    private Stage gameStage ,pauseStage;
+    private SpriteBatch batch, batch2;
     private float currentZoom;
-    private Entity menuButton;
+    private Entity menuOpenButton, menuCloseButton;
     private InputMultiplexer imp;
     private GestureDetector gd;
     private float maxZoom, minZoom;
     private boolean menuOpen;
     private float menuButtonOriginalWidth, menuButtonOriginalHeight;
+    private float moveX, moveY;
 
     public GameScreen(HiddenNature hiddenNature, Level level) {
+
+
         diorama = level.getLevelDiorama();
         imp = new InputMultiplexer();
         gd = new GestureDetector(this);
         hn = hiddenNature;
         menuOpen = false;
 
-        menuButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
+        background = new Texture(Gdx.files.internal("laatikko.png"));
+
+        menuOpenButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
+        menuCloseButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 2, true);
 
         batch = hn.getBatch();
+        batch2 = hn.getBatch();
+
 
         gameStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-        gameStage.addActor(menuButton);
+        pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch2);
+        gameStage.addActor(menuOpenButton);
+        pauseStage.addActor(menuCloseButton);
         imp.addProcessor(gameStage);
+        imp.addProcessor(pauseStage);
         imp.addProcessor(gd);
         imp.addProcessor(this);
 
         Gdx.input.setInputProcessor(imp);
         maxZoom = ((OrthographicCamera)gameStage.getCamera()).zoom;
         minZoom = 0.3f;
+    }
+
+    public void setMenuOpen(boolean mO){
+        menuOpen = mO;
+    }
+
+    public boolean isMenuOpen(){
+        return menuOpen;
     }
 
     public void getEntityID(Entity entity){
@@ -57,8 +77,13 @@ public class GameScreen extends MyAdapter implements Screen{
                 entity.resetAction();
                 break;
 
-            case 1: Gdx.app.log("GameScreen", "Quit");
-                hn.setScreen(new LevelSelect(hn));
+            case 1: Gdx.app.log("GameScreen", "pausemenu");
+                setMenuOpen(true);
+                entity.resetAction();
+                break;
+
+            case 2: Gdx.app.log("GameScreen", "pausemenu");
+                setMenuOpen(false);
                 entity.resetAction();
                 break;
         }
@@ -85,7 +110,8 @@ public class GameScreen extends MyAdapter implements Screen{
     public boolean touchDown (float x, float y, int pointer, int button) {
         currentZoom = ((OrthographicCamera)gameStage.getCamera()).zoom;
         Gdx.app.log("coordinates", " ");
-
+        moveX = x;
+        moveY = y;
         return true;
     }
 
@@ -95,6 +121,9 @@ public class GameScreen extends MyAdapter implements Screen{
         Gdx.app.log("screenX", " "+ screenX);
         Gdx.app.log("pointer", " "+ pointer);
 
+        float lerp = 0.3f;
+
+        gameStage.getCamera().position.add(0 - Gdx.input.getDeltaX() * lerp, Gdx.input.getDeltaY() * lerp, 0);
         return true;
     }
 
@@ -183,32 +212,46 @@ public class GameScreen extends MyAdapter implements Screen{
         gameStage.getActors().get(0).setX((currentViewportWidth - gameStage.getActors().get(0).getWidth()) + (gameStage.getCamera().position.x - (currentViewportWidth / 2)));
         gameStage.getActors().get(0).setY((currentViewportHeight - gameStage.getActors().get(0).getHeight()) + (gameStage.getCamera().position.y - (currentViewportHeight / 2)));
 
-        gameStage.getActors().get(0).setSize(menuButton.getTexture().getWidth() * ((OrthographicCamera) gameStage.getCamera()).zoom,
-                menuButton.getTexture().getHeight() * ((OrthographicCamera) gameStage.getCamera()).zoom);
+        gameStage.getActors().get(0).setSize(menuOpenButton.getTexture().getWidth() * ((OrthographicCamera) gameStage.getCamera()).zoom,
+                menuOpenButton.getTexture().getHeight() * ((OrthographicCamera) gameStage.getCamera()).zoom);
     }
 
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (menuOpen == false){
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        gameStage.getBatch().begin();
-        gameStage.getBatch().draw(diorama, 0, 0 , hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
-        gameStage.getBatch().end();
+            gameStage.getBatch().begin();
+            gameStage.getBatch().draw(diorama, 0, 0 , hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+            gameStage.getBatch().end();
 
-        handleInput();
-        moveCamera();
-        solidElements();
+            handleInput();
+            moveCamera();
+            solidElements();
 
-        gameStage.act(Gdx.graphics.getDeltaTime());
-        gameStage.draw();
-        gameStage.getCamera().update();
+            gameStage.act(Gdx.graphics.getDeltaTime());
+            gameStage.draw();
+            gameStage.getCamera().update();
 
-        getEntityID(menuButton);
+            getEntityID(menuOpenButton);
+        } else {
 
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+            pauseStage.getBatch().begin();
+            pauseStage.getBatch().draw(background, 0, 0 , hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+            pauseStage.getBatch().end();
 
+            pauseStage.act(Gdx.graphics.getDeltaTime());
+            pauseStage.draw();
+            pauseStage.getCamera().update();
+
+            getEntityID(menuCloseButton);
+
+        }
     }
 
     @Override
