@@ -5,8 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import java.util.ArrayList;
 
 /**
  * Created by ghost on 9.3.2017.
@@ -20,26 +24,71 @@ public class PauseMenu implements Screen {
     private Level level;
     private GameScreen gameScreen;
     private Texture background;
-    private Entity menuButton;
+    private Entity menuButton, returnButton, textureChange;
+    private Array<Entity> objects;
+    private Array<Entity> pauseObjects;
 
-
-
-    public PauseMenu(HiddenNature hiddenNature, Level l, GameScreen gS){
-
+    public PauseMenu(HiddenNature hiddenNature, Level l){
         hn = hiddenNature;
         level = l;
-        gameScreen = gS;
         batch = hn.getBatch();
+        objects = level.getObjects();
+        pauseObjects = level.getPauseObjects();
 
         background = new Texture(Gdx.files.internal("laatikko.png"));
-        menuButton = new Entity("return.png", "returnpressed.png", 390f, 290f, 1, true);
+        menuButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
+        returnButton = new Entity("previous.png", "previouspressed.png", 690f, 290f, 2, true);
+        
+        
+        
+        
+        
+//        for(int i = 0; i < objects.size; i++){
+//            Gdx.app.log("object:" + i, ""+objects.get(i).isFound());
+//            if (objects.get(i).isFound()){
+//                for(int j = 0; j < pauseObjects.size; j++){
+//                    Gdx.app.log("pauseobject:" + j, ""+objects.get(j).isFound());
+//                    Entity tmp = pauseObjects.get(j);
+//                    if(objects.get(i).getAction() == pauseObjects.get(j).getAction()){
+//                        tmp.setFound(true);
+//                        tmp.pressedTexture();
+//                        pauseObjects.set(j, null);
+//                        pauseObjects.set(j, tmp);
+//                    }
+//                }
+//            }
+//        }
+//        for (Entity e : pauseObjects) {
+//            if (e.isFound()) {
+//                e.pressedTexture();
+//            }
+//        }
+
+//        for (Entity e : objects) {
+//
+//            if (e.isFound()) {
+//                int counter= 0;
+//                for (Entity n : pauseObjects) {
+//
+//                    if (e.getAction() == n.getAction()) {
+//                        Entity t = n;
+//                        t.pressedTexture();
+//                        pauseObjects.set(counter, t);
+//                    }
+//                }
+//            }
+//        }
 
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
         pauseStage.addActor(menuButton);
+        pauseStage.addActor(returnButton);
+
+        for (Entity e : pauseObjects) {
+            pauseStage.addActor(e);
+        }
 
         Gdx.input.setInputProcessor(pauseStage);
     }
-
 
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
@@ -48,7 +97,14 @@ public class PauseMenu implements Screen {
                 break;
 
             case 1:Gdx.app.log("pauseMenu", "menubutton");
-                //hn.setScreen(gameScreen);
+                level.setObjects(objects);
+                level.setPauseObjects(pauseObjects);
+                hn.setScreen(new GameScreen(hn, level, true));
+                entity.resetAction();
+                break;
+
+            case 2:Gdx.app.log("pauseMenu", "back");
+                hn.setScreen(new LevelSelect(hn));
                 entity.resetAction();
                 break;
         }
@@ -64,17 +120,21 @@ public class PauseMenu implements Screen {
     public void render(float delta) {
 
         //if (gameScreen.isMenuOpen() == true){
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
 
-            pauseStage.getBatch().begin();
-            pauseStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
-            pauseStage.getBatch().end();
+        pauseStage.getBatch().begin();
+        pauseStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
 
-            pauseStage.act(Gdx.graphics.getDeltaTime());
-            pauseStage.draw();
 
-            getEntityID(menuButton);
+        pauseStage.getBatch().end();
+
+        pauseStage.act(Gdx.graphics.getDeltaTime());
+        pauseStage.draw();
+
+        getEntityID(menuButton);
+        getEntityID(returnButton);
         //}
     }
 

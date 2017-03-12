@@ -43,7 +43,7 @@ public class LevelSelect implements Screen{
         quit = new Entity("return.png", "returnpressed.png", 690f, 390f, 3, true);
         start = new Entity("accept.png", "acceptpressed.png", 690f, 20f, 4, true);
 
-        level = new Level(1, "mutsis", "kuva.jpg", 2, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+        level = levels.get(0);
 
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
@@ -54,12 +54,12 @@ public class LevelSelect implements Screen{
         mainStage.addActor(level);
 
         Gdx.input.setInputProcessor(mainStage);
-    }
+}
 
     public void loadLevels(){
-        levels.add(new Level(1, "mutsis", "kuva.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(2, "ebin", "badlogic.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(3, "munasuuhun", "kuva.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(1, "mutsis", "kuva4.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(2, "ebin", "kuva5.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(3, "munasuuhun", "kuva6.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
     }
 
     public void setLevel(int l){
@@ -97,7 +97,7 @@ public class LevelSelect implements Screen{
                 break;
 
             case 4: Gdx.app.log("LevelSelect", "Start");
-                hn.setScreen(new GameScreen(hn, levels.get(currentLevel)));
+                hn.setScreen(new GameScreen(hn, levels.get(currentLevel), false));
                 entity.resetAction();
                 break;
         }
