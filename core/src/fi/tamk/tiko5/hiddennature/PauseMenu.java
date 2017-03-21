@@ -5,12 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import java.util.ArrayList;
 
 /**
  * Created by ghost on 9.3.2017.
@@ -25,24 +23,22 @@ public class PauseMenu implements Screen {
     private GameScreen gameScreen;
     private Texture background;
     private Entity menuButton, returnButton, textureChange;
-    private Array<Entity> objects;
-    private Array<Entity> pauseObjects;
+    private Array<Entity> objects, pauseObjects, foundEntities;
 
     public PauseMenu(HiddenNature hiddenNature, Level l){
         hn = hiddenNature;
         level = l;
         batch = hn.getBatch();
-        objects = level.getObjects();
-        pauseObjects = level.getPauseObjects();
+        objects = new Array<Entity>(this.level.getObjects());
+        pauseObjects = new Array<Entity>(this.level.getPauseObjects());
+        foundEntities = new Array<Entity>(this.level.getFoundEntities());
 
         background = new Texture(Gdx.files.internal("laatikko.png"));
         menuButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
         returnButton = new Entity("previous.png", "previouspressed.png", 690f, 290f, 2, true);
-        
-        
-        
-        
-        
+
+
+
 //        for(int i = 0; i < objects.size; i++){
 //            Gdx.app.log("object:" + i, ""+objects.get(i).isFound());
 //            if (objects.get(i).isFound()){
@@ -87,6 +83,13 @@ public class PauseMenu implements Screen {
             pauseStage.addActor(e);
         }
 
+        for (int i = 0; i < objects.size; i++){
+            if (objects.get(i).isFound()) {
+                foundEntities.get(i).setPosition(pauseObjects.get(i).getX(), pauseObjects.get(i).getY());
+                pauseStage.addActor(foundEntities.get(i));
+            }
+        }
+
         Gdx.input.setInputProcessor(pauseStage);
     }
 
@@ -99,6 +102,7 @@ public class PauseMenu implements Screen {
             case 1:Gdx.app.log("pauseMenu", "menubutton");
                 level.setObjects(objects);
                 level.setPauseObjects(pauseObjects);
+                level.setFoundEntities(foundEntities);
                 hn.setScreen(new GameScreen(hn, level, true));
                 entity.resetAction();
                 break;

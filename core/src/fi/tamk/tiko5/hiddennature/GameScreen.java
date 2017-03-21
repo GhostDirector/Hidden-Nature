@@ -33,17 +33,24 @@ public class GameScreen extends MyAdapter implements Screen{
     private float menuButtonOriginalWidth, menuButtonOriginalHeight;
     private float moveX, moveY;
     private Level level;
-    private Array<Entity> objects;
-    Entity remove;
+    private Array<Entity> objects, pauseObjects, foundObjects;
+    private PrefHandler pH;
+
 
     public GameScreen(HiddenNature hiddenNature, Level level, boolean isPauseMenu) {
+
         this.level = level;
+        pH = new PrefHandler(this.level);
         diorama = level.getLevelDiorama();
         imp = new InputMultiplexer();
         gd = new GestureDetector(this);
         hn = hiddenNature;
         menuOpen = false;
-        objects = this.level.getObjects();
+        objects = new Array<Entity>(this.level.getObjects());
+        pauseObjects = new Array<Entity>(this.level.getPauseObjects());
+        foundObjects = new Array<Entity>(this.level.getFoundEntities());
+        pH.save();
+
 
         menuOpenButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
 
@@ -52,6 +59,8 @@ public class GameScreen extends MyAdapter implements Screen{
         batch = hn.getBatch();
 
         gameStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+
+
 
         for (Entity e : objects) {
             if (!e.isFound()) {
@@ -92,6 +101,8 @@ public class GameScreen extends MyAdapter implements Screen{
 
             case 1: Gdx.app.log("GameScreen", "pausemenu");
                 level.setObjects(objects);
+                level.setPauseObjects(pauseObjects);
+                level.setFoundEntities(foundObjects);
                 level.setZoom(((OrthographicCamera) gameStage.getCamera()).zoom);
                 level.setCamPos(gameStage.getCamera().position);
                 hn.setScreen(new PauseMenu(hn, level));
@@ -100,9 +111,14 @@ public class GameScreen extends MyAdapter implements Screen{
         }
 
         if (entity.getAction() < 0){
-            remove.setFound(true);
-            remove.remove();
+            entity.setFound(true);
+
+//            Object B = new Object((String)A.getProperty1().toString(), A.getProperty2()...);
         }
+
+//        for(Person p : oldList) {
+//            newList.add(p.clone());
+//        }
 
     }
 
@@ -258,11 +274,18 @@ public class GameScreen extends MyAdapter implements Screen{
 
             for (Entity e : objects) {
 
-                remove = e;
-                getEntityID(remove);
+                getEntityID(e);
 
+                if (e.isFound()) {
+                    for (Entity f : foundObjects) {
+                        if (e.getAction() == f.getAction()) {
+                            f.setFound(true);
+                        }
+                    }
+
+                    e.remove();
+                }
             }
-
         }
     }
 

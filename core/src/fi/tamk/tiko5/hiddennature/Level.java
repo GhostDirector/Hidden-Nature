@@ -10,18 +10,14 @@ import com.badlogic.gdx.utils.Array;
 public class Level extends Actor{
 
     private int levelID;
-    private String levelName;
+    private String levelName, dioString;
     private Texture levelDiorama;
     private int entitiesFound;
-    private Entity doge, doge2, doge3;
-    private Array<Entity> objects;
-    private Array<Entity> pauseObjects;
-    private ObjectManager objectManager;
-    private float zoom;
+    private Array<Entity> objects, pauseObjects, foundEntities;
     private Vector3 camPos;
 
     public Level(int id, String name, String diorama, int found, float width, float height){
-
+        dioString = diorama;
         levelID = id;
         objectManager = new ObjectManager(levelID);
         levelName = name;
@@ -31,7 +27,25 @@ public class Level extends Actor{
 
         objects = objectManager.getObjects();
         pauseObjects = objectManager.getPauseEntities();
+        foundEntities = objectManager.getOriginals();
     }
+
+    private float zoom;
+
+    public String getdioString(){
+        return dioString;
+    }
+
+    private ObjectManager objectManager;
+
+    public Array<Entity> getFoundEntities() {
+        return foundEntities;
+    }
+
+    public void setFoundEntities(Array<Entity> foundEntities) {
+        this.foundEntities = foundEntities;
+    }
+
     public Array<Entity> getPauseObjects() {
         return pauseObjects;
     }

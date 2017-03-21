@@ -20,7 +20,52 @@ public class Entity extends Actor {
     
     private int buttonID;
     private boolean isButton;
+
     private String original, pressed;
+
+    public Entity(String file, float x, float y, int buttonID) {
+        found = false;
+        original = file;
+        texture = new Texture(Gdx.files.internal(original));
+        setBounds(x, y, texture.getWidth(), texture.getHeight());
+        this.buttonID = buttonID;
+        addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+
+                //scaleDown = new ScaleToAction();
+                //scaleDown.setScale(0.5f);
+                //scaleDown.setDuration(1f);
+//
+                //scaleUp = new ScaleToAction();
+                //scaleUp.setScale(1f);
+                //scaleUp.setDuration(1f);
+//
+                //animation = new SequenceAction();
+                //animation.addAction(scaleDown);
+                //animation.addAction(scaleUp);
+//
+                //Entity.this.addAction(animation);
+
+                return true;
+            }
+
+
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                action = ((Entity)event.getTarget()).buttonID;
+            }
+        });
+    }
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public int getButtonID(){
+        return  buttonID;
+    }
 
     private boolean found;
 

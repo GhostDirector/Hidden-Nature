@@ -23,6 +23,7 @@ public class LevelSelect implements Screen{
     private Entity entity2;
     private Entity quit;
     private Entity start;
+    private Entity levelEntity;
     private Level level;
     private int currentLevel;
 
