@@ -23,53 +23,57 @@ public class PauseMenu implements Screen {
     private GameScreen gameScreen;
     private Texture background;
     private Entity menuButton, returnButton, textureChange;
-    private Array<Entity> objects, pauseObjects, foundEntities;
+    private Array<Entity>entities = new Array<Entity>();
+    private Array<Entity>originals = new Array<Entity>();
+    private Array<Entity>silhouettes = new Array<Entity>();
+
 
     public PauseMenu(HiddenNature hiddenNature, Level l){
+
         hn = hiddenNature;
         level = l;
         batch = hn.getBatch();
-        objects = new Array<Entity>(this.level.getObjects());
-        pauseObjects = new Array<Entity>(this.level.getPauseObjects());
-        foundEntities = new Array<Entity>(this.level.getFoundEntities());
+        entities = level.getEntities();
+        originals = level.getOriginals();
+        silhouettes = level.getSilhouettes();
 
-        background = new Texture(Gdx.files.internal("laatikko.png"));
-        menuButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
-        returnButton = new Entity("previous.png", "previouspressed.png", 690f, 290f, 2, true);
+        background = new Texture(Gdx.files.internal("pauseScreen.png"));
+        menuButton = new Entity("PauseMenu.png", "PauseMenu.png", 690f, 390f, 1, true, 0.25f);
+        returnButton = new Entity("X.png", "X.png", 690f, 290f, 2, true, 0.25f);
 
 
 
-//        for(int i = 0; i < objects.size; i++){
-//            Gdx.app.log("object:" + i, ""+objects.get(i).isFound());
-//            if (objects.get(i).isFound()){
-//                for(int j = 0; j < pauseObjects.size; j++){
-//                    Gdx.app.log("pauseobject:" + j, ""+objects.get(j).isFound());
-//                    Entity tmp = pauseObjects.get(j);
-//                    if(objects.get(i).getAction() == pauseObjects.get(j).getAction()){
+//        for(int i = 0; i < entities.size; i++){
+//            Gdx.app.log("object:" + i, ""+entities.get(i).isFound());
+//            if (entities.get(i).isFound()){
+//                for(int j = 0; j < originals.size; j++){
+//                    Gdx.app.log("pauseobject:" + j, ""+entities.get(j).isFound());
+//                    Entity tmp = originals.get(j);
+//                    if(entities.get(i).getAction() == originals.get(j).getAction()){
 //                        tmp.setFound(true);
 //                        tmp.pressedTexture();
-//                        pauseObjects.set(j, null);
-//                        pauseObjects.set(j, tmp);
+//                        originals.set(j, null);
+//                        originals.set(j, tmp);
 //                    }
 //                }
 //            }
 //        }
-//        for (Entity e : pauseObjects) {
+//        for (Entity e : originals) {
 //            if (e.isFound()) {
 //                e.pressedTexture();
 //            }
 //        }
 
-//        for (Entity e : objects) {
+//        for (Entity e : entities) {
 //
 //            if (e.isFound()) {
 //                int counter= 0;
-//                for (Entity n : pauseObjects) {
+//                for (Entity n : originals) {
 //
 //                    if (e.getAction() == n.getAction()) {
 //                        Entity t = n;
 //                        t.pressedTexture();
-//                        pauseObjects.set(counter, t);
+//                        originals.set(counter, t);
 //                    }
 //                }
 //            }
@@ -79,16 +83,23 @@ public class PauseMenu implements Screen {
         pauseStage.addActor(menuButton);
         pauseStage.addActor(returnButton);
 
-        for (Entity e : pauseObjects) {
+        for (int i = 0; i < originals.size; i++){
+            if (originals.get(i).isFound()) {
+                originals.get(i).setPosition(silhouettes.get(i).getX(), silhouettes.get(i).getY());
+
+            }
+
+        }
+        for (Entity e : silhouettes) {
             pauseStage.addActor(e);
         }
 
-        for (int i = 0; i < objects.size; i++){
-            if (objects.get(i).isFound()) {
-                foundEntities.get(i).setPosition(pauseObjects.get(i).getX(), pauseObjects.get(i).getY());
-                pauseStage.addActor(foundEntities.get(i));
+        for (Entity e : originals) {
+            if (e.isFound()) {
+                pauseStage.addActor(e);
             }
         }
+
 
         Gdx.input.setInputProcessor(pauseStage);
     }
@@ -97,18 +108,20 @@ public class PauseMenu implements Screen {
         switch (entity.getAction()){
 
             case 0: //Gdx.app.log("pauseMenu", "no actions");
+                entity.resetAction();
                 break;
 
             case 1:Gdx.app.log("pauseMenu", "menubutton");
-                level.setObjects(objects);
-                level.setPauseObjects(pauseObjects);
-                level.setFoundEntities(foundEntities);
+                level.setEntities(entities);
+                level.setOriginals(originals);
+                level.setSilhouettes(silhouettes);
                 hn.setScreen(new GameScreen(hn, level, true));
                 entity.resetAction();
                 break;
 
             case 2:Gdx.app.log("pauseMenu", "back");
                 hn.setScreen(new LevelSelect(hn));
+
                 entity.resetAction();
                 break;
         }

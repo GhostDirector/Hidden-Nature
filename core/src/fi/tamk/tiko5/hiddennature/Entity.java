@@ -1,6 +1,7 @@
 package fi.tamk.tiko5.hiddennature;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Timer;
 
 
 public class Entity extends Actor {
@@ -17,17 +19,20 @@ public class Entity extends Actor {
     private SequenceAction animation;
 
     private int action;
-    
+
+    private float scale;
+
     private int buttonID;
     private boolean isButton;
-
     private String original, pressed;
+    private FileHandle file;
 
-    public Entity(String file, float x, float y, int buttonID) {
-        found = false;
+    public Entity(String file, float x, float y, int buttonID, float scale, boolean found) {
+        this.scale = scale;
+        this.found = found;
         original = file;
         texture = new Texture(Gdx.files.internal(original));
-        setBounds(x, y, texture.getWidth(), texture.getHeight());
+        setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
         this.buttonID = buttonID;
         addListener(new InputListener() {
 
@@ -48,6 +53,7 @@ public class Entity extends Actor {
 //
                 //Entity.this.addAction(animation);
 
+                Timer timer = new Timer(); // longperse
                 return true;
             }
 
@@ -57,6 +63,10 @@ public class Entity extends Actor {
                 action = ((Entity)event.getTarget()).buttonID;
             }
         });
+    }
+
+    public float getScale() {
+        return scale;
     }
 
     public String getOriginal() {
@@ -69,7 +79,7 @@ public class Entity extends Actor {
 
     private boolean found;
 
-    public Entity(String file, String filePressed, float x, float y , int buttonID, boolean isbutton) {
+    public Entity(String file, String filePressed, float x, float y , int buttonID, boolean isbutton, float scale) {
         found = false;
         original = file;
         pressed = filePressed;
@@ -77,7 +87,7 @@ public class Entity extends Actor {
 
 
         this.isButton = isbutton;
-        setBounds(x, y, texture.getWidth(), texture.getHeight());
+        setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
         this.buttonID = buttonID;
 
             addListener(new InputListener() {

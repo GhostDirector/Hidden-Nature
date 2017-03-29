@@ -13,15 +13,15 @@ public class HiddenNature extends Game {
     private SpriteBatch batch;
     final float WORLD_WIDTH = 800f;
     final float WORLD_HEIGHT = 480f;
-    //private Locale defaultLocale;
-    //private I18NBundle myBundle;
+    private Locale defaultLocale;
+    private I18NBundle Localization;
 
     public SpriteBatch getBatch() {
         return batch;
     }
-    //public I18NBundle getMyBundle() {
-    //    return myBundle;
-    //}
+
+
+
 
     public float getWORLD_WIDTH(){
         return WORLD_WIDTH;
@@ -34,10 +34,14 @@ public class HiddenNature extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-//        defaultLocale = Locale.getDefault();
-//        myBundle = I18NBundle.createBundle(Gdx.files.internal("MyBundle"), defaultLocale);
+        defaultLocale = Locale.getDefault();
+        Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), defaultLocale);
         setScreen(new MainMenu(this));
 	}
+
+    public I18NBundle getLocalization() {
+        return Localization;
+    }
 
     @Override
     public void dispose () {

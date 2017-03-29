@@ -22,19 +22,21 @@ public class MainMenu implements Screen {
     private Entity entity2;
     private Entity entity3;
     private Entity entity4;
+    private Entity entity5;
 
     public MainMenu(HiddenNature hiddenNature){
 
-        background = new Texture(Gdx.files.internal("background.jpeg"));
+        background = new Texture(Gdx.files.internal("menu2.png"));
 
         hn = hiddenNature;
 
         batch = hn.getBatch();
 
-        entity1 = new Entity("startbutton.png", "startbuttonpressed.png", 510f, 350f, 1, true);
-        entity2 = new Entity("creditsbutton.png", "creditsbuttonpressed.png" ,510f, 250f, 2, true);
-        entity3 = new Entity("quitbutton.png", "quitbuttonpressed.png", 510f, 150f, 3, true);
-        entity4 = new Entity("sound.png", "mute.png", 30, 380f, 4, true);
+        entity1 = new Entity(hn.getLocalization().get("playButton"), "PLAY.png", 600f, 350f, 1, true, 0.65f);
+        entity2 = new Entity(hn.getLocalization().get("creditsButton"), "CREDITS.png" ,600f, 200f, 2, true, 0.65f);
+        entity3 = new Entity(hn.getLocalization().get("quitButton"), "QUIT.png", 600f, 50f, 3, true, 0.65f);
+        entity4 = new Entity("AANET.png", "MUTE.png", 30f, 25f, 4, true, 0.28f);
+        entity5 = new Entity(hn.getLocalization().get("locButton"), "FIN.png", 150f, 25f, 5, true, 0.65f);
 
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
@@ -42,6 +44,7 @@ public class MainMenu implements Screen {
         mainStage.addActor(entity2);
         mainStage.addActor(entity3);
         mainStage.addActor(entity4);
+        mainStage.addActor(entity5);
 
         Gdx.input.setInputProcessor(mainStage);
     }
@@ -64,9 +67,15 @@ public class MainMenu implements Screen {
 
             case 3:Gdx.app.log("MainMenu", "quit game");
                 System.exit(0);
+                entity.resetAction();
                 break;
 
             case 4:Gdx.app.log("MainMenu", "Mute");
+                entity.resetAction();
+                break;
+
+            case 5:Gdx.app.log("MainMenu", "localization");
+                entity.resetAction();
                 break;
         }
     }
@@ -88,6 +97,7 @@ public class MainMenu implements Screen {
         getEntityID(entity2);
         getEntityID(entity3);
         getEntityID(entity4);
+        getEntityID(entity5);
     }
 
     @Override
@@ -120,3 +130,13 @@ public class MainMenu implements Screen {
     }
 
 }
+/*
+
+∧＿∧
+( ･ω･｡)つ━☆・*。
+⊂　　 ノ 　　　・゜+.
+/ ╰U╯\　　　°。+ *´¨)
+　　　　　　　　　.· ´¸.·*´¨) ¸.·*¨)
+　　　　　　　　　　(¸.·´ (¸.·Waffles
+
+ */

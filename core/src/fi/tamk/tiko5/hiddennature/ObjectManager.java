@@ -11,52 +11,70 @@ import com.badlogic.gdx.utils.Array;
  */
 
 public class ObjectManager {
-    
-    Array<Entity> entities;
-    Array<Entity> pauseEntities;
+    private int id;
 
-    Array<Entity> originals;
+    private PrefHandler prefs;
 
-    public ObjectManager(int id){
-        entities = new Array<Entity>();
-        originals = new Array<Entity>();
-        pauseEntities = new Array<Entity>();
+    private Array<Entity> entities = new Array<Entity>();
 
-        switch (id){
+    private Array<Entity> silhouettes = new Array<Entity>();
+    private Array<Entity> originals = new Array<Entity>();
 
-            case 1:
-
-                entities.add(new Entity("doge.png", 200f, 100f, -1));
-                entities.add(new Entity("fatso.png", 300f, 200f, -2));
-                entities.add(new Entity("doge.png", 250f, 150f, -3));
-                entities.add(new Entity("doge.png", 350f, 250f, -4));
-
-                originals.add(new Entity("doge.png", 200f, 100f, -1));
-                originals.add(new Entity("fatso.png", 300f, 200f, -2));
-                originals.add(new Entity("doge.png", 250f, 150f, -3));
-                originals.add(new Entity("doge.png", 350f, 250f, -4));
-
-                pauseEntities.add(new Entity("dogesilu.png", 10f, 10f, -1));
-                pauseEntities.add(new Entity("fatsosilu.png", 50f, 10f, -2));
-                pauseEntities.add(new Entity("dogesilu.png", 90f, 10f, -3));
-                pauseEntities.add(new Entity("dogesilu.png", 130f, 10f, -4));
-                break;
+    public ObjectManager(Level level){
+        id = level.getLevelID();
+        prefs = new PrefHandler(level);
 
 
 
-            case 2:
-                entities.add(new Entity("doge.png", 300f, 200f, -1));
-
-                pauseEntities.add(new Entity("dogesilu.png", 200f, 100f, -1));
-                break;
-
-            case 3:
-                entities.add(new Entity("doge.png", 250f, 150f, -1));
-
-                pauseEntities.add(new Entity("dogesilu.png", 200f, 100f, -1));
-                break;
+        if (!prefs.loadLevel()) {
 
 
+            switch (this.id) {
+
+                case 1:
+
+                    entities.add(new Entity("hirvi2.png", 279f, 78f, -1, 1f, false));
+                    entities.add(new Entity("orava2.png", 90f, 360f, -2, 1f, false));
+                    entities.add(new Entity("siili2.png", 535f, 5f, -3, 1f, false));
+                    entities.add(new Entity("tintti2.png", 190f, 398f, -4, 1f, false));
+
+                    originals.add(new Entity("hirvi.png", 0, 0, -1, 1f, false));
+                    originals.add(new Entity("orava.png", 0, 0, -2, 1f, false));
+                    originals.add(new Entity("HEDGEHOG.png", 0, 0, -3, 0.15f, false));
+                    originals.add(new Entity("TIT.png", 0, 0, -4, 0.12f, false));
+
+                    silhouettes.add(new Entity("hirviSil.png", 10f, 10f, -1, 1f, true));
+                    silhouettes.add(new Entity("oravaSil.png", 150f, 10f, -2, 1f, true));
+                    silhouettes.add(new Entity("siiliSil.png", 250f, 10f, -3, 1.14f, true));
+                    silhouettes.add(new Entity("tinttiSil.png", 350f, 10f, -4, 1.45f, true));
+                    break;
+
+
+                case 2:
+                    entities.add(new Entity("doge.png", 300f, 200f, -1, 1f, false));
+
+                    originals.add(new Entity("doge.png", 0, 0, -1, 1f, false));
+
+                    silhouettes.add(new Entity("dogesilu.png", 10f, 10f, -1, 1f, true));
+                    break;
+
+                case 3:
+                    entities.add(new Entity("doge.png", 250f, 150f, -1, 1f, false));
+
+                    originals.add(new Entity("doge.png", 0, 0, -1, 1f, false));
+
+                    silhouettes.add(new Entity("dogesilu.png", 10f, 10f, -1, 1f, true));
+                    break;
+            }
+        }
+
+        if (prefs.loadLevel()) {
+
+            entities = prefs.getEntities();
+
+            originals = prefs.getOriginals();
+
+            silhouettes = prefs.getSilhouettes();
 
         }
     }
@@ -65,14 +83,13 @@ public class ObjectManager {
         return originals;
     }
 
-    Array<Texture> textures;
 
-    public Array<Entity> getObjects() {
+    public Array<Entity> getEntities() {
         return entities;
     }
 
-    public Array<Entity> getPauseEntities() {
-        return pauseEntities;
+    public Array<Entity> getSilhouettes() {
+        return silhouettes;
     }
 
 }

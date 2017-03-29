@@ -11,9 +11,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -33,26 +30,28 @@ public class GameScreen extends MyAdapter implements Screen{
     private float menuButtonOriginalWidth, menuButtonOriginalHeight;
     private float moveX, moveY;
     private Level level;
-    private Array<Entity> objects, pauseObjects, foundObjects;
-    private PrefHandler pH;
+    private Array<Entity>originals = new Array<Entity>();
+    private Array<Entity>entities = new Array<Entity>();
+    private Array<Entity>silhouettes = new Array<Entity>();
+    private PrefHandler prefs;
 
 
-    public GameScreen(HiddenNature hiddenNature, Level level, boolean isPauseMenu) {
+    public GameScreen(HiddenNature hiddenNature, Level l, boolean isPauseMenu) {
 
-        this.level = level;
-        pH = new PrefHandler(this.level);
+        level = l;
+
         diorama = level.getLevelDiorama();
         imp = new InputMultiplexer();
         gd = new GestureDetector(this);
         hn = hiddenNature;
         menuOpen = false;
-        objects = new Array<Entity>(this.level.getObjects());
-        pauseObjects = new Array<Entity>(this.level.getPauseObjects());
-        foundObjects = new Array<Entity>(this.level.getFoundEntities());
-        pH.save();
+        entities = level.getEntities();
+        originals = level.getOriginals();
+        silhouettes = level.getSilhouettes();
+        prefs = new PrefHandler(level);
 
 
-        menuOpenButton = new Entity("return.png", "returnpressed.png", 690f, 390f, 1, true);
+        menuOpenButton = new Entity("PauseMenu.png", "PauseMenu.png", 690f, 390f, 1, true, 0.25f);
 
 
 
@@ -62,7 +61,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
 
 
-        for (Entity e : objects) {
+        for (Entity e : entities) {
             if (!e.isFound()) {
                 gameStage.addActor(e);
             }
@@ -75,7 +74,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
         Gdx.input.setInputProcessor(imp);
         maxZoom = ((OrthographicCamera)gameStage.getCamera()).zoom;
-        minZoom = 0.3f;
+        minZoom = 0.60f;
         if (isPauseMenu){
 
             gameStage.getCamera().position.set(level.getCamPos());
@@ -100,11 +99,12 @@ public class GameScreen extends MyAdapter implements Screen{
                 break;
 
             case 1: Gdx.app.log("GameScreen", "pausemenu");
-                level.setObjects(objects);
-                level.setPauseObjects(pauseObjects);
-                level.setFoundEntities(foundObjects);
+                level.setOriginals(originals);
+                level.setEntities(entities);
+                level.setSilhouettes(silhouettes);
                 level.setZoom(((OrthographicCamera) gameStage.getCamera()).zoom);
                 level.setCamPos(gameStage.getCamera().position);
+                prefs.save();
                 hn.setScreen(new PauseMenu(hn, level));
                 entity.resetAction();
                 break;
@@ -112,6 +112,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
         if (entity.getAction() < 0){
             entity.setFound(true);
+            entity.resetAction();
 
 //            Object B = new Object((String)A.getProperty1().toString(), A.getProperty2()...);
         }
@@ -143,6 +144,13 @@ public class GameScreen extends MyAdapter implements Screen{
     public boolean touchDown (float x, float y, int pointer, int button) {
         currentZoom = ((OrthographicCamera)gameStage.getCamera()).zoom;
         Gdx.app.log("coordinates", " ");
+        int realX = Gdx.input.getX();
+        int realY = Gdx.input.getY();
+        Vector3 touchPos = new Vector3(realX, realY, 0);
+        Gdx.app.log("Game", "real X = " + realX);
+        Gdx.app.log("Game", "real Y = " + realY);
+        Gdx.app.log("Game", "world X = " + touchPos.x);
+        Gdx.app.log("Game", "world Y = " + touchPos.y);
         moveX = x;
         moveY = y;
         return true;
@@ -150,9 +158,9 @@ public class GameScreen extends MyAdapter implements Screen{
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        Gdx.app.log("screenY", " "+ screenY);
-        Gdx.app.log("screenX", " "+ screenX);
-        Gdx.app.log("pointer", " "+ pointer);
+        Gdx.app.log("touchDragged", "screenY = "+ screenY);
+        Gdx.app.log("touchDragged", "screenX = "+ screenX);
+        Gdx.app.log("touchDragged", "pointer = "+ pointer);
 
         float lerp = 0.3f;
 
@@ -207,10 +215,6 @@ public class GameScreen extends MyAdapter implements Screen{
 
             gameStage.getCamera().project(touchPos);
 
-            Gdx.app.log("Game", "real X = " + realX);
-            Gdx.app.log("Game", "real Y = " + realY);
-            Gdx.app.log("Game", "world X = " + touchPos.x);
-            Gdx.app.log("Game", "world Y = " + touchPos.y);
         }
     }
 
@@ -246,8 +250,8 @@ public class GameScreen extends MyAdapter implements Screen{
         menuOpenButton.setX((currentViewportWidth - menuOpenButton.getWidth()) + (gameStage.getCamera().position.x - (currentViewportWidth / 2)));
         menuOpenButton.setY((currentViewportHeight - menuOpenButton.getHeight()) + (gameStage.getCamera().position.y - (currentViewportHeight / 2)));
 
-        menuOpenButton.setSize(menuOpenButton.getTexture().getWidth() * ((OrthographicCamera) gameStage.getCamera()).zoom,
-                menuOpenButton.getTexture().getHeight() * ((OrthographicCamera) gameStage.getCamera()).zoom);
+        menuOpenButton.setSize((menuOpenButton.getTexture().getWidth() * 0.25f) * ((OrthographicCamera) gameStage.getCamera()).zoom,
+                (menuOpenButton.getTexture().getHeight() * 0.25f) * ((OrthographicCamera) gameStage.getCamera()).zoom);
     }
 
     @Override
@@ -272,13 +276,13 @@ public class GameScreen extends MyAdapter implements Screen{
 
             getEntityID(menuOpenButton);
 
-            for (Entity e : objects) {
+            for (Entity e : entities) {
 
                 getEntityID(e);
 
                 if (e.isFound()) {
-                    for (Entity f : foundObjects) {
-                        if (e.getAction() == f.getAction()) {
+                    for (Entity f : originals) {
+                        if (e.getButtonID() == f.getButtonID()) {
                             f.setFound(true);
                         }
                     }

@@ -2,9 +2,12 @@ package fi.tamk.tiko5.hiddennature;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -27,24 +30,38 @@ public class LevelSelect implements Screen{
     private Level level;
     private int currentLevel;
 
-    private ArrayList<Level> levels;
+    private String select, found;
+
+    private BitmapFont font;
+
+    private ArrayList<Level>levels;
 
     public LevelSelect(HiddenNature hiddenNature) {
+        Gdx.app.log("level select","");
         currentLevel = 0;
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("background.jpeg"));
+        background = new Texture(Gdx.files.internal("menu2.png"));
         batch = hn.getBatch();
         levels = new ArrayList<Level>();
         loadLevels();
 
+        select = hn.getLocalization().get("selLevelText");
+        found = hn.getLocalization().get("foundText");
 
-        entity1 = new Entity("previous.png", "previouspressed.png", 20f, 210, 1, true);
-        entity2 = new Entity("next.png", "nextpressed.png", 690f, 210, 2, true);
+        entity1 = new Entity("NuoliVasen.png", "NuoliVasen.png", 20f, 210, 1, true, 0.25f);
+        entity2 = new Entity("NuoliOikea.png", "NuoliOikea.png", 690f, 210, 2, true, 0.25f);
 
-        quit = new Entity("return.png", "returnpressed.png", 690f, 390f, 3, true);
-        start = new Entity("accept.png", "acceptpressed.png", 690f, 20f, 4, true);
+        quit = new Entity("X.png", "X.png", 690f, 390f, 3, true, 0.25f);
+        start = new Entity("V.png", "V.png", 690f, 20f, 4, true, 0.25f);
 
         level = levels.get(0);
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 32;
+        param.color = Color.DARK_GRAY;
+        param.borderWidth = 2;
+        font = generator.generateFont(param);
 
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
@@ -58,9 +75,9 @@ public class LevelSelect implements Screen{
 }
 
     public void loadLevels(){
-        levels.add(new Level(1, "mutsis", "kuva4.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(2, "ebin", "kuva5.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(3, "munasuuhun", "kuva6.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(2, "test1", "testi1.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
     }
 
     public void setLevel(int l){
@@ -71,7 +88,7 @@ public class LevelSelect implements Screen{
             level.remove();
             level = levels.get(currentLevel);
             mainStage.addActor(level);
-            Gdx.app.log("ripuli", ""+currentLevel);
+            Gdx.app.log("currentLevel", ""+currentLevel);
         }
     }
 
@@ -111,6 +128,8 @@ public class LevelSelect implements Screen{
 
         mainStage.getBatch().begin();
         mainStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
+        font.draw(batch, select + levels.get(currentLevel).getLevelID()+ "/"+ levels.size(), 150, 450);
+        font.draw(batch, found + 0 +"/"+ 0, 150, 60);
         mainStage.getBatch().end();
 
         mainStage.act(Gdx.graphics.getDeltaTime());
