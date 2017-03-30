@@ -46,7 +46,7 @@ public class PrefHandler {
         String original = "";
         String silhouette = "";
 
-        prefs.putBoolean("Reset", true);
+
 
         for(int i = 0; i < saveEntities.size; i++){
             entity += saveEntities.get(i).getButtonID() +
@@ -96,8 +96,10 @@ public class PrefHandler {
 
 
             if (reset){
-
+                globalPrefs.putBoolean("Reset", false);
+                globalPrefs.flush();
                 isLoad = false;
+
             } else {
 
                 String[] entitiesString = entity.split(":;:");
@@ -112,11 +114,12 @@ public class PrefHandler {
                 isLoad = true;
             }
 
-            return isLoad;
+
         } catch (Exception e){
             isLoad = false;
-            return isLoad;
+
         }
+        return isLoad;
     }
 
     public Array<Entity> getArrays(String[] longStrings) {

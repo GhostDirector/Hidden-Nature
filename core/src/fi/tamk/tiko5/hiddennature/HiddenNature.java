@@ -15,6 +15,7 @@ public class HiddenNature extends Game {
     final float WORLD_HEIGHT = 480f;
     private Locale defaultLocale;
     private I18NBundle Localization;
+    private boolean sound;
 
     public SpriteBatch getBatch() {
         return batch;
@@ -37,7 +38,12 @@ public class HiddenNature extends Game {
         defaultLocale = Locale.getDefault();
         Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), defaultLocale);
         setScreen(new MainMenu(this));
+        sound = true;
 	}
+
+    public boolean isSound(){
+        return sound;
+    }
 
     public I18NBundle getLocalization() {
         return Localization;
