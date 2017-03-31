@@ -29,7 +29,6 @@ public class LevelSelect implements Screen{
 
     public LevelSelect(HiddenNature hiddenNature) {
         globalPrefs = Gdx.app.getPreferences("settings");
-        reset = globalPrefs.getBoolean("Reset", false);
         Gdx.app.log("level select","");
         currentLevel = 0;
         hn = hiddenNature;
@@ -68,6 +67,8 @@ public class LevelSelect implements Screen{
 }
 
     public void loadLevels(){
+        reset = globalPrefs.getBoolean("Reset", false);
+        
         levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
         levels.add(new Level(2, "talvinenMetsa", "talvinenMetsa.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
         levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));

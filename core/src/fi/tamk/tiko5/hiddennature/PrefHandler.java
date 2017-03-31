@@ -70,7 +70,10 @@ public class PrefHandler {
             String original = prefs.getString("Original", "true");
             String silhouette = prefs.getString("Silhouette", "true");
 
-            if (Boolean.valueOf(entity)){
+            if (Boolean.valueOf(entity) ||
+                Boolean.valueOf(original) ||
+                Boolean.valueOf(silhouette)){
+                
                 isLoad = false;
 
             } else {
