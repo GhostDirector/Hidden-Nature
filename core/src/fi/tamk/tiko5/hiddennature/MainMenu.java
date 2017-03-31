@@ -9,28 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MainMenu implements Screen {
-
     private HiddenNature hn;
-
     private Texture background;
-
     private Stage mainStage;
-
     private SpriteBatch batch;
-
-    private Entity entity1;
-    private Entity entity2;
-    private Entity entity3;
-    private Entity entity4;
+    private Entity entity1, entity2, entity3, entity4;
 
     public MainMenu(HiddenNature hiddenNature){
-
         background = new Texture(Gdx.files.internal("menu2.png"));
-
         hn = hiddenNature;
-
         batch = hn.getBatch();
-
+        
         entity1 = new Entity(hn.getLocalization().get("playButton"), "PLAY.png", 600f, 350f, 1, true, 0.65f);
         entity2 = new Entity(hn.getLocalization().get("creditsButton"), "CREDITS.png" ,600f, 200f, 2, true, 0.65f);
         entity3 = new Entity(hn.getLocalization().get("quitButton"), "QUIT.png", 600f, 50f, 3, true, 0.65f);
@@ -71,8 +60,6 @@ public class MainMenu implements Screen {
                 hn.setScreen(new Settings(hn));
                 entity.resetAction();
                 break;
-
-
         }
     }
 
@@ -125,13 +112,3 @@ public class MainMenu implements Screen {
     }
 
 }
-/*
-
-∧＿∧
-( ･ω･｡)つ━☆・*。
-⊂　　 ノ 　　　・゜+.
-/ ╰U╯\　　　°。+ *´¨)
-　　　　　　　　　.· ´¸.·*´¨) ¸.·*¨)
-　　　　　　　　　　(¸.·´ (¸.·Waffles
-
- */

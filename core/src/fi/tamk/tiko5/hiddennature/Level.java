@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 public class Level extends Actor{
-    private boolean reset;
     private int levelID;
     private String levelName, dioString;
     private Texture levelDiorama;
@@ -17,28 +16,20 @@ public class Level extends Actor{
     private Array<Entity>silhouettes = new Array<Entity>();
     private Array<Entity>entities = new Array<Entity>();
     private Vector3 camPos;
-
     private float zoom;
     private ObjectManager objectManager;
-
-
-    public Level(int id, String name, String diorama, int found, float width, float height){
-
-        reset = false;
+    
+    public Level(int id, String name, String diorama, int found, float width, float height, boolean reset){
         dioString = diorama;
         levelID = id;
-
         levelName = name;
         levelDiorama = new Texture(Gdx.files.internal(diorama));
         entitiesFound = found;
         setBounds(160, 90, width - 320, height - 180);
-
-        objectManager = new ObjectManager(this);
-
+        objectManager = new ObjectManager(this, reset);
         entities = objectManager.getEntities();
 
         for (int i = 0; i < entities.size; i++){
-
             Gdx.app.log("entities","");
             Gdx.app.log("id "+ i +" :", ""+entities.get(i).getButtonID());
             Gdx.app.log("png "+ i +" :", ""+entities.get(i).getOriginal());
@@ -46,13 +37,11 @@ public class Level extends Actor{
             Gdx.app.log("y "+ i +" :", ""+entities.get(i).getY());
             Gdx.app.log("scale "+ i +" :", ""+entities.get(i).getScale());
             Gdx.app.log("found "+ i +" :", ""+entities.get(i).isFound());
-
         }
 
         originals = objectManager.getOriginals();
 
         for (int j = 0; j < originals.size; j++){
-
             Gdx.app.log("originals","");
             Gdx.app.log("id "+ j +" :", ""+originals.get(j).getButtonID());
             Gdx.app.log("png "+ j +" :", ""+originals.get(j).getOriginal());
@@ -60,13 +49,11 @@ public class Level extends Actor{
             Gdx.app.log("y "+ j +" :", ""+originals.get(j).getY());
             Gdx.app.log("scale "+ j +" :", ""+originals.get(j).getScale());
             Gdx.app.log("found "+ j +" :", ""+originals.get(j).isFound());
-
         }
 
         silhouettes = objectManager.getSilhouettes();
 
         for (int k = 0; k < silhouettes.size; k++){
-
             Gdx.app.log("silhouettes","");
             Gdx.app.log("id "+ k +" :", ""+silhouettes.get(k).getButtonID());
             Gdx.app.log("png "+ k +" :", ""+silhouettes.get(k).getOriginal());
@@ -74,23 +61,29 @@ public class Level extends Actor{
             Gdx.app.log("y "+ k +" :", ""+silhouettes.get(k).getY());
             Gdx.app.log("scale "+ k +" :", ""+silhouettes.get(k).getScale());
             Gdx.app.log("found "+ k +" :", ""+silhouettes.get(k).isFound());
-
         }
-
-
-//        objects = prefs.getEntities();
-//        pauseObjects = prefs.getOriginals();
-//        foundEntities = prefs.getSilhouettes();
     }
-
-    public ObjectManager getObjectManager() {
-        return objectManager;
+    
+    @Override
+    public void draw(Batch batch, float alpha) {
+        batch.draw(levelDiorama,
+                this.getX(), this.getY(),
+                this.getOriginX(),
+                this.getOriginY(),
+                this.getWidth(),
+                this.getHeight(),
+                this.getScaleX(),
+                this.getScaleY(),
+                this.getRotation(),0,0,
+                levelDiorama.getWidth(), levelDiorama.getHeight(), false, false);
     }
-
-    public String getdioString(){
-        return dioString;
+    
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        
     }
-
+    
     public Array<Entity> getEntities() {
         return entities;
     }
@@ -139,32 +132,7 @@ public class Level extends Actor{
         return levelID;
     }
 
-    public String getLevelName(){
-        return levelName;
-    }
-
     public int getEntitiesFound(){
         return entitiesFound;
     }
-
-    @Override
-    public void draw(Batch batch, float alpha) {
-        batch.draw(levelDiorama,
-                this.getX(), this.getY(),
-                this.getOriginX(),
-                this.getOriginY(),
-                this.getWidth(),
-                this.getHeight(),
-                this.getScaleX(),
-                this.getScaleY(),
-                this.getRotation(),0,0,
-                levelDiorama.getWidth(), levelDiorama.getHeight(), false, false);
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-
-    }
-    
 }

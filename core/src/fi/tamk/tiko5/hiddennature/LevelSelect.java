@@ -1,6 +1,7 @@
 package fi.tamk.tiko5.hiddennature;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,33 +11,25 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
 import java.util.ArrayList;
 
 public class LevelSelect implements Screen{
     private HiddenNature hn;
-
     private Texture background;
-
     private Stage mainStage;
-
     private SpriteBatch batch;
-
-    private Entity entity1;
-    private Entity entity2;
-    private Entity quit;
-    private Entity start;
-    private Entity levelEntity;
     private Level level;
     private int currentLevel;
-
     private String select, found;
-
     private BitmapFont font;
-
     private ArrayList<Level>levels;
+    private Preferences globalPrefs;
+    private boolean reset;
+    private Entity entity1, entity2, quit, start, levelEntity;
 
     public LevelSelect(HiddenNature hiddenNature) {
+        globalPrefs = Gdx.app.getPreferences("settings");
+        reset = globalPrefs.getBoolean("Reset", false);
         Gdx.app.log("level select","");
         currentLevel = 0;
         hn = hiddenNature;
@@ -75,9 +68,12 @@ public class LevelSelect implements Screen{
 }
 
     public void loadLevels(){
-        levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(2, "talvinenMetsa", "talvinenMetsa.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
+        levels.add(new Level(2, "talvinenMetsa", "talvinenMetsa.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
+        levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
+        
+        globalPrefs.putBoolean("Reset", false);
+        globalPrefs.flush();
     }
 
     public void setLevel(int l){
@@ -130,18 +126,15 @@ public class LevelSelect implements Screen{
         mainStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
         font.draw(batch, select + levels.get(currentLevel).getLevelID()+ "/"+ levels.size(), 150, 450);
         font.draw(batch, found + 0 +"/"+ 0, 150, 60);
+        
         mainStage.getBatch().end();
-
         mainStage.act(Gdx.graphics.getDeltaTime());
-
         mainStage.draw();
 
         getEntityID(entity1);
         getEntityID(entity2);
         getEntityID(quit);
         getEntityID(start);
-
-
     }
 
     @Override

@@ -12,35 +12,21 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-/**
- * Created by ghost on 30.3.2017.
- */
-
 public class Settings implements Screen {
-
     private HiddenNature hn;
     private Texture background;
     private Stage settingStage;
     private SpriteBatch batch;
     private BitmapFont font;
     private Preferences globalPrefs;
-
-    private Entity quitButton;
-    private Entity finButton;
-    private Entity engButton;
-    private Entity soundButton;
-    private Entity resetButton;
+    private Entity quitButton, finButton, engButton, soundButton, resetButton;
 
     public Settings(HiddenNature hiddenNature){
-
         hn = hiddenNature;
         background = new Texture(Gdx.files.internal("menu2.png"));
         batch = hn.getBatch();
-
         settingStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
         globalPrefs = Gdx.app.getPreferences("settings");
-
-
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -92,7 +78,7 @@ public class Settings implements Screen {
                 entity.resetAction();
                 break;
 
-            case 4: Gdx.app.log("Settings", "");
+            case 4: Gdx.app.log("Settings", "reset");
                 globalPrefs.putBoolean("Reset", true);
                 globalPrefs.flush();
                 entity.resetAction();
@@ -104,13 +90,7 @@ public class Settings implements Screen {
                 break;
         }
     }
-
-
-    @Override
-    public void show() {
-
-    }
-
+    
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -130,6 +110,11 @@ public class Settings implements Screen {
         getEntityID(soundButton);
         getEntityID(resetButton);
 
+    }
+    
+    @Override
+    public void show() {
+        
     }
 
     @Override

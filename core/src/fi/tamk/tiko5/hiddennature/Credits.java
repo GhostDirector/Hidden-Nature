@@ -10,12 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-/**
- * Created by Ghost on 2.3.2017.
- */
-
 public class Credits implements Screen {
-
     private HiddenNature hn;
     private Texture background;
     private Stage creditsStage;
@@ -23,16 +18,12 @@ public class Credits implements Screen {
     private Entity entity1, entity2, entity3, entity4, entity5;
     private BitmapFont font;
     private boolean gameIsOn;
-
     private String creditsText, leadText, programmingText, graphicsText, collabText;
 
     public Credits(HiddenNature hiddenNature){
-
         gameIsOn = true;
-
         hn = hiddenNature;
         background = new Texture(Gdx.files.internal("menu2.png"));
-
         batch = hn.getBatch();
 
         creditsText = hn.getLocalization().get("credits");
@@ -100,17 +91,8 @@ public class Credits implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
-
         if (gameIsOn){
-
-
-
             creditsStage.getBatch().begin();
             creditsStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
             font.draw(batch, creditsText, 100, 450);
@@ -120,21 +102,22 @@ public class Credits implements Screen {
             font.draw(batch, graphicsText + " Severi", 100, 310);
 
             font.draw(batch, collabText, 100, 220);
-
-
+            
             creditsStage.getBatch().end();
-
             creditsStage.act(Gdx.graphics.getDeltaTime());
-
             creditsStage.draw();
+            
             getEntityID(entity1);
             getEntityID(entity2);
             getEntityID(entity3);
             getEntityID(entity4);
             getEntityID(entity5);
-
         }
-
+    }
+    
+    @Override
+    public void show() {
+        
     }
 
     @Override

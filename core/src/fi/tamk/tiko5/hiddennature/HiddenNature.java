@@ -2,10 +2,7 @@ package fi.tamk.tiko5.hiddennature;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.I18NBundle;
 import java.util.Locale;
 
@@ -17,21 +14,6 @@ public class HiddenNature extends Game {
     private I18NBundle Localization;
     private boolean sound;
 
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-
-
-
-    public float getWORLD_WIDTH(){
-        return WORLD_WIDTH;
-    }
-
-    public float getWORLD_HEIGHT(){
-        return WORLD_HEIGHT;
-    }
-
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -40,36 +22,35 @@ public class HiddenNature extends Game {
         setScreen(new MainMenu(this));
         sound = true;
 	}
-
+    
     public boolean isSound(){
         return sound;
     }
-
+    
     public I18NBundle getLocalization() {
         return Localization;
     }
-
+    
     @Override
     public void dispose () {
         batch.dispose();
     }
-
+    
 	@Override
 	public void render () {
 		super.render();
 	}
-
-    public BitmapFont createFont(String file, int fontSize) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-                Gdx.files.internal(file));
-
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = fontSize;
-        parameter.color = Color.WHITE;
-        parameter.borderColor = Color.BLACK;
-        parameter.borderWidth = 2;
-
-        return generator.generateFont(parameter);
+    
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+    
+    public float getWORLD_WIDTH(){
+        return WORLD_WIDTH;
+    }
+    
+    public float getWORLD_HEIGHT(){
+        return WORLD_HEIGHT;
     }
 
 }
