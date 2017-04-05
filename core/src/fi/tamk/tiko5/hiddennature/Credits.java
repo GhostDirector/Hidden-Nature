@@ -34,7 +34,7 @@ public class Credits implements Screen {
 
         creditsStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
-        entity1 = new Entity("X.png", "X.png", 690f, 390f, 1, true, 0.25f);
+        entity1 = new Entity("X.png", "xPushedButton.png", 690f, 390f, 1, true, 0.25f);
         entity2 = new Entity(hn.getLocalization().get("trashLogo"), hn.getLocalization().get("trashLogo"), 370f, 240f, 2, true, 0.15f);
         entity3 = new Entity(hn.getLocalization().get("tamkLogo"), hn.getLocalization().get("tamkLogo"), 40f, 40f, 3, true, 0.07f);
         entity4 = new Entity(hn.getLocalization().get("tikoLogo"), hn.getLocalization().get("tikoLogo"), 260f, 40f, 4, true, 0.35f);

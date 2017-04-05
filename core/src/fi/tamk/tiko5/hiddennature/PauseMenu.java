@@ -38,8 +38,8 @@ public class PauseMenu implements Screen {
         silhouettes = level.getSilhouettes();
 
         background = new Texture(Gdx.files.internal("pauseScreen.png"));
-        menuButton = new Entity("PauseMenu.png", "PauseMenu.png", 690f, 390f, 1, true, 0.25f);
-        returnButton = new Entity("X.png", "X.png", 690f, 290f, 2, true, 0.25f);
+        menuButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
+        returnButton = new Entity("X.png", "xPushedButton.png", 690f, 290f, 2, true, 0.25f);
 
 
 

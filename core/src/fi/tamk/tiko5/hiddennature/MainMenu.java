@@ -20,10 +20,10 @@ public class MainMenu implements Screen {
         hn = hiddenNature;
         batch = hn.getBatch();
         
-        entity1 = new Entity(hn.getLocalization().get("playButton"), "PLAY.png", 600f, 350f, 1, true, 0.65f);
-        entity2 = new Entity(hn.getLocalization().get("creditsButton"), "CREDITS.png" ,600f, 200f, 2, true, 0.65f);
-        entity3 = new Entity(hn.getLocalization().get("quitButton"), "QUIT.png", 600f, 50f, 3, true, 0.65f);
-        entity4 = new Entity("PauseMenu.png", "PauseMenu.png", 30f, 25f, 4, true, 0.28f);
+        entity1 = new Entity(hn.getLocalization().get("playButton"), hn.getLocalization().get("playpressedButton"), 600f, 350f, 1, true, 0.65f);
+        entity2 = new Entity(hn.getLocalization().get("creditsButton"), hn.getLocalization().get("creditspressedButton") ,600f, 200f, 2, true, 0.65f);
+        entity3 = new Entity(hn.getLocalization().get("quitButton"), hn.getLocalization().get("quitpressedButton"), 600f, 50f, 3, true, 0.65f);
+        entity4 = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 30f, 25f, 4, true, 0.28f);
 
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 

@@ -3,10 +3,13 @@ package fi.tamk.tiko5.hiddennature;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 
 public class Entity extends Actor {
     private Texture texture;
@@ -16,6 +19,9 @@ public class Entity extends Actor {
     private boolean isButton;
     private String original, pressed;
     private boolean found;
+    private ParallelAction up, down, left, right;
+    private MoveToAction moveAction;
+    private RotateToAction rotateAction;
 
     public Entity(String file, float x, float y, int buttonID, float scale, boolean found) {
         this.scale = scale;
@@ -24,30 +30,40 @@ public class Entity extends Actor {
         texture = new Texture(Gdx.files.internal(original));
         setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
         this.buttonID = buttonID;
+        moveAction = new MoveToAction();
+        rotateAction = new RotateToAction();
+        up = new ParallelAction();
+        down = new ParallelAction();
+        left = new ParallelAction();
+        right = new ParallelAction();
+        createAnimations();
         addListener(new InputListener() {
 
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
-                //scaleDown = new ScaleToAction();
-                //scaleDown.setScale(0.5f);
-                //scaleDown.setDuration(1f);
-//
-                //scaleUp = new ScaleToAction();
-                //scaleUp.setScale(1f);
-                //scaleUp.setDuration(1f);
-//
-                //animation = new SequenceAction();
-                //animation.addAction(scaleDown);
-                //animation.addAction(scaleUp);
-//
-                //Entity.this.addAction(animation);
-
-                Timer timer = new Timer(); // longperse
                 return true;
             }
             
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+
+                switch (MathUtils.random(1,4)) {
+                    case 1:
+                        Entity.this.addAction(up);
+                        break;
+
+                    case 2:
+                        Entity.this.addAction(down);
+                        break;
+
+                    case 3:
+                        Entity.this.addAction(left);
+                        break;
+
+                    case 4:
+                        Entity.this.addAction(right);
+                        break;
+                }
                 action = ((Entity)event.getTarget()).buttonID;
             }
         });
@@ -67,20 +83,6 @@ public class Entity extends Actor {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
                 pressedTexture();
-
-                //scaleDown = new ScaleToAction();
-                //scaleDown.setScale(0.5f);
-                //scaleDown.setDuration(1f);
-//
-                //scaleUp = new ScaleToAction();
-                //scaleUp.setScale(1f);
-                //scaleUp.setDuration(1f);
-//
-                //animation = new SequenceAction();
-                //animation.addAction(scaleDown);
-                //animation.addAction(scaleUp);
-//
-                //Entity.this.addAction(animation);
 
                 return true;
             }
@@ -112,6 +114,31 @@ public class Entity extends Actor {
 
     }
     
+    public void createAnimations() {
+        moveAction.setPosition(this.getX() + 1000, this.getY());
+        moveAction.setDuration(3f);
+        rotateAction.setRotation(360f);
+        rotateAction.setDuration(1f);
+
+        up.addAction(moveAction);
+        up.addAction(rotateAction);
+
+        moveAction.setPosition(this.getX() - 1000, this.getY());
+
+        down.addAction(moveAction);
+        down.addAction(rotateAction);
+
+        moveAction.setPosition(this.getX(), this.getY() - 1000);
+
+        left.addAction(moveAction);
+        left.addAction(rotateAction);
+
+        moveAction.setPosition(this.getX(), this.getY() + 1000);
+
+        right.addAction(moveAction);
+        right.addAction(rotateAction);
+    }
+
     public boolean isFound() {
         return found;
     }

@@ -3,6 +3,7 @@ package fi.tamk.tiko5.hiddennature;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,6 +35,9 @@ public class GameScreen extends MyAdapter implements Screen{
     private Array<Entity>entities = new Array<Entity>();
     private Array<Entity>silhouettes = new Array<Entity>();
     private PrefHandler prefs;
+    private Preferences globalPrefs;
+
+
 
 
     public GameScreen(HiddenNature hiddenNature, Level l, boolean isPauseMenu) {
@@ -50,8 +54,14 @@ public class GameScreen extends MyAdapter implements Screen{
         silhouettes = level.getSilhouettes();
         prefs = new PrefHandler(level);
 
+        globalPrefs = Gdx.app.getPreferences("settings");
 
-        menuOpenButton = new Entity("PauseMenu.png", "PauseMenu.png", 690f, 390f, 1, true, 0.25f);
+        globalPrefs.putBoolean("Reset"+level.getLevelID(), false);
+        globalPrefs.flush();
+
+
+
+        menuOpenButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
 
 
 
@@ -287,7 +297,7 @@ public class GameScreen extends MyAdapter implements Screen{
                         }
                     }
 
-                    e.remove();
+
                 }
             }
         }

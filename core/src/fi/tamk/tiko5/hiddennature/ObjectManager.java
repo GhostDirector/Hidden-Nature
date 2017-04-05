@@ -5,18 +5,17 @@ import com.badlogic.gdx.utils.Array;
 public class ObjectManager {
     private int id;
     private PrefHandler prefs;
-    private boolean reset, isLoad;
+    private boolean isLoad;
     private Array<Entity> entities = new Array<Entity>();
     private Array<Entity> silhouettes = new Array<Entity>();
     private Array<Entity> originals = new Array<Entity>();
 
-    public ObjectManager(Level level, boolean reset){
-        this.reset = reset;
+    public ObjectManager(Level level){
         prefs = new PrefHandler(level);
         isLoad = prefs.loadLevel();
         id = level.getLevelID();
         
-        if ((this.reset) || (!isLoad)) {
+        if (!isLoad) {
             switch (this.id) {
 
                 case 1:

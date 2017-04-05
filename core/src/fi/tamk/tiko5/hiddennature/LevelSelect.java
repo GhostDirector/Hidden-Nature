@@ -24,8 +24,7 @@ public class LevelSelect implements Screen{
     private BitmapFont font;
     private ArrayList<Level>levels;
     private Preferences globalPrefs;
-    private boolean reset;
-    private Entity entity1, entity2, quit, start, levelEntity;
+    private Entity entity1, entity2, quit, start;
 
     public LevelSelect(HiddenNature hiddenNature) {
         globalPrefs = Gdx.app.getPreferences("settings");
@@ -40,11 +39,11 @@ public class LevelSelect implements Screen{
         select = hn.getLocalization().get("selLevelText");
         found = hn.getLocalization().get("foundText");
 
-        entity1 = new Entity("NuoliVasen.png", "NuoliVasen.png", 20f, 210, 1, true, 0.25f);
-        entity2 = new Entity("NuoliOikea.png", "NuoliOikea.png", 690f, 210, 2, true, 0.25f);
+        entity1 = new Entity("NuoliVasen.png", "NuoliVasenPushedButton.png", 20f, 210, 1, true, 0.25f);
+        entity2 = new Entity("NuoliOikea.png", "NuoliOikeaPushedButton.png", 690f, 210, 2, true, 0.25f);
 
-        quit = new Entity("X.png", "X.png", 690f, 390f, 3, true, 0.25f);
-        start = new Entity("V.png", "V.png", 690f, 20f, 4, true, 0.25f);
+        quit = new Entity("X.png", "xPushedButton.png", 690f, 390f, 3, true, 0.25f);
+        start = new Entity("V.png", "vPushedButton.png", 690f, 20f, 4, true, 0.25f);
 
         level = levels.get(0);
 
@@ -67,14 +66,9 @@ public class LevelSelect implements Screen{
 }
 
     public void loadLevels(){
-        reset = globalPrefs.getBoolean("Reset", false);
-        
-        levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
-        levels.add(new Level(2, "talvinenMetsa", "talvinenMetsa.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
-        levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), reset));
-        
-        globalPrefs.putBoolean("Reset", false);
-        globalPrefs.flush();
+        levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(2, "talvinenMetsa", "talvinenMetsa.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
     }
 
     public void setLevel(int l){
@@ -90,7 +84,13 @@ public class LevelSelect implements Screen{
     }
 
     public void getEntityID(Entity entity){
-        switch (entity.getAction()){
+        int caseID = entity.getAction();
+
+        if(level.isLevelStart()) {
+            caseID = 4;
+        }
+
+        switch (caseID){
 
             case 0: //Gdx.app.log("LevelSelect", "no actions");
                 entity.resetAction();
@@ -112,6 +112,7 @@ public class LevelSelect implements Screen{
                 break;
 
             case 4: Gdx.app.log("LevelSelect", "Start");
+                globalPrefs.putBoolean("Reset", false);
                 hn.setScreen(new GameScreen(hn, levels.get(currentLevel), false));
                 entity.resetAction();
                 break;
@@ -125,8 +126,8 @@ public class LevelSelect implements Screen{
 
         mainStage.getBatch().begin();
         mainStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
-        font.draw(batch, select + levels.get(currentLevel).getLevelID()+ "/"+ levels.size(), 150, 450);
-        font.draw(batch, found + 0 +"/"+ 0, 150, 60);
+        font.draw(batch, select + levels.get(currentLevel).getLevelID()+ "/"+ levels.size(), 250, 450);
+        font.draw(batch, found + 0 +"/"+ 0, 210, 60);
         
         mainStage.getBatch().end();
         mainStage.act(Gdx.graphics.getDeltaTime());

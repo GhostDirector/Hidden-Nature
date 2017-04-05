@@ -5,7 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Array;
 
 public class PrefHandler {
-    private Preferences prefs;
+    private Preferences prefs, globalPrefs;
     private Level level;
     private Array<Entity>entities = new Array<Entity>();
     private Array<Entity>silhouettes = new Array<Entity>();
@@ -15,6 +15,7 @@ public class PrefHandler {
     public PrefHandler(Level l){
         level = l;
         prefs = Gdx.app.getPreferences("savedLevel"+level.getLevelID());
+
     }
     
     public void save(){
@@ -64,7 +65,10 @@ public class PrefHandler {
         boolean isLoad;
         
         try {
+            globalPrefs = Gdx.app.getPreferences("settings");
             prefs = Gdx.app.getPreferences("savedLevel"+level.getLevelID());
+
+            boolean reset = globalPrefs.getBoolean("Reset"+level.getLevelID(), true);
 
             String entity = prefs.getString("Entity", "true");
             String original = prefs.getString("Original", "true");
@@ -72,9 +76,10 @@ public class PrefHandler {
 
             if (Boolean.valueOf(entity) ||
                 Boolean.valueOf(original) ||
-                Boolean.valueOf(silhouette)){
+                Boolean.valueOf(silhouette) || reset){
                 
                 isLoad = false;
+
 
             } else {
                 String[] entitiesString = entity.split(":;:");

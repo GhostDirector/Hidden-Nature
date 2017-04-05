@@ -36,16 +36,18 @@ public class Settings implements Screen {
         font = generator.generateFont(param);
 
         if(hn.isSound() == true){
-            soundButton = new Entity(hn.getLocalization().get("soundButton"), hn.getLocalization().get("soundOffButton"), 20f, 200f, 1, true, 0.80f);
+            soundButton = new Entity(hn.getLocalization().get("soundButton"), hn.getLocalization().get("soundpressedButton"), 20f, 200f, 1, true, 0.80f);
         }
         else{
-            soundButton = new Entity(hn.getLocalization().get("soundOffButton"), hn.getLocalization().get("soundButton"), 20f, 200f, 1, true, 0.80f);
+            soundButton = new Entity(hn.getLocalization().get("soundOffButton"), hn.getLocalization().get("soundOffpressedButton"), 20f, 200f, 1, true, 0.80f);
         }
 
         engButton = new Entity(hn.getLocalization().get("engButton"), hn.getLocalization().get("engButton"), 200f, 300f, 2, true, 0.80f);
         finButton = new Entity(hn.getLocalization().get("finButton"), hn.getLocalization().get("finButton"), 20f, 300f, 3, true, 0.80f);
-        quitButton = new Entity("X.png", "X.png", 690f, 390f, 5, true, 0.25f);
-        resetButton = new Entity(hn.getLocalization().get("resetButton"), hn.getLocalization().get("resetButton"), 20f, 100f, 4, true, 0.80f);
+
+
+        quitButton = new Entity("X.png", "xPushedButton.png", 690f, 390f, 5, true, 0.25f);
+        resetButton = new Entity(hn.getLocalization().get("resetButton"), hn.getLocalization().get("resetpressedButton"), 20f, 100f, 4, true, 0.80f);
 
         settingStage.addActor(quitButton);
         settingStage.addActor(finButton);
@@ -68,18 +70,26 @@ public class Settings implements Screen {
                 entity.resetAction();
                 break;
 
-            case 2: Gdx.app.log("Settings", "");
-                
+            case 2: Gdx.app.log("Settings", "Eng");
+                globalPrefs.putString("localization", "eng");
+                globalPrefs.flush();
+                hn.setLocalization("Localization");
+                hn.setScreen(new Settings(hn));
                 entity.resetAction();
                 break;
 
-            case 3: Gdx.app.log("Settings", "");
-                
+            case 3: Gdx.app.log("Settings", "Fin");
+                globalPrefs.putString("localization", "fin");
+                globalPrefs.flush();
+                hn.setLocalization("Localization_fi_FI");
+                hn.setScreen(new Settings(hn));
                 entity.resetAction();
                 break;
 
             case 4: Gdx.app.log("Settings", "reset");
-                globalPrefs.putBoolean("Reset", true);
+                globalPrefs.putBoolean("Reset1", true);
+                globalPrefs.putBoolean("Reset2", true);
+                globalPrefs.putBoolean("Reset3", true);
                 globalPrefs.flush();
                 entity.resetAction();
                 break;
