@@ -26,6 +26,15 @@ public class LevelSelect implements Screen{
     private Preferences globalPrefs;
     private Entity entity1, entity2, quit, start;
 
+    @Override
+    public void dispose() {
+        font.dispose();
+        batch.dispose();
+        mainStage.dispose();
+        background.dispose();
+        hn.dispose();
+    }
+
     public LevelSelect(HiddenNature hiddenNature) {
         globalPrefs = Gdx.app.getPreferences("settings");
         Gdx.app.log("level select","");
@@ -66,8 +75,8 @@ public class LevelSelect implements Screen{
 }
 
     public void loadLevels(){
-        levels.add(new Level(1, "demo", "Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(2, "talvinenMetsa", "talvinenMetsa.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(1, "Taso1", "l1/Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+        levels.add(new Level(2, "Taso2", "l2/Taso2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
         levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
     }
 
@@ -128,7 +137,7 @@ public class LevelSelect implements Screen{
         mainStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
         font.draw(batch, select + levels.get(currentLevel).getLevelID()+ "/"+ levels.size(), 250, 450);
         font.draw(batch, found + 0 +"/"+ 0, 210, 60);
-        
+
         mainStage.getBatch().end();
         mainStage.act(Gdx.graphics.getDeltaTime());
         mainStage.draw();
@@ -137,11 +146,6 @@ public class LevelSelect implements Screen{
         getEntityID(entity2);
         getEntityID(quit);
         getEntityID(start);
-    }
-
-    @Override
-    public void dispose() {
-
     }
 
     @Override

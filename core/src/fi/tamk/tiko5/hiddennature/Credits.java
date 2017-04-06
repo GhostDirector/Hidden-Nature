@@ -20,6 +20,15 @@ public class Credits implements Screen {
     private boolean gameIsOn;
     private String creditsText, leadText, programmingText, graphicsText, collabText;
 
+    @Override
+    public void dispose() {
+        font.dispose();
+        batch.dispose();
+        creditsStage.dispose();
+        background.dispose();
+        hn.dispose();
+    }
+
     public Credits(HiddenNature hiddenNature){
         gameIsOn = true;
         hn = hiddenNature;
@@ -102,11 +111,11 @@ public class Credits implements Screen {
             font.draw(batch, graphicsText + " Severi", 100, 310);
 
             font.draw(batch, collabText, 100, 220);
-            
+
             creditsStage.getBatch().end();
             creditsStage.act(Gdx.graphics.getDeltaTime());
             creditsStage.draw();
-            
+
             getEntityID(entity1);
             getEntityID(entity2);
             getEntityID(entity3);
@@ -114,10 +123,10 @@ public class Credits implements Screen {
             getEntityID(entity5);
         }
     }
-    
+
     @Override
     public void show() {
-        
+
     }
 
     @Override
@@ -137,11 +146,6 @@ public class Credits implements Screen {
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
 
     }
 }

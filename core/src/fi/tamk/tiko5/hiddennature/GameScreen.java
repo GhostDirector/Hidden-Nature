@@ -37,8 +37,14 @@ public class GameScreen extends MyAdapter implements Screen{
     private PrefHandler prefs;
     private Preferences globalPrefs;
 
-
-
+    @Override
+    public void dispose() {
+        batch.dispose();
+        batch2.dispose();
+        gameStage.dispose();
+        diorama.dispose();
+        hn.dispose();
+    }
 
     public GameScreen(HiddenNature hiddenNature, Level l, boolean isPauseMenu) {
 
@@ -133,6 +139,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
     }
 
+
     @Override
     public boolean zoom(float initialDistance, float distance) {
         Gdx.app.log("gamescreen", "zoom");
@@ -148,7 +155,6 @@ public class GameScreen extends MyAdapter implements Screen{
 
         return true;
     }
-
 
     @Override
     public boolean touchDown (float x, float y, int pointer, int button) {
@@ -178,6 +184,7 @@ public class GameScreen extends MyAdapter implements Screen{
         return true;
     }
 
+
     @Override
     public boolean scrolled(int amount) {
         Gdx.app.log("INFO", "Zoom"+ ((OrthographicCamera) gameStage.getCamera()).zoom);
@@ -197,7 +204,6 @@ public class GameScreen extends MyAdapter implements Screen{
         // TODO Auto-generated method stub
         return true;
     }
-
 
     private void handleInput() {
 
@@ -301,11 +307,6 @@ public class GameScreen extends MyAdapter implements Screen{
                 }
             }
         }
-    }
-
-    @Override
-    public void dispose() {
-
     }
 
     @Override

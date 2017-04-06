@@ -71,17 +71,17 @@ public class Settings implements Screen {
                 break;
 
             case 2: Gdx.app.log("Settings", "Eng");
-                globalPrefs.putString("localization", "eng");
+                globalPrefs.putInteger("localization", 2);
                 globalPrefs.flush();
-                hn.setLocalization("Localization");
+                hn.setLocalization(hn.getEng());
                 hn.setScreen(new Settings(hn));
                 entity.resetAction();
                 break;
 
             case 3: Gdx.app.log("Settings", "Fin");
-                globalPrefs.putString("localization", "fin");
+                globalPrefs.putInteger("localization", 3);
                 globalPrefs.flush();
-                hn.setLocalization("Localization_fi_FI");
+                hn.setLocalization(hn.getFin());
                 hn.setScreen(new Settings(hn));
                 entity.resetAction();
                 break;

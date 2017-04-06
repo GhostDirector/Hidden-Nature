@@ -27,6 +27,14 @@ public class PauseMenu implements Screen {
     private Array<Entity>originals = new Array<Entity>();
     private Array<Entity>silhouettes = new Array<Entity>();
 
+    @Override
+    public void dispose() {
+        background.dispose();
+        gameScreen.dispose();
+        batch.dispose();
+        pauseStage.dispose();
+        hn.dispose();
+    }
 
     public PauseMenu(HiddenNature hiddenNature, Level l){
 
@@ -37,51 +45,12 @@ public class PauseMenu implements Screen {
         originals = level.getOriginals();
         silhouettes = level.getSilhouettes();
 
-        background = new Texture(Gdx.files.internal("pauseScreen.png"));
+        background = new Texture(Gdx.files.internal("PauseMenuFancy.png"));
         menuButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
         returnButton = new Entity("X.png", "xPushedButton.png", 690f, 290f, 2, true, 0.25f);
 
 
-
-//        for(int i = 0; i < entities.size; i++){
-//            Gdx.app.log("object:" + i, ""+entities.get(i).isFound());
-//            if (entities.get(i).isFound()){
-//                for(int j = 0; j < originals.size; j++){
-//                    Gdx.app.log("pauseobject:" + j, ""+entities.get(j).isFound());
-//                    Entity tmp = originals.get(j);
-//                    if(entities.get(i).getAction() == originals.get(j).getAction()){
-//                        tmp.setFound(true);
-//                        tmp.pressedTexture();
-//                        originals.set(j, null);
-//                        originals.set(j, tmp);
-//                    }
-//                }
-//            }
-//        }
-//        for (Entity e : originals) {
-//            if (e.isFound()) {
-//                e.pressedTexture();
-//            }
-//        }
-
-//        for (Entity e : entities) {
-//
-//            if (e.isFound()) {
-//                int counter= 0;
-//                for (Entity n : originals) {
-//
-//                    if (e.getAction() == n.getAction()) {
-//                        Entity t = n;
-//                        t.pressedTexture();
-//                        originals.set(counter, t);
-//                    }
-//                }
-//            }
-//        }
-
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-        pauseStage.addActor(menuButton);
-        pauseStage.addActor(returnButton);
 
         for (int i = 0; i < originals.size; i++){
             if (originals.get(i).isFound()) {
@@ -100,9 +69,12 @@ public class PauseMenu implements Screen {
             }
         }
 
+        pauseStage.addActor(menuButton);
+        pauseStage.addActor(returnButton);
 
         Gdx.input.setInputProcessor(pauseStage);
     }
+
 
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
@@ -127,7 +99,6 @@ public class PauseMenu implements Screen {
         }
     }
 
-
     @Override
     public void show() {
 
@@ -139,7 +110,7 @@ public class PauseMenu implements Screen {
         //if (gameScreen.isMenuOpen() == true){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
 
         pauseStage.getBatch().begin();
         pauseStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
@@ -172,11 +143,6 @@ public class PauseMenu implements Screen {
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
 
     }
 }
