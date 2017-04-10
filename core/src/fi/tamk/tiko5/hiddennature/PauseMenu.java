@@ -20,7 +20,6 @@ public class PauseMenu implements Screen {
     private Stage pauseStage;
     private SpriteBatch batch;
     private Level level;
-    private GameScreen gameScreen;
     private Texture background;
     private Entity menuButton, returnButton, textureChange;
     private Array<Entity>entities = new Array<Entity>();
@@ -30,7 +29,6 @@ public class PauseMenu implements Screen {
     @Override
     public void dispose() {
         background.dispose();
-        gameScreen.dispose();
         batch.dispose();
         pauseStage.dispose();
         hn.dispose();
@@ -45,11 +43,18 @@ public class PauseMenu implements Screen {
         originals = level.getOriginals();
         silhouettes = level.getSilhouettes();
 
-        background = new Texture(Gdx.files.internal("PauseMenuFancy.png"));
+        background = new Texture(Gdx.files.internal("PauseMenuFancy.jpg"));
         menuButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
         returnButton = new Entity("X.png", "xPushedButton.png", 690f, 290f, 2, true, 0.25f);
 
 
+        pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+
+        update();
+    }
+
+    public void update() {
+        pauseStage.dispose();
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
         for (int i = 0; i < originals.size; i++){
@@ -75,7 +80,6 @@ public class PauseMenu implements Screen {
         Gdx.input.setInputProcessor(pauseStage);
     }
 
-
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
@@ -87,13 +91,13 @@ public class PauseMenu implements Screen {
                 level.setEntities(entities);
                 level.setOriginals(originals);
                 level.setSilhouettes(silhouettes);
-                hn.setScreen(new GameScreen(hn, level, true));
+                hn.gameScreen.update(true);
+                hn.setScreen(hn.gameScreen);
                 entity.resetAction();
                 break;
 
             case 2:Gdx.app.log("pauseMenu", "back");
                 hn.setScreen(new LevelSelect(hn));
-
                 entity.resetAction();
                 break;
         }

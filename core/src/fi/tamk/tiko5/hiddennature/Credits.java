@@ -32,7 +32,7 @@ public class Credits implements Screen {
     public Credits(HiddenNature hiddenNature){
         gameIsOn = true;
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("menu2.png"));
+        background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
 
         creditsText = hn.getLocalization().get("credits");

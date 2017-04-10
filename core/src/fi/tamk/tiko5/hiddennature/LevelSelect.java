@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.ArrayList;
 
@@ -22,9 +23,11 @@ public class LevelSelect implements Screen{
     private int currentLevel;
     private String select, found;
     private BitmapFont font;
-    private ArrayList<Level>levels;
     private Preferences globalPrefs;
-    private Entity entity1, entity2, quit, start;
+    private Entity entity1, entity2, quit, start, levelButton;
+    private final byte LEVELCOUNT = 3;
+    private Array<Entity> levels;
+    private int levelText;
 
     @Override
     public void dispose() {
@@ -37,13 +40,12 @@ public class LevelSelect implements Screen{
 
     public LevelSelect(HiddenNature hiddenNature) {
         globalPrefs = Gdx.app.getPreferences("settings");
+        levelText = 1;
         Gdx.app.log("level select","");
         currentLevel = 0;
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("menu2.png"));
+        background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
-        levels = new ArrayList<Level>();
-        loadLevels();
 
         select = hn.getLocalization().get("selLevelText");
         found = hn.getLocalization().get("foundText");
@@ -51,10 +53,19 @@ public class LevelSelect implements Screen{
         entity1 = new Entity("NuoliVasen.png", "NuoliVasenPushedButton.png", 20f, 210, 1, true, 0.25f);
         entity2 = new Entity("NuoliOikea.png", "NuoliOikeaPushedButton.png", 690f, 210, 2, true, 0.25f);
 
+        levels = new Array<Entity>();
+
+        levels.add(new Entity("l1/Taso1.jpg", "l1/Taso1.jpg", 160, 90, 4, true, 1f));
+        levels.add(new Entity("l2/Taso2.jpg", "l2/Taso2.jpg", 160, 90, 4, true, 1f));
+        levels.add(new Entity("testi2.png", "testi2.png", 160, 90, 4, true, 1f));
+
+        for (Entity e : levels) {
+            e.setSize(hn.getWORLD_WIDTH() - 320, hn.getWORLD_HEIGHT() - 180);
+        }
+
         quit = new Entity("X.png", "xPushedButton.png", 690f, 390f, 3, true, 0.25f);
         start = new Entity("V.png", "vPushedButton.png", 690f, 20f, 4, true, 0.25f);
-
-        level = levels.get(0);
+        levelButton = levels.get(currentLevel);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -65,39 +76,67 @@ public class LevelSelect implements Screen{
 
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
-        mainStage.addActor(entity1);
-        mainStage.addActor(entity2);
-        mainStage.addActor(quit);
-        mainStage.addActor(start);
-        mainStage.addActor(level);
-
-        Gdx.input.setInputProcessor(mainStage);
+        update();
 }
 
-    public void loadLevels(){
-        levels.add(new Level(1, "Taso1", "l1/Taso1.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(2, "Taso2", "l2/Taso2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
-        levels.add(new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()));
+public void update() {
+    mainStage.dispose();
+    mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+
+    mainStage.addActor(entity1);
+    mainStage.addActor(entity2);
+    mainStage.addActor(quit);
+    mainStage.addActor(start);
+    mainStage.addActor(levelButton);
+
+    Gdx.input.setInputProcessor(mainStage);
+}
+
+    public void loadLevel(int id){
+
+        switch (id){
+
+            case 1:
+                level = new Level(1, "Taso1", "l1/Taso1.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                break;
+
+            case 2:
+                level = new Level(2, "Taso2", "l2/Taso2.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                break;
+
+            case 3:
+                level = new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                break;
+
+        }
+
     }
 
     public void setLevel(int l){
 
-        int tmp = currentLevel + l;
-        if (tmp >= 0 && tmp <= levels.size() - 1){
-            currentLevel = currentLevel + l;
-            level.remove();
-            level = levels.get(currentLevel);
-            mainStage.addActor(level);
-            Gdx.app.log("currentLevel", ""+currentLevel);
+        int tmp = currentLevel;
+
+        if ((tmp + l) < 0){
+            tmp = 0;
+        } else if (tmp + l > LEVELCOUNT -1) {
+            tmp = LEVELCOUNT -1;
+        } else {
+            tmp = tmp + l;
         }
+
+        currentLevel = tmp;
+
+        if (currentLevel >= 0 && currentLevel < LEVELCOUNT){
+            levelButton.remove();
+            levelButton = levels.get(currentLevel);
+            mainStage.addActor(levelButton);
+        }
+        levelText = currentLevel+1;
+        Gdx.app.log("currentlevel", ""+ currentLevel);
     }
 
     public void getEntityID(Entity entity){
         int caseID = entity.getAction();
-
-        if(level.isLevelStart()) {
-            caseID = 4;
-        }
 
         switch (caseID){
 
@@ -116,13 +155,17 @@ public class LevelSelect implements Screen{
                 break;
 
             case 3: Gdx.app.log("LevelSelect", "Quit");
-                hn.setScreen(new MainMenu(hn));
+                hn.mainMenu.update();
+                hn.setScreen(hn.mainMenu);
                 entity.resetAction();
                 break;
 
             case 4: Gdx.app.log("LevelSelect", "Start");
                 globalPrefs.putBoolean("Reset", false);
-                hn.setScreen(new GameScreen(hn, levels.get(currentLevel), false));
+                loadLevel(currentLevel+1);
+                hn.pauseMenu = new PauseMenu(hn, level);
+                hn.gameScreen = new GameScreen(hn, level, false);
+                hn.setScreen(hn.gameScreen);
                 entity.resetAction();
                 break;
         }
@@ -135,7 +178,7 @@ public class LevelSelect implements Screen{
 
         mainStage.getBatch().begin();
         mainStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
-        font.draw(batch, select + levels.get(currentLevel).getLevelID()+ "/"+ levels.size(), 250, 450);
+        font.draw(batch, select + levelText + "/"+ LEVELCOUNT, 250, 450);
         font.draw(batch, found + 0 +"/"+ 0, 210, 60);
 
         mainStage.getBatch().end();

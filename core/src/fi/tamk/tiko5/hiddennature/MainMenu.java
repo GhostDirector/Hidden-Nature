@@ -24,7 +24,7 @@ public class MainMenu implements Screen {
     }
 
     public MainMenu(HiddenNature hiddenNature){
-        background = new Texture(Gdx.files.internal("menu2.png"));
+        background = new Texture(Gdx.files.internal("background.jpg"));
         hn = hiddenNature;
         batch = hn.getBatch();
 
@@ -33,6 +33,13 @@ public class MainMenu implements Screen {
         entity3 = new Entity(hn.getLocalization().get("quitButton"), hn.getLocalization().get("quitpressedButton"), 600f, 50f, 3, true, 0.65f);
         entity4 = new Entity("SettingsButton.png", "SettingsPushedButton.png", 30f, 25f, 4, true, 0.28f);
 
+        mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+
+        update();
+    }
+
+    public void update() {
+        mainStage.dispose();
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
         mainStage.addActor(entity1);
@@ -50,7 +57,8 @@ public class MainMenu implements Screen {
                 break;
 
             case 1:Gdx.app.log("MainMenu", "Start");
-                hn.setScreen(new LevelSelect(hn));
+                hn.levelSelect = new LevelSelect(hn);
+                hn.setScreen(hn.levelSelect);
                 entity.resetAction();
                 break;
 

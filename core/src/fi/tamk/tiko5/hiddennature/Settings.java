@@ -23,7 +23,7 @@ public class Settings implements Screen {
 
     public Settings(HiddenNature hiddenNature){
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("menu2.png"));
+        background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
         settingStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
         globalPrefs = Gdx.app.getPreferences("settings");

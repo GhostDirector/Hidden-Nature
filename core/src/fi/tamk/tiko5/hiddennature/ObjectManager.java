@@ -13,7 +13,7 @@ public class ObjectManager {
     public ObjectManager(Level level){
         prefs = new PrefHandler(level);
         isLoad = prefs.loadLevel();
-//        isLoad = false;
+//        isLoad = false;                       // for adjusting hardcoded coordinates
         id = level.getLevelID();
         
         if (!isLoad) {

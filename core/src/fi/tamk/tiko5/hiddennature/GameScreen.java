@@ -47,35 +47,35 @@ public class GameScreen extends MyAdapter implements Screen{
     }
 
     public GameScreen(HiddenNature hiddenNature, Level l, boolean isPauseMenu) {
-
         level = l;
-
         diorama = level.getLevelDiorama();
         imp = new InputMultiplexer();
-        gd = new GestureDetector(this);
         hn = hiddenNature;
         menuOpen = false;
         entities = level.getEntities();
         originals = level.getOriginals();
         silhouettes = level.getSilhouettes();
         prefs = new PrefHandler(level);
+        gd = new GestureDetector(this);
 
         globalPrefs = Gdx.app.getPreferences("settings");
 
         globalPrefs.putBoolean("Reset"+level.getLevelID(), false);
         globalPrefs.flush();
 
-
-
         menuOpenButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
-
-
 
         batch = hn.getBatch();
 
         gameStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
+        update(isPauseMenu);
+    }
 
+    public void update(boolean isPauseMenu) {
+        gameStage.dispose();
+        imp.clear();
+        gameStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
         for (Entity e : entities) {
             if (!e.isFound()) {
@@ -84,6 +84,7 @@ public class GameScreen extends MyAdapter implements Screen{
         }
 
         gameStage.addActor(menuOpenButton);
+
         imp.addProcessor(gameStage);
         imp.addProcessor(gd);
         imp.addProcessor(this);
@@ -91,12 +92,12 @@ public class GameScreen extends MyAdapter implements Screen{
         Gdx.input.setInputProcessor(imp);
         maxZoom = ((OrthographicCamera)gameStage.getCamera()).zoom;
         minZoom = 0.60f;
+
         if (isPauseMenu){
 
             gameStage.getCamera().position.set(level.getCamPos());
             ((OrthographicCamera) gameStage.getCamera()).zoom = level.getZoom();
         }
-
     }
 
     public void setMenuOpen(boolean mO){
@@ -121,7 +122,8 @@ public class GameScreen extends MyAdapter implements Screen{
                 level.setZoom(((OrthographicCamera) gameStage.getCamera()).zoom);
                 level.setCamPos(gameStage.getCamera().position);
                 prefs.save();
-                hn.setScreen(new PauseMenu(hn, level));
+                hn.pauseMenu.update();
+                hn.setScreen(hn.pauseMenu);
                 entity.resetAction();
                 break;
         }
@@ -277,6 +279,7 @@ public class GameScreen extends MyAdapter implements Screen{
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
             gameStage.getBatch().begin();
             gameStage.getBatch().draw(diorama, 0, 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
             gameStage.getBatch().end();
@@ -291,6 +294,8 @@ public class GameScreen extends MyAdapter implements Screen{
 
 
             getEntityID(menuOpenButton);
+
+
 
             for (Entity e : entities) {
 

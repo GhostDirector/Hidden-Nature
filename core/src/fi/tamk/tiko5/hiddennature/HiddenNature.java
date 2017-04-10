@@ -15,11 +15,14 @@ public class HiddenNature extends Game {
     private I18NBundle Localization;
     private boolean sound;
     private Preferences globalPrefs;
-
+    GameScreen gameScreen;
+    PauseMenu pauseMenu;
+    LevelSelect levelSelect;
+    MainMenu mainMenu;
 
     @Override
     public void dispose () {
-        batch.dispose();
+//        batch.dispose();
     }
 
 	@Override
@@ -39,10 +42,10 @@ public class HiddenNature extends Game {
                 break;
         }
 
-        setScreen(new MainMenu(this));
         sound = true;
-
-	}
+        mainMenu = new MainMenu(this);
+        setScreen(mainMenu);
+    }
 
     public Locale getFin(){
         return fin;
