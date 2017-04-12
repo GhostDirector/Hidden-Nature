@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -23,7 +24,7 @@ public class GameScreen extends MyAdapter implements Screen{
     private Stage gameStage;
     private SpriteBatch batch, batch2;
     private float currentZoom;
-    private Entity menuOpenButton;
+    private Entity menuOpenButton, tutorialBox;
     private InputMultiplexer imp;
     private GestureDetector gd;
     private float maxZoom, minZoom;
@@ -36,6 +37,7 @@ public class GameScreen extends MyAdapter implements Screen{
     private Array<Entity>silhouettes = new Array<Entity>();
     private PrefHandler prefs;
     private Preferences globalPrefs;
+    private boolean showTutorial;
 
     @Override
     public void dispose() {
@@ -57,6 +59,7 @@ public class GameScreen extends MyAdapter implements Screen{
         silhouettes = level.getSilhouettes();
         prefs = new PrefHandler(level);
         gd = new GestureDetector(this);
+        showTutorial = true;
 
         globalPrefs = Gdx.app.getPreferences("settings");
 
@@ -64,16 +67,18 @@ public class GameScreen extends MyAdapter implements Screen{
         globalPrefs.flush();
 
         menuOpenButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
-
+        tutorialBox = new Entity("tutorialPopup.png", "tutorialPopup.png", 120f, 0f, 2, true, 0.48f);
+        
         batch = hn.getBatch();
-
-        gameStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-
-        update(isPauseMenu);
+        
+        selectScreen(isPauseMenu);
     }
 
-    public void update(boolean isPauseMenu) {
-        gameStage.dispose();
+    public void selectScreen(boolean isPauseMenu) {
+        if (gameStage != null) {
+            gameStage.dispose();
+        }
+        
         imp.clear();
         gameStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
@@ -84,6 +89,10 @@ public class GameScreen extends MyAdapter implements Screen{
         }
 
         gameStage.addActor(menuOpenButton);
+
+        if (level.getLevelID() == 1 && showTutorial) {
+            gameStage.addActor(tutorialBox);
+        }
 
         imp.addProcessor(gameStage);
         imp.addProcessor(gd);
@@ -98,6 +107,7 @@ public class GameScreen extends MyAdapter implements Screen{
             gameStage.getCamera().position.set(level.getCamPos());
             ((OrthographicCamera) gameStage.getCamera()).zoom = level.getZoom();
         }
+        hn.setScreen(this);
     }
 
     public void setMenuOpen(boolean mO){
@@ -122,9 +132,13 @@ public class GameScreen extends MyAdapter implements Screen{
                 level.setZoom(((OrthographicCamera) gameStage.getCamera()).zoom);
                 level.setCamPos(gameStage.getCamera().position);
                 prefs.save();
-                hn.pauseMenu.update();
-                hn.setScreen(hn.pauseMenu);
+                hn.pauseMenu.selectScreen();
                 entity.resetAction();
+                break;
+
+            case 2: showTutorial = false;
+                entity.resetAction();
+                selectScreen(false);
                 break;
         }
 
@@ -292,7 +306,9 @@ public class GameScreen extends MyAdapter implements Screen{
             gameStage.draw();
             gameStage.getCamera().update();
 
-
+            
+            getEntityID(tutorialBox);
+            
             getEntityID(menuOpenButton);
 
 

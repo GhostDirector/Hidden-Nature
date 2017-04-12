@@ -34,16 +34,26 @@ public class Credits implements Screen {
         hn = hiddenNature;
         background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
-
-        creditsText = hn.getLocalization().get("credits");
-        leadText = hn.getLocalization().get("creLead");
-        programmingText = hn.getLocalization().get("creProg");
-        graphicsText = hn.getLocalization().get("creGraph");
-        collabText =  hn.getLocalization().get("collabText");
-
-        creditsStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-
+    
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Rosemary.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 26;
+        param.color = Color.DARK_GRAY;
+        param.borderWidth = 2;
+        font = generator.generateFont(param);
+    
         entity1 = new Entity("X.png", "xPushedButton.png", 690f, 390f, 1, true, 0.25f);
+        
+        selectScreen();
+    }
+    
+    public void selectScreen() {
+        if (creditsStage != null) {
+            creditsStage.dispose();
+        }
+        
+        creditsStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+    
         entity2 = new Entity(hn.getLocalization().get("trashLogo"), hn.getLocalization().get("trashLogo"), 370f, 240f, 2, true, 0.15f);
         entity3 = new Entity(hn.getLocalization().get("tamkLogo"), hn.getLocalization().get("tamkLogo"), 40f, 40f, 3, true, 0.07f);
         entity4 = new Entity(hn.getLocalization().get("tikoLogo"), hn.getLocalization().get("tikoLogo"), 260f, 40f, 4, true, 0.35f);
@@ -55,15 +65,15 @@ public class Credits implements Screen {
         creditsStage.addActor(entity4);
         creditsStage.addActor(entity5);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 22;
-        param.color = Color.DARK_GRAY;
-        param.borderWidth = 2;
-        font = generator.generateFont(param);
+        creditsText = hn.getLocalization().get("credits");
+        leadText = hn.getLocalization().get("creLead");
+        programmingText = hn.getLocalization().get("creProg");
+        graphicsText = hn.getLocalization().get("creGraph");
+        collabText =  hn.getLocalization().get("collabText");
 
         Gdx.input.setInputProcessor(creditsStage);
 
+        hn.setScreen(this);
     }
 
     public void getEntityID(Entity entity){
@@ -73,7 +83,7 @@ public class Credits implements Screen {
                 entity.resetAction();
                 break;
 
-            case 1: hn.setScreen(new MainMenu(hn));
+            case 1: hn.mainMenu.selectScreen();
                 entity.resetAction();
                 break;
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.I18NBundle;
+
 import java.util.Locale;
 
 public class HiddenNature extends Game {
@@ -19,10 +20,12 @@ public class HiddenNature extends Game {
     PauseMenu pauseMenu;
     LevelSelect levelSelect;
     MainMenu mainMenu;
+    Credits credits;
+    Settings settings;
 
     @Override
     public void dispose () {
-//        batch.dispose();
+        batch.dispose();
     }
 
 	@Override
@@ -41,10 +44,13 @@ public class HiddenNature extends Game {
             case 3: Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), fin);
                 break;
         }
-
-        sound = true;
+        levelSelect = new LevelSelect(this);
         mainMenu = new MainMenu(this);
-        setScreen(mainMenu);
+        credits = new Credits(this);
+        settings = new Settings(this);
+        
+        sound = true;
+        mainMenu.selectScreen();
     }
 
     public Locale getFin(){

@@ -46,15 +46,15 @@ public class PauseMenu implements Screen {
         background = new Texture(Gdx.files.internal("PauseMenuFancy.jpg"));
         menuButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
         returnButton = new Entity("X.png", "xPushedButton.png", 690f, 290f, 2, true, 0.25f);
-
-
-        pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-
-        update();
+        
+        selectScreen();
     }
 
-    public void update() {
-        pauseStage.dispose();
+    public void selectScreen() {
+        if (pauseStage != null) {
+            pauseStage.dispose();
+        }
+        
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
         for (int i = 0; i < originals.size; i++){
@@ -78,6 +78,7 @@ public class PauseMenu implements Screen {
         pauseStage.addActor(returnButton);
 
         Gdx.input.setInputProcessor(pauseStage);
+        hn.setScreen(this);
     }
 
     public void getEntityID(Entity entity){
@@ -91,13 +92,12 @@ public class PauseMenu implements Screen {
                 level.setEntities(entities);
                 level.setOriginals(originals);
                 level.setSilhouettes(silhouettes);
-                hn.gameScreen.update(true);
-                hn.setScreen(hn.gameScreen);
+                hn.gameScreen.selectScreen(true);
                 entity.resetAction();
                 break;
 
             case 2:Gdx.app.log("pauseMenu", "back");
-                hn.setScreen(new LevelSelect(hn));
+                hn.levelSelect.selectScreen();
                 entity.resetAction();
                 break;
         }

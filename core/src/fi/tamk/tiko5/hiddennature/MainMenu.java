@@ -27,19 +27,21 @@ public class MainMenu implements Screen {
         background = new Texture(Gdx.files.internal("background.jpg"));
         hn = hiddenNature;
         batch = hn.getBatch();
+        
+        entity4 = new Entity("SettingsButton.png", "SettingsPushedButton.png", 30f, 25f, 4, true, 0.28f);
 
+        selectScreen();
+    }
+
+    public void selectScreen() {
+        if (mainStage != null) {
+            mainStage.dispose();
+        }
+    
         entity1 = new Entity(hn.getLocalization().get("playButton"), hn.getLocalization().get("playpressedButton"), 600f, 350f, 1, true, 0.65f);
         entity2 = new Entity(hn.getLocalization().get("creditsButton"), hn.getLocalization().get("creditspressedButton") ,600f, 200f, 2, true, 0.65f);
         entity3 = new Entity(hn.getLocalization().get("quitButton"), hn.getLocalization().get("quitpressedButton"), 600f, 50f, 3, true, 0.65f);
-        entity4 = new Entity("SettingsButton.png", "SettingsPushedButton.png", 30f, 25f, 4, true, 0.28f);
-
-        mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-
-        update();
-    }
-
-    public void update() {
-        mainStage.dispose();
+        
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
         mainStage.addActor(entity1);
@@ -48,6 +50,7 @@ public class MainMenu implements Screen {
         mainStage.addActor(entity4);
 
         Gdx.input.setInputProcessor(mainStage);
+        hn.setScreen(this);
     }
 
     public void getEntityID(Entity entity){
@@ -57,13 +60,12 @@ public class MainMenu implements Screen {
                 break;
 
             case 1:Gdx.app.log("MainMenu", "Start");
-                hn.levelSelect = new LevelSelect(hn);
-                hn.setScreen(hn.levelSelect);
+                hn.levelSelect.selectScreen();
                 entity.resetAction();
                 break;
 
             case 2:Gdx.app.log("MainMenu", "credits screen");
-                hn.setScreen(new Credits(hn));
+                hn.credits.selectScreen();
                 entity.resetAction();
                 break;
 
@@ -73,7 +75,7 @@ public class MainMenu implements Screen {
                 break;
 
             case 4:Gdx.app.log("MainMenu", "settings");
-                hn.setScreen(new Settings(hn));
+                hn.settings.selectScreen();
                 entity.resetAction();
                 break;
         }

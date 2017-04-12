@@ -25,37 +25,45 @@ public class Settings implements Screen {
         hn = hiddenNature;
         background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
-        settingStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
         globalPrefs = Gdx.app.getPreferences("settings");
-
+    
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 32;
         param.color = Color.DARK_GRAY;
         param.borderWidth = 2;
         font = generator.generateFont(param);
-
+        
+        selectScreen();
+    }
+    
+    public void selectScreen() {
+        if (settingStage != null) {
+            settingStage.dispose();
+        }
+    
         if(hn.isSound() == true){
             soundButton = new Entity(hn.getLocalization().get("soundButton"), hn.getLocalization().get("soundpressedButton"), 20f, 200f, 1, true, 0.80f);
         }
         else{
             soundButton = new Entity(hn.getLocalization().get("soundOffButton"), hn.getLocalization().get("soundOffpressedButton"), 20f, 200f, 1, true, 0.80f);
         }
-
+    
         engButton = new Entity(hn.getLocalization().get("engButton"), hn.getLocalization().get("engButton"), 200f, 300f, 2, true, 0.80f);
         finButton = new Entity(hn.getLocalization().get("finButton"), hn.getLocalization().get("finButton"), 20f, 300f, 3, true, 0.80f);
-
-
         quitButton = new Entity("X.png", "xPushedButton.png", 690f, 390f, 5, true, 0.25f);
         resetButton = new Entity(hn.getLocalization().get("resetButton"), hn.getLocalization().get("resetpressedButton"), 20f, 100f, 4, true, 0.80f);
-
+        
+        settingStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+        
         settingStage.addActor(quitButton);
         settingStage.addActor(finButton);
         settingStage.addActor(engButton);
         settingStage.addActor(soundButton);
         settingStage.addActor(resetButton);
-
+        
         Gdx.input.setInputProcessor(settingStage);
+        hn.setScreen(this);
     }
 
     public void getEntityID(Entity entity){
@@ -74,7 +82,7 @@ public class Settings implements Screen {
                 globalPrefs.putInteger("localization", 2);
                 globalPrefs.flush();
                 hn.setLocalization(hn.getEng());
-                hn.setScreen(new Settings(hn));
+                selectScreen();
                 entity.resetAction();
                 break;
 
@@ -82,7 +90,7 @@ public class Settings implements Screen {
                 globalPrefs.putInteger("localization", 3);
                 globalPrefs.flush();
                 hn.setLocalization(hn.getFin());
-                hn.setScreen(new Settings(hn));
+                selectScreen();
                 entity.resetAction();
                 break;
 
@@ -95,7 +103,7 @@ public class Settings implements Screen {
                 break;
 
             case 5: Gdx.app.log("Settings", "cancel");
-                hn.setScreen(new MainMenu(hn));
+                hn.mainMenu.selectScreen();
                 entity.resetAction();
                 break;
         }
