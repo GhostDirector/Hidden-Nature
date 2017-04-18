@@ -24,8 +24,8 @@ public class LevelSelect implements Screen{
     private String select, found;
     private BitmapFont font;
     private Preferences globalPrefs;
-    private Entity entity1, entity2, quit, start, levelButton;
-    private final byte LEVELCOUNT = 3;
+    private Entity entity1, entity2, quit, start, levelButton, tmp;
+    private final byte LEVELCOUNT = 4;
     private Array<Entity> levels;
     private int levelText;
 
@@ -49,11 +49,14 @@ public class LevelSelect implements Screen{
         
         entity1 = new Entity("NuoliVasen.png", "NuoliVasenPushedButton.png", 20f, 210, 1, true, 0.25f);
         entity2 = new Entity("NuoliOikea.png", "NuoliOikeaPushedButton.png", 690f, 210, 2, true, 0.25f);
+        tmp = new Entity("PauseMenuFancy.jpg", "PauseMenuFancy.jpg", 150, 80, 4, false, 1f);
+        tmp.setSize(hn.getWORLD_WIDTH() - 300, hn.getWORLD_HEIGHT() - 160);
 
         levels = new Array<Entity>();
 
         levels.add(new Entity("l1/Taso1.jpg", "l1/Taso1.jpg", 160, 90, 4, true, 1f));
         levels.add(new Entity("l2/Taso2.jpg", "l2/Taso2.jpg", 160, 90, 4, true, 1f));
+        levels.add(new Entity("l3/Taso3.jpg", "l3/Taso3.jpg", 160, 90, 4, true, 1f));
         levels.add(new Entity("testi2.png", "testi2.png", 160, 90, 4, true, 1f));
 
         for (Entity e : levels) {
@@ -88,6 +91,7 @@ public void selectScreen() {
     mainStage.addActor(entity2);
     mainStage.addActor(quit);
     mainStage.addActor(start);
+    mainStage.addActor(tmp);
     mainStage.addActor(levelButton);
 
     Gdx.input.setInputProcessor(mainStage);
@@ -107,7 +111,11 @@ public void selectScreen() {
                 break;
 
             case 3:
-                level = new Level(3, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                level = new Level(3, "Taso3", "l3/Taso3.jpg", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                break;
+
+            case 4:
+                level = new Level(4, "test2", "testi2.png", 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
                 break;
 
         }

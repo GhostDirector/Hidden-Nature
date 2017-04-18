@@ -13,7 +13,7 @@ public class MainMenu implements Screen {
     private Texture background;
     private Stage mainStage;
     private SpriteBatch batch;
-    private Entity entity1, entity2, entity3, entity4;
+    private Entity entity1, entity2, entity3, entity4, entity5;
 
     @Override
     public void dispose() {
@@ -29,6 +29,7 @@ public class MainMenu implements Screen {
         batch = hn.getBatch();
         
         entity4 = new Entity("SettingsButton.png", "SettingsPushedButton.png", 30f, 25f, 4, true, 0.28f);
+        entity5 = new Entity("title.png", "title.png", 20f, 270f, 6, false, 0.40f);
 
         selectScreen();
     }
@@ -48,6 +49,7 @@ public class MainMenu implements Screen {
         mainStage.addActor(entity2);
         mainStage.addActor(entity3);
         mainStage.addActor(entity4);
+        mainStage.addActor(entity5);
 
         Gdx.input.setInputProcessor(mainStage);
         hn.setScreen(this);

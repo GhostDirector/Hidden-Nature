@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 
 public class Entity extends Actor {
@@ -21,8 +22,9 @@ public class Entity extends Actor {
     private boolean isButton;
     private String original, pressed;
     private boolean found;
-    private ParallelAction up, down, left, right;
-    private MoveToAction moveUp, moveDown, moveLeft, moveRight;
+    private ParallelAction up, middle, left, right;
+    private SequenceAction middleAndUp;
+    private MoveToAction moveUp, moveMiddle, moveLeft, moveRight;
     private RotateToAction rotateAction;
 
     public Entity(String file, float x, float y, int buttonID, float scale, boolean found) {
@@ -33,14 +35,15 @@ public class Entity extends Actor {
         setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
         this.buttonID = buttonID;
         moveUp = new MoveToAction();
-        moveDown = new MoveToAction();
+        moveMiddle = new MoveToAction();
         moveLeft = new MoveToAction();
         moveRight = new MoveToAction();
         rotateAction = new RotateToAction();
         up = new ParallelAction();
-        down = new ParallelAction();
+        middle = new ParallelAction();
         left = new ParallelAction();
         right = new ParallelAction();
+        middleAndUp = new SequenceAction();
         createAnimations();
 
         addListener(new ActorGestureListener() {
@@ -49,13 +52,13 @@ public class Entity extends Actor {
             public boolean longPress(Actor actor, float x, float y) {
 
                 if (!Entity.this.found) {
-                    switch (MathUtils.random(1, 4)) {
+                    switch (2) {
                         case 1:
                             Entity.this.addAction(up);
                             break;
 
                         case 2:
-                            Entity.this.addAction(down);
+                            Entity.this.addAction(middleAndUp);
                             break;
 
                         case 3:
@@ -119,27 +122,30 @@ public class Entity extends Actor {
     }
     
     public void createAnimations() {
-        moveUp.setPosition(this.getX() + 1000, this.getY());
-        moveUp.setDuration(3f);
+        moveUp.setPosition(400, 700);
+        moveUp.setDuration(2f);
         rotateAction.setRotation(360f);
-        rotateAction.setDuration(1f);
+        rotateAction.setDuration(2f);
 
         up.addAction(moveUp);
         up.addAction(rotateAction);
 
-        moveDown.setPosition(this.getX() - 1000, this.getY());
-        moveDown.setDuration(3f);
+        moveMiddle.setPosition((800 - this.getWidth()) / 2, (480 - this.getHeight()) / 2);
+        moveMiddle.setDuration(1f);
 
-        down.addAction(moveDown);
-        down.addAction(rotateAction);
+//        middle.addAction(moveMiddle);
+//        middle.addAction(rotateAction);
 
-        moveLeft.setPosition(this.getX(), this.getY() - 1000);
+        middleAndUp.addAction(moveMiddle);
+        middleAndUp.addAction(up);
+
+        moveLeft.setPosition(this.getX() - 1000, this.getY());
         moveLeft.setDuration(3f);
 
         left.addAction(moveLeft);
         left.addAction(rotateAction);
 
-        moveRight.setPosition(this.getX(), this.getY() + 1000);
+        moveRight.setPosition(this.getX() + 1000, this.getY());
         moveRight.setDuration(3f);
 
         right.addAction(moveRight);

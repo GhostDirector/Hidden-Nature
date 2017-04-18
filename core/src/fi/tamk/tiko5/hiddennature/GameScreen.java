@@ -67,8 +67,7 @@ public class GameScreen extends MyAdapter implements Screen{
         globalPrefs.flush();
 
         menuOpenButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
-        tutorialBox = new Entity("tutorialPopup.png", "tutorialPopup.png", 120f, 0f, 2, true, 0.48f);
-        
+
         batch = hn.getBatch();
         
         selectScreen(isPauseMenu);
@@ -89,6 +88,7 @@ public class GameScreen extends MyAdapter implements Screen{
         }
 
         gameStage.addActor(menuOpenButton);
+        tutorialBox = new Entity(hn.getLocalization().get("tutBox"), hn.getLocalization().get("tutBox"), 120f, 0f, 2, true, 0.48f);
 
         if (level.getLevelID() == 1 && showTutorial) {
             gameStage.addActor(tutorialBox);

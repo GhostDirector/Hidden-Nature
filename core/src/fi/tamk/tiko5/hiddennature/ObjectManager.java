@@ -90,6 +90,29 @@ public class ObjectManager {
                     break;
 
                 case 3:
+                    entities.add(new Entity("l3/myyraEnt.png", 355f, 12f, -1, 0.65f, false));
+                    entities.add(new Entity("l3/sorsaEnt.png", 592f, 15f, -2, 0.7f, false));
+                    entities.add(new Entity("l3/supikoiraEnt.png", 247f, 65f, -3, 0.6f, false));
+                    entities.add(new Entity("l3/talitinttiEnt.png", 440f, 427f, -4, 0.6f, false));
+                    entities.add(new Entity("l3/tikkaEnt.png", 63f, 320f, -5, 0.60f, false));
+                    entities.add(new Entity("l3/yokkonenEnt.png", 735f, 145f, -6, 0.55f, false));
+
+                    originals.add(new Entity("l3/myyraOrig.png", 0, 0, -1, 0.65f, false));
+                    originals.add(new Entity("l3/sorsaOrig.png", 0, 0, -2, 0.7f, false));
+                    originals.add(new Entity("l3/supikoiraOrig.png", 0, 0, -3, 0.6f, false));
+                    originals.add(new Entity("l3/talitinttiOrig.png", 0, 0, -4, 0.6f, false));
+                    originals.add(new Entity("l3/tikkaOrig.png", 0, 0, -5, 0.6f, false));
+                    originals.add(new Entity("l3/yokkonenOrig.png", 0, 0, -6, 0.55f, false));
+
+                    silhouettes.add(new Entity("l3/myyraSil.png", 70f, 280f, -1, 0.65f, true));
+                    silhouettes.add(new Entity("l3/sorsaSil.png", 250f, 310f, -2, 0.7f, true));
+                    silhouettes.add(new Entity("l3/supikoiraSil.png", 270f, 120f, -3, 0.6f, true));
+                    silhouettes.add(new Entity("l3/talitinttiSil.png", 70f, 120f, -4, 0.6f, true));
+                    silhouettes.add(new Entity("l3/tikkaSil.png", 500f, 280f, -5, 0.6f, true));
+                    silhouettes.add(new Entity("l3/yokkonenSil.png", 470f, 120f, -6, 0.55f, true));
+                    break;
+
+                case 4:
                     entities.add(new Entity("doge.png", 80f, 230f, -1, 1f, false));
                     entities.add(new Entity("doge.png", 265f, 120f, -2, 1f, false));
                     entities.add(new Entity("doge.png", 320f, 380f, -3, 1f, false));
@@ -99,14 +122,12 @@ public class ObjectManager {
                     originals.add(new Entity("doge.png", 0, 0, -1, 1f, false));
                     originals.add(new Entity("doge.png", 0, 0, -2, 1f, false));
                     originals.add(new Entity("doge.png", 0, 0, -3, 1f, false));
-
                     originals.add(new Entity("fatso.png", 0, 0, -5, 3.05f, false));
                     originals.add(new Entity("diilaa.png", 0, 0, -4, 0.48f, false));
 
                     silhouettes.add(new Entity("dogesilu.png", 460, 310f, -1, 1f, true));
                     silhouettes.add(new Entity("dogesilu.png", 560f, 260f, -2, 1f, true));
                     silhouettes.add(new Entity("dogesilu.png", 500f, 260f, -3, 1f, true));
-
                     silhouettes.add(new Entity("fatsosilu.png", 510f, 310f, -5, 3.05f, true));
                     silhouettes.add(new Entity("diilaa.png", 505f, 358f, -4, 0.48f, true));
                     break;
