@@ -22,8 +22,8 @@ public class ObjectManager {
                 case 1:
                     entities.add(new Entity("l1/HirviEnt.png", 282f, 78f, -1, 1f, false)); //1
                     entities.add(new Entity("l1/JanisEnt.png", 281f, 30f, -2, 1f, false)); //2
-                    entities.add(new Entity("l1/KaapaEnt.png", 15f, 75f, -3, 1f, false)); //3
-                    entities.add(new Entity("l1/KiipijaEntOrig.png", 372f, 316f, -4, 1f, false)); //4
+                    entities.add(new Entity("l1/KaapaEnt.png", 18f, 70f, -3, 0.7f, false)); //3
+                    entities.add(new Entity("l1/KiipijaEntOrig.png", 115f, 435f, -4, 1f, false)); //4
                     entities.add(new Entity("l1/LehdokkiEntOrig.png", 487f, 5f, -5, 1f, false)); //5
                     entities.add(new Entity("l1/LiitoOravaEnt.png", 457f, 400f, -6, 1f, false)); //6
                     entities.add(new Entity("l1/OravaEnt.png", 90f, 360f, -7, 1f, false)); //7
@@ -31,7 +31,7 @@ public class ObjectManager {
                     entities.add(new Entity("l1/TikkaEntOrig.png", 726f, 323f, -9, 1f, false)); //9
                     entities.add(new Entity("l1/TinttiEnt.png", 190f, 398f, -10, 1f, false)); //10
 
-                    originals.add(new Entity("l1/HirviOrig.png", 0, 0, -1, 1f, false)); //1
+                    originals.add(new Entity("l1/HirviOrig.png", 0, 0, -1, 0.60f, false)); //1
                     originals.add(new Entity("l1/JanisOrig.png", 0, 0, -2, 0.4f, false)); //2
                     originals.add(new Entity("l1/KaapaOrig.png", 0, 0, -3, 1.14f, false)); //3
                     originals.add(new Entity("l1/KiipijaEntOrig.png", 0, 0, -4, 1.45f, false)); //4
@@ -42,7 +42,7 @@ public class ObjectManager {
                     originals.add(new Entity("l1/TikkaEntOrig.png", 0, 0, -9, 1.45f, false)); //9
                     originals.add(new Entity("l1/TinttiOrig.png", 0, 0, -10, 1.45f, false)); //10
 
-                    silhouettes.add(new Entity("l1/HirviSil.png", 70f, 280f, -1, 1f, true)); //1
+                    silhouettes.add(new Entity("l1/HirviSil.png", 70f, 300f, -1, 0.60f, true)); //1
                     silhouettes.add(new Entity("l1/JanisSil.png", 220f, 310f, -2, 0.4f, true)); //2
                     silhouettes.add(new Entity("l1/KaapaSil.png", 320f, 310f, -3, 1.14f, true)); //3
                     silhouettes.add(new Entity("l1/KiipijaSil.png", 430f, 310f, -4, 1.45f, true)); //4
@@ -55,12 +55,12 @@ public class ObjectManager {
                     break;
 
                 case 2:
-                    entities.add(new Entity("l2/HiiriEnt.png", 740f, 145f, -1, 1f, false));
+                    entities.add(new Entity("l2/HiiriEnt.png", 533f, 75f, -1, 1f, false));
                     entities.add(new Entity("l2/JanisEnt.png", 85f, 20f, -2, 1f, false));
                     entities.add(new Entity("l2/KorpiEnt.png", 297f, 200f, -3, 1f, false));
                     entities.add(new Entity("l2/LumikkoEnt.png", 670f, 40f, -4, 1f, false));
                     entities.add(new Entity("l2/PolloEnt.png", 123f, 283f, -5, 1f, false));
-                    entities.add(new Entity("l2/PyyEnt.png", 197f, 37f, -6, 1f, false));
+                    entities.add(new Entity("l2/PyyEnt.png", 543f, 420f, -6, 1f, false));
                     entities.add(new Entity("l2/KettuEnt.png", 302f, 50f, -7, 1f, false));
                     entities.add(new Entity("l2/NaataEnt.png", 667f, 333f, -8, 1f, false));
                     entities.add(new Entity("l2/TiainenEnt.png", 20f, 360f, -9, 1f, false));
@@ -77,7 +77,7 @@ public class ObjectManager {
                     originals.add(new Entity("l2/TiainenOrig.png", 0, 0, -9, 0.4f, false));
                     originals.add(new Entity("l2/TulkkuOrig.png", 0, 0, -10, 0.4f, false));
 
-                    silhouettes.add(new Entity("l2/HiiriSil.png", 70f, 280f, -1, 0.4f, true));
+                    silhouettes.add(new Entity("l2/HiiriSil.png", 70f, 310f, -1, 0.4f, true));
                     silhouettes.add(new Entity("l2/JanisSil.png", 200f, 310f, -2, 0.4f, true));
                     silhouettes.add(new Entity("l2/KorppiSil.png", 300f, 310f, -3, 0.4f, true));
                     silhouettes.add(new Entity("l2/LumikkoSil.png", 430f, 310f, -4, 0.4f, true));
@@ -92,10 +92,14 @@ public class ObjectManager {
                 case 3:
                     entities.add(new Entity("l3/myyraEnt.png", 355f, 12f, -1, 0.65f, false));
                     entities.add(new Entity("l3/sorsaEnt.png", 592f, 15f, -2, 0.7f, false));
-                    entities.add(new Entity("l3/supikoiraEnt.png", 247f, 65f, -3, 0.6f, false));
+                    entities.add(new Entity("l3/supikoiraEnt.png", 251f, 93f, -3, 0.7f, false));
                     entities.add(new Entity("l3/talitinttiEnt.png", 440f, 427f, -4, 0.6f, false));
                     entities.add(new Entity("l3/tikkaEnt.png", 63f, 320f, -5, 0.60f, false));
                     entities.add(new Entity("l3/yokkonenEnt.png", 735f, 145f, -6, 0.55f, false));
+                    entities.add(new Entity("l3/haperoEnt.png", 100f, 110f, -7, 0.55f, false));
+                    entities.add(new Entity("l3/karpassieniEnt.png", 190f, 20f, -8, 0.55f, false));
+                    entities.add(new Entity("l3/tattiEnt.png", 58f, 78f, -9, 0.55f, false));
+                    entities.add(new Entity("l3/uikkuEnt.png", 645f, 120f, -10, 0.65f, false));
 
                     originals.add(new Entity("l3/myyraOrig.png", 0, 0, -1, 0.65f, false));
                     originals.add(new Entity("l3/sorsaOrig.png", 0, 0, -2, 0.7f, false));
@@ -103,13 +107,21 @@ public class ObjectManager {
                     originals.add(new Entity("l3/talitinttiOrig.png", 0, 0, -4, 0.6f, false));
                     originals.add(new Entity("l3/tikkaOrig.png", 0, 0, -5, 0.6f, false));
                     originals.add(new Entity("l3/yokkonenOrig.png", 0, 0, -6, 0.55f, false));
+                    originals.add(new Entity("l3/haperoOrig.png", 0, 0, -7, 0.55f, false));
+                    originals.add(new Entity("l3/karpassieniOrig.png", 0, 0, -8, 0.55f, false));
+                    originals.add(new Entity("l3/tattiOrig.png", 0, 0, -9, 0.55f, false));
+                    originals.add(new Entity("l3/uikkuOrig.png", 0, 0, -10, 0.55f, false));
 
-                    silhouettes.add(new Entity("l3/myyraSil.png", 70f, 280f, -1, 0.65f, true));
-                    silhouettes.add(new Entity("l3/sorsaSil.png", 250f, 310f, -2, 0.7f, true));
-                    silhouettes.add(new Entity("l3/supikoiraSil.png", 270f, 120f, -3, 0.6f, true));
-                    silhouettes.add(new Entity("l3/talitinttiSil.png", 70f, 120f, -4, 0.6f, true));
-                    silhouettes.add(new Entity("l3/tikkaSil.png", 500f, 280f, -5, 0.6f, true));
-                    silhouettes.add(new Entity("l3/yokkonenSil.png", 470f, 120f, -6, 0.55f, true));
+                    silhouettes.add(new Entity("l3/myyraSil.png", 70f, 310f, -1, 0.4f, true));
+                    silhouettes.add(new Entity("l3/sorsaSil.png", 190f, 310f, -2, 0.4f, true));
+                    silhouettes.add(new Entity("l3/supikoiraSil.png", 340f, 310f, -3, 0.4f, true));
+                    silhouettes.add(new Entity("l3/talitinttiSil.png", 450f, 310f, -4, 0.5f, true));
+                    silhouettes.add(new Entity("l3/tikkaSil.png", 580f, 310f, -5, 0.5f, true));
+                    silhouettes.add(new Entity("l3/yokkonenSil.png", 70f, 120f, -6, 0.3f, true));
+                    silhouettes.add(new Entity("l3/haperoSil.png", 190f, 120f, -7, 0.3f, true));
+                    silhouettes.add(new Entity("l3/karpassieniSil.png", 330f, 120f, -8, 0.3f, true));
+                    silhouettes.add(new Entity("l3/tattiSil.png", 460f, 120f, -9, 0.3f, true));
+                    silhouettes.add(new Entity("l3/uikkuSil.png", 560f, 120f, -10, 0.6f, true));
                     break;
 
                 case 4:

@@ -49,7 +49,7 @@ public class LevelSelect implements Screen{
         
         entity1 = new Entity("NuoliVasen.png", "NuoliVasenPushedButton.png", 20f, 210, 1, true, 0.25f);
         entity2 = new Entity("NuoliOikea.png", "NuoliOikeaPushedButton.png", 690f, 210, 2, true, 0.25f);
-        tmp = new Entity("PauseMenuFancy.jpg", "PauseMenuFancy.jpg", 150, 80, 4, false, 1f);
+        tmp = new Entity("roundBox.jpg", "roundBox.jpg", 150, 80, 4, false, 1f);
         tmp.setSize(hn.getWORLD_WIDTH() - 300, hn.getWORLD_HEIGHT() - 160);
 
         levels = new Array<Entity>();
@@ -198,6 +198,7 @@ public void selectScreen() {
         getEntityID(entity2);
         getEntityID(quit);
         getEntityID(start);
+        getEntityID(levelButton);
     }
 
     @Override

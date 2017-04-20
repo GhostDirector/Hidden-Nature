@@ -21,7 +21,7 @@ public class PauseMenu implements Screen {
     private SpriteBatch batch;
     private Level level;
     private Texture background;
-    private Entity menuButton, returnButton, textureChange;
+    private Entity menuButton, returnButton, textureChange, helpButton, tutorialBox;
     private Array<Entity>entities = new Array<Entity>();
     private Array<Entity>originals = new Array<Entity>();
     private Array<Entity>silhouettes = new Array<Entity>();
@@ -44,8 +44,8 @@ public class PauseMenu implements Screen {
         silhouettes = level.getSilhouettes();
 
         background = new Texture(Gdx.files.internal("PauseMenuFancy.jpg"));
-        menuButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
-        returnButton = new Entity("X.png", "xPushedButton.png", 690f, 290f, 2, true, 0.25f);
+        menuButton = new Entity("X.png", "xPushedButton.png", 690f, 390f, 1, true, 0.25f);
+        helpButton = new Entity("HelpButton.png", "HelpPushedButton.png", 690f, 290f, 3, true, 0.25f);
         
         selectScreen();
     }
@@ -54,16 +54,19 @@ public class PauseMenu implements Screen {
         if (pauseStage != null) {
             pauseStage.dispose();
         }
-        
+
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
+        returnButton = new Entity(hn.getLocalization().get("returnToMenu"), hn.getLocalization().get("returnToMenuPressed"), 280f, 10f, 2, true, 0.50f);
+        tutorialBox = new Entity(hn.getLocalization().get("pauseTutBox"), hn.getLocalization().get("pauseTutBox"), 0f, 0f, 4, true, 1f);
+        tutorialBox.setSize(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+
 
         for (int i = 0; i < originals.size; i++){
             if (originals.get(i).isFound()) {
                 originals.get(i).setPosition(silhouettes.get(i).getX(), silhouettes.get(i).getY());
-
             }
-
         }
+
         for (Entity e : silhouettes) {
             pauseStage.addActor(e);
         }
@@ -76,6 +79,7 @@ public class PauseMenu implements Screen {
 
         pauseStage.addActor(menuButton);
         pauseStage.addActor(returnButton);
+        pauseStage.addActor(helpButton);
 
         Gdx.input.setInputProcessor(pauseStage);
         hn.setScreen(this);
@@ -98,6 +102,16 @@ public class PauseMenu implements Screen {
 
             case 2:Gdx.app.log("pauseMenu", "back");
                 hn.levelSelect.selectScreen();
+                entity.resetAction();
+                break;
+
+            case 3:Gdx.app.log("HelpButton", "help");
+                pauseStage.addActor(tutorialBox);
+                entity.resetAction();
+                break;
+
+            case 4:Gdx.app.log("Tutorial", "tutButton");
+                tutorialBox.remove();
                 entity.resetAction();
                 break;
         }
@@ -127,6 +141,8 @@ public class PauseMenu implements Screen {
 
         getEntityID(menuButton);
         getEntityID(returnButton);
+        getEntityID(helpButton);
+        getEntityID(tutorialBox);
         //}
     }
 

@@ -24,7 +24,7 @@ public class GameScreen extends MyAdapter implements Screen{
     private Stage gameStage;
     private SpriteBatch batch, batch2;
     private float currentZoom;
-    private Entity menuOpenButton, tutorialBox;
+    private Entity menuOpenButton, tutorialBox, completeBox;
     private InputMultiplexer imp;
     private GestureDetector gd;
     private float maxZoom, minZoom;
@@ -38,6 +38,7 @@ public class GameScreen extends MyAdapter implements Screen{
     private PrefHandler prefs;
     private Preferences globalPrefs;
     private boolean showTutorial;
+    private int counter;
 
     @Override
     public void dispose() {
@@ -59,11 +60,12 @@ public class GameScreen extends MyAdapter implements Screen{
         silhouettes = level.getSilhouettes();
         prefs = new PrefHandler(level);
         gd = new GestureDetector(this);
-        showTutorial = true;
 
         globalPrefs = Gdx.app.getPreferences("settings");
 
         globalPrefs.putBoolean("Reset"+level.getLevelID(), false);
+        showTutorial = globalPrefs.getBoolean("Tutorial", true);
+        globalPrefs.putBoolean("Tutorial", false);
         globalPrefs.flush();
 
         menuOpenButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
@@ -89,8 +91,10 @@ public class GameScreen extends MyAdapter implements Screen{
 
         gameStage.addActor(menuOpenButton);
         tutorialBox = new Entity(hn.getLocalization().get("tutBox"), hn.getLocalization().get("tutBox"), 120f, 0f, 2, true, 0.48f);
+        completeBox = new Entity(hn.getLocalization().get("completeBox"), hn.getLocalization().get("completeBox"), 0f, 0f, 1, true, 1f);
+        completeBox.setSize(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
 
-        if (level.getLevelID() == 1 && showTutorial) {
+        if (showTutorial) {
             gameStage.addActor(tutorialBox);
         }
 
@@ -310,9 +314,9 @@ public class GameScreen extends MyAdapter implements Screen{
             getEntityID(tutorialBox);
             
             getEntityID(menuOpenButton);
+            getEntityID(completeBox);
 
-
-
+            counter = 0;
             for (Entity e : entities) {
 
                 getEntityID(e);
@@ -324,9 +328,14 @@ public class GameScreen extends MyAdapter implements Screen{
                         }
                     }
 
-
+                    counter++;
+                    System.out.println(counter);
+                }
+                if (counter == entities.size) {
+                    gameStage.addActor(completeBox);
                 }
             }
+
         }
     }
 
