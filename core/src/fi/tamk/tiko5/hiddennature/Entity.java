@@ -49,6 +49,33 @@ public class Entity extends Actor {
         addListener(new ActorGestureListener() {
 
             @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                if(count >= 2){
+                    if (!Entity.this.found) {
+                        switch (2) {
+                            case 1:
+                                Entity.this.addAction(up);
+                                break;
+
+                            case 2:
+                                Entity.this.addAction(middleAndUp);
+                                break;
+
+                            case 3:
+                                Entity.this.addAction(left);
+                                break;
+
+                            case 4:
+                                Entity.this.addAction(right);
+                                break;
+                        }
+                        Entity.this.action = Entity.this.buttonID;
+                    }
+                }
+            }
+
+            /*
+            @Override
             public boolean longPress(Actor actor, float x, float y) {
 
                 if (!Entity.this.found) {
@@ -73,6 +100,9 @@ public class Entity extends Actor {
                 }
                 return true;
             }
+            */
+
+
         });
     }
     

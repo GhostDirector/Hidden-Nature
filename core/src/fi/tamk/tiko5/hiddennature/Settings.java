@@ -98,6 +98,7 @@ public class Settings implements Screen {
                 globalPrefs.putBoolean("Reset1", true);
                 globalPrefs.putBoolean("Reset2", true);
                 globalPrefs.putBoolean("Reset3", true);
+                globalPrefs.putBoolean("Reset4", true);
                 globalPrefs.putBoolean("Tutorial", true);
                 globalPrefs.flush();
                 entity.resetAction();

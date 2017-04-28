@@ -159,7 +159,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
     }
 
-
+    /*
     @Override
     public boolean zoom(float initialDistance, float distance) {
         Gdx.app.log("gamescreen", "zoom");
@@ -175,6 +175,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
         return true;
     }
+    */
 
     @Override
     public boolean touchDown (float x, float y, int pointer, int button) {
@@ -192,6 +193,7 @@ public class GameScreen extends MyAdapter implements Screen{
         return true;
     }
 
+    /*
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         Gdx.app.log("touchDragged", "screenY = "+ screenY);
@@ -203,8 +205,9 @@ public class GameScreen extends MyAdapter implements Screen{
         gameStage.getCamera().position.add(0 - Gdx.input.getDeltaX() * lerp, Gdx.input.getDeltaY() * lerp, 0);
         return true;
     }
+    */
 
-
+    /*
     @Override
     public boolean scrolled(int amount) {
         Gdx.app.log("INFO", "Zoom"+ ((OrthographicCamera) gameStage.getCamera()).zoom);
@@ -224,7 +227,9 @@ public class GameScreen extends MyAdapter implements Screen{
         // TODO Auto-generated method stub
         return true;
     }
+    */
 
+    /*
     private void handleInput() {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -278,6 +283,7 @@ public class GameScreen extends MyAdapter implements Screen{
             gameStage.getCamera().position.y += Math.abs(amountGoneOver);
         }
     }
+    */
 
     public void solidElements() {
         float currentViewportWidth = ((gameStage.getCamera().viewportWidth * ((OrthographicCamera) gameStage.getCamera()).zoom));
@@ -302,8 +308,8 @@ public class GameScreen extends MyAdapter implements Screen{
             gameStage.getBatch().draw(diorama, 0, 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
             gameStage.getBatch().end();
 
-            handleInput();
-            moveCamera();
+            //handleInput();
+            //moveCamera();
             solidElements();
 
             gameStage.act(Gdx.graphics.getDeltaTime());

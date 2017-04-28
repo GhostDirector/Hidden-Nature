@@ -101,16 +101,16 @@ public class ObjectManager {
                     entities.add(new Entity("l3/tattiEnt.png", 58f, 78f, -9, 0.55f, false));
                     entities.add(new Entity("l3/uikkuEnt.png", 645f, 120f, -10, 0.65f, false));
 
-                    originals.add(new Entity("l3/myyraOrig.png", 0, 0, -1, 0.65f, false));
-                    originals.add(new Entity("l3/sorsaOrig.png", 0, 0, -2, 0.7f, false));
-                    originals.add(new Entity("l3/supikoiraOrig.png", 0, 0, -3, 0.6f, false));
-                    originals.add(new Entity("l3/talitinttiOrig.png", 0, 0, -4, 0.6f, false));
-                    originals.add(new Entity("l3/tikkaOrig.png", 0, 0, -5, 0.6f, false));
-                    originals.add(new Entity("l3/yokkonenOrig.png", 0, 0, -6, 0.55f, false));
-                    originals.add(new Entity("l3/haperoOrig.png", 0, 0, -7, 0.55f, false));
-                    originals.add(new Entity("l3/karpassieniOrig.png", 0, 0, -8, 0.55f, false));
-                    originals.add(new Entity("l3/tattiOrig.png", 0, 0, -9, 0.55f, false));
-                    originals.add(new Entity("l3/uikkuOrig.png", 0, 0, -10, 0.55f, false));
+                    originals.add(new Entity("l3/myyraOrig.png", 0, 0, -1, 0.4f, false));
+                    originals.add(new Entity("l3/sorsaOrig.png", 0, 0, -2, 0.4f, false));
+                    originals.add(new Entity("l3/supikoiraOrig.png", 0, 0, -3, 0.4f, false));
+                    originals.add(new Entity("l3/talitinttiOrig.png", 0, 0, -4, 0.5f, false));
+                    originals.add(new Entity("l3/tikkaOrig.png", 0, 0, -5, 0.5f, false));
+                    originals.add(new Entity("l3/yokkonenOrig.png", 0, 0, -6, 0.3f, false));
+                    originals.add(new Entity("l3/haperoOrig.png", 0, 0, -7, 0.3f, false));
+                    originals.add(new Entity("l3/karpassieniOrig.png", 0, 0, -8, 0.3f, false));
+                    originals.add(new Entity("l3/tattiOrig.png", 0, 0, -9, 0.3f, false));
+                    originals.add(new Entity("l3/uikkuOrig.png", 0, 0, -10, 0.6f, false));
 
                     silhouettes.add(new Entity("l3/myyraSil.png", 70f, 310f, -1, 0.4f, true));
                     silhouettes.add(new Entity("l3/sorsaSil.png", 190f, 310f, -2, 0.4f, true));
