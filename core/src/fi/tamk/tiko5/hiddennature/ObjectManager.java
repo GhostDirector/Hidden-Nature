@@ -13,7 +13,6 @@ public class ObjectManager {
     public ObjectManager(Level level){
         prefs = new PrefHandler(level);
         isLoad = prefs.loadLevel();
-//        isLoad = false;                       // for adjusting hardcoded coordinates
         id = level.getLevelID();
         
         if (!isLoad) {
@@ -35,23 +34,23 @@ public class ObjectManager {
                     originals.add(new Entity("l1/JanisOrig.png", 0, 0, -2, 0.4f, false)); //2
                     originals.add(new Entity("l1/KaapaOrig.png", 0, 0, -3, 1.14f, false)); //3
                     originals.add(new Entity("l1/KiipijaEntOrig.png", 0, 0, -4, 1.45f, false)); //4
-                    originals.add(new Entity("l1/LehdokkiEntOrig.png", 0, 0, -5, 1.45f, false)); //5
+                    originals.add(new Entity("l1/LehdokkiEntOrig.png", 0, 0, -5, 1.3f, false)); //5
                     originals.add(new Entity("l1/LiitoOravaOrig.png", 0, 0, -6, 1.45f, false)); //6
-                    originals.add(new Entity("l1/OravaOrig.png", 0, 0, -7, 1.45f, false)); //7
+                    originals.add(new Entity("l1/OravaOrig.png", 0, 0, -7, 1.2f, false)); //7
                     originals.add(new Entity("l1/PerhonenEntOrig.png", 0, 0, -8, 1.45f, false)); //8
                     originals.add(new Entity("l1/TikkaEntOrig.png", 0, 0, -9, 1.45f, false)); //9
                     originals.add(new Entity("l1/TinttiOrig.png", 0, 0, -10, 1.45f, false)); //10
 
-                    silhouettes.add(new Entity("l1/HirviSil.png", 70f, 300f, -1, 0.60f, true)); //1
-                    silhouettes.add(new Entity("l1/JanisSil.png", 220f, 310f, -2, 0.4f, true)); //2
-                    silhouettes.add(new Entity("l1/KaapaSil.png", 320f, 310f, -3, 1.14f, true)); //3
-                    silhouettes.add(new Entity("l1/KiipijaSil.png", 430f, 310f, -4, 1.45f, true)); //4
-                    silhouettes.add(new Entity("l1/LehdokkiSil.png", 510f, 310f, -5, 1.45f, true)); //5
-                    silhouettes.add(new Entity("l1/LiitoOravaSil.png", 70f, 120f, -6, 1.45f, true)); //6
-                    silhouettes.add(new Entity("l1/OravaSil.png", 180f, 120f, -7, 1.45f, true)); //7
-                    silhouettes.add(new Entity("l1/PerhonenSil.png", 320f, 120f, -8, 1.45f, true)); //8
-                    silhouettes.add(new Entity("l1/TikkaSil.png", 430f, 120f, -9, 1.45f, true)); //9
-                    silhouettes.add(new Entity("l1/TinttiSil.png", 510f, 120f, -10, 1.45f, true)); //10
+                    silhouettes.add(new Entity("l1/HirviSil.png", 70f, 300f, -1, 0.60f, false)); //1
+                    silhouettes.add(new Entity("l1/JanisSil.png", 230f, 310f, -2, 0.4f, false)); //2
+                    silhouettes.add(new Entity("l1/KaapaSil.png", 340f, 310f, -3, 1.14f, false)); //3
+                    silhouettes.add(new Entity("l1/KiipijaSil.png", 460f, 310f, -4, 1.45f, false)); //4
+                    silhouettes.add(new Entity("l1/LehdokkiSil.png", 550f, 310f, -5, 1.3f, false)); //5
+                    silhouettes.add(new Entity("l1/LiitoOravaSil.png", 70f, 120f, -6, 1.45f, false)); //6
+                    silhouettes.add(new Entity("l1/OravaSil.png", 190f, 120f, -7, 1.2f, false)); //7
+                    silhouettes.add(new Entity("l1/PerhonenSil.png", 340f, 120f, -8, 1.45f, false)); //8
+                    silhouettes.add(new Entity("l1/TikkaSil.png", 460f, 120f, -9, 1.45f, false)); //9
+                    silhouettes.add(new Entity("l1/TinttiSil.png", 550f, 120f, -10, 1.45f, false)); //10
                     break;
 
                 case 2:
@@ -77,16 +76,16 @@ public class ObjectManager {
                     originals.add(new Entity("l2/TiainenOrig.png", 0, 0, -9, 0.4f, false));
                     originals.add(new Entity("l2/TulkkuOrig.png", 0, 0, -10, 0.4f, false));
 
-                    silhouettes.add(new Entity("l2/HiiriSil.png", 70f, 310f, -1, 0.4f, true));
-                    silhouettes.add(new Entity("l2/JanisSil.png", 200f, 310f, -2, 0.4f, true));
-                    silhouettes.add(new Entity("l2/KorppiSil.png", 300f, 310f, -3, 0.4f, true));
-                    silhouettes.add(new Entity("l2/LumikkoSil.png", 430f, 310f, -4, 0.4f, true));
-                    silhouettes.add(new Entity("l2/PolloSil.png", 540f, 310f, -5, 0.4f, true));
-                    silhouettes.add(new Entity("l2/PyySil.png", 70f, 120f, -6, 0.4f, true));
-                    silhouettes.add(new Entity("l2/KettuSil.png", 190f, 120f, -7, 0.4f, true));
-                    silhouettes.add(new Entity("l2/NaataSil.png", 320f, 120f, -8, 0.4f, true));
-                    silhouettes.add(new Entity("l2/TiainenSil.png", 440f, 120f, -9, 0.4f, true));
-                    silhouettes.add(new Entity("l2/TulkkuSil.png", 550f, 120f, -10, 0.4f, true));
+                    silhouettes.add(new Entity("l2/HiiriSil.png", 70f, 310f, -1, 0.4f, false));
+                    silhouettes.add(new Entity("l2/JanisSil.png", 200f, 310f, -2, 0.4f, false));
+                    silhouettes.add(new Entity("l2/KorppiSil.png", 300f, 310f, -3, 0.4f, false));
+                    silhouettes.add(new Entity("l2/LumikkoSil.png", 430f, 310f, -4, 0.4f, false));
+                    silhouettes.add(new Entity("l2/PolloSil.png", 540f, 310f, -5, 0.4f, false));
+                    silhouettes.add(new Entity("l2/PyySil.png", 70f, 120f, -6, 0.4f, false));
+                    silhouettes.add(new Entity("l2/KettuSil.png", 190f, 120f, -7, 0.4f, false));
+                    silhouettes.add(new Entity("l2/NaataSil.png", 320f, 120f, -8, 0.4f, false));
+                    silhouettes.add(new Entity("l2/TiainenSil.png", 440f, 120f, -9, 0.4f, false));
+                    silhouettes.add(new Entity("l2/TulkkuSil.png", 550f, 120f, -10, 0.4f, false));
                     break;
 
                 case 3:
@@ -112,36 +111,51 @@ public class ObjectManager {
                     originals.add(new Entity("l3/tattiOrig.png", 0, 0, -9, 0.3f, false));
                     originals.add(new Entity("l3/uikkuOrig.png", 0, 0, -10, 0.6f, false));
 
-                    silhouettes.add(new Entity("l3/myyraSil.png", 70f, 310f, -1, 0.4f, true));
-                    silhouettes.add(new Entity("l3/sorsaSil.png", 190f, 310f, -2, 0.4f, true));
-                    silhouettes.add(new Entity("l3/supikoiraSil.png", 340f, 310f, -3, 0.4f, true));
-                    silhouettes.add(new Entity("l3/talitinttiSil.png", 450f, 310f, -4, 0.5f, true));
-                    silhouettes.add(new Entity("l3/tikkaSil.png", 580f, 310f, -5, 0.5f, true));
-                    silhouettes.add(new Entity("l3/yokkonenSil.png", 70f, 120f, -6, 0.3f, true));
-                    silhouettes.add(new Entity("l3/haperoSil.png", 190f, 120f, -7, 0.3f, true));
-                    silhouettes.add(new Entity("l3/karpassieniSil.png", 330f, 120f, -8, 0.3f, true));
-                    silhouettes.add(new Entity("l3/tattiSil.png", 460f, 120f, -9, 0.3f, true));
-                    silhouettes.add(new Entity("l3/uikkuSil.png", 560f, 120f, -10, 0.6f, true));
+                    silhouettes.add(new Entity("l3/myyraSil.png", 70f, 310f, -1, 0.4f, false));
+                    silhouettes.add(new Entity("l3/sorsaSil.png", 190f, 310f, -2, 0.4f, false));
+                    silhouettes.add(new Entity("l3/supikoiraSil.png", 340f, 310f, -3, 0.4f, false));
+                    silhouettes.add(new Entity("l3/talitinttiSil.png", 450f, 310f, -4, 0.5f, false));
+                    silhouettes.add(new Entity("l3/tikkaSil.png", 580f, 310f, -5, 0.5f, false));
+                    silhouettes.add(new Entity("l3/yokkonenSil.png", 70f, 120f, -6, 0.3f, false));
+                    silhouettes.add(new Entity("l3/haperoSil.png", 190f, 120f, -7, 0.3f, false));
+                    silhouettes.add(new Entity("l3/karpassieniSil.png", 330f, 120f, -8, 0.3f, false));
+                    silhouettes.add(new Entity("l3/tattiSil.png", 460f, 120f, -9, 0.3f, false));
+                    silhouettes.add(new Entity("l3/uikkuSil.png", 560f, 120f, -10, 0.6f, false));
                     break;
 
                 case 4:
-                    entities.add(new Entity("doge.png", 80f, 230f, -1, 1f, false));
-                    entities.add(new Entity("doge.png", 265f, 120f, -2, 1f, false));
-                    entities.add(new Entity("doge.png", 320f, 380f, -3, 1f, false));
-                    entities.add(new Entity("diilaa.png", 450f, 320f, -4, 0.48f, false));
-                    entities.add(new Entity("fatso.png", 455f, 280f, -5, 3.05f, false));
+                    entities.add(new Entity("l4/haikaraEnt.png", 350f, 300f, -1, 0.75f, false));
+                    entities.add(new Entity("l4/harmaalokkiEnt.png", 500f, 330f, -2, 0.75f, false));
+                    entities.add(new Entity("l4/haukiEnt.png", 530f, 50f, -3, 0.75f, false));
+                    entities.add(new Entity("l4/kerttunenEnt.png", 100f, 220f, -4, 0.75f, false));
+                    entities.add(new Entity("l4/korentoEnt.png", 270f, 240f, -5, 0.75f, false));
+                    entities.add(new Entity("l4/lokkiEnt.png", 400f, 430f, -6, 0.75f, false));
+                    entities.add(new Entity("l4/myyraEnt.png", 265f, 90f, -7, 0.75f, false));
+                    entities.add(new Entity("l4/sorsaEnt.png", 500f, 200f, -8, 0.75f, false));
+                    entities.add(new Entity("l4/vastarakkiEnt.png", 190f, 40f, -9, 0.75f, false));
+                    entities.add(new Entity("l4/sammakkoEnt.png", 265f, 180f, -10, 0.75f, false));
 
-                    originals.add(new Entity("doge.png", 0, 0, -1, 1f, false));
-                    originals.add(new Entity("doge.png", 0, 0, -2, 1f, false));
-                    originals.add(new Entity("doge.png", 0, 0, -3, 1f, false));
-                    originals.add(new Entity("fatso.png", 0, 0, -5, 3.05f, false));
-                    originals.add(new Entity("diilaa.png", 0, 0, -4, 0.48f, false));
+                    originals.add(new Entity("l4/haikaraOrig.png", 0, 0, -1, 0.2f, false));
+                    originals.add(new Entity("l4/harmaalokkiOrig.png", 0, 0, -2, 0.3f, false));
+                    originals.add(new Entity("l4/haukiOrig.png", 0, 0, -3, 0.4f, false));
+                    originals.add(new Entity("l4/kerttunenOrig.png", 0, 0, -4, 0.15f, false));
+                    originals.add(new Entity("l4/korentoOrig.png", 0, 0, -5, 0.2f, false));
+                    originals.add(new Entity("l4/lokkiOrig.png", 0, 0, -6, 0.2f, false));
+                    originals.add(new Entity("l4/myyraOrig.png", 0, 0, -7, 0.2f, false));
+                    originals.add(new Entity("l4/sorsaOrig.png", 0, 0, -8, 0.2f, false));
+                    originals.add(new Entity("l4/vastarakkiOrig.png", 0, 0, -9, 0.2f, false));
+                    originals.add(new Entity("l4/sammakkoOrig.png", 0, 0, -10, 0.2f, false));
 
-                    silhouettes.add(new Entity("dogesilu.png", 460, 310f, -1, 1f, true));
-                    silhouettes.add(new Entity("dogesilu.png", 560f, 260f, -2, 1f, true));
-                    silhouettes.add(new Entity("dogesilu.png", 500f, 260f, -3, 1f, true));
-                    silhouettes.add(new Entity("fatsosilu.png", 510f, 310f, -5, 3.05f, true));
-                    silhouettes.add(new Entity("diilaa.png", 505f, 358f, -4, 0.48f, true));
+                    silhouettes.add(new Entity("l4/haikaraSil.png", 80, 270f, -1, 0.2f, false));
+                    silhouettes.add(new Entity("l4/harmaalokkiSil.png", 180f, 310f, -2, 0.3f, false));
+                    silhouettes.add(new Entity("l4/haukiSil.png", 320f, 310f, -3, 0.4f, false));
+                    silhouettes.add(new Entity("l4/kerttunenSil.png", 460f, 310f, -4, 0.15f, false));
+                    silhouettes.add(new Entity("l4/korentoSil.png", 560f, 310f, -5, 0.2f, false));
+                    silhouettes.add(new Entity("l4/lokkiSil.png", 80f, 130f, -6, 0.2f, false));
+                    silhouettes.add(new Entity("l4/myyraSil.png", 200f, 130f, -7, 0.2f, false));
+                    silhouettes.add(new Entity("l4/sorsaSil.png", 320f, 130f, -8, 0.2f, false));
+                    silhouettes.add(new Entity("l4/vastarakkiSil.png", 470f, 130f, -9, 0.2f, false));
+                    silhouettes.add(new Entity("l4/sammakkoSil.png", 560f, 130f, -10, 0.2f, false));
                     break;
             }
         } else {

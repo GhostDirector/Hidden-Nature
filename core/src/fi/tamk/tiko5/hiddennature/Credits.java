@@ -15,7 +15,7 @@ public class Credits implements Screen {
     private Texture background;
     private Stage creditsStage;
     private SpriteBatch batch;
-    private Entity entity1, entity2, entity3, entity4, entity5;
+    private Entity entity1, entity2, entity3, entity4, entity5, entity6;
     private BitmapFont font;
     private boolean gameIsOn;
     private String creditsText, leadText, programmingText, graphicsText, collabText;
@@ -35,14 +35,15 @@ public class Credits implements Screen {
         background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
     
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Rosemary.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 26;
-        param.color = Color.DARK_GRAY;
+        param.size = 20;
+        param.color = Color.GOLDENROD;
         param.borderWidth = 2;
         font = generator.generateFont(param);
     
         entity1 = new Entity("X.png", "xPushedButton.png", 690f, 390f, 1, true, 0.25f);
+        entity6 = new Entity("Lumu.png", "Lumu.png", 530f, 240f, 6, true, 0.19f);
         
         selectScreen();
     }
@@ -59,11 +60,13 @@ public class Credits implements Screen {
         entity4 = new Entity(hn.getLocalization().get("tikoLogo"), hn.getLocalization().get("tikoLogo"), 260f, 40f, 4, true, 0.35f);
         entity5 = new Entity(hn.getLocalization().get("vapriikkiLogo"), hn.getLocalization().get("vapriikkiLogo"), 520f, 40f, 5, true, 0.35f);
 
+
         creditsStage.addActor(entity1);
         creditsStage.addActor(entity2);
         creditsStage.addActor(entity3);
         creditsStage.addActor(entity4);
         creditsStage.addActor(entity5);
+        creditsStage.addActor(entity6);
 
         creditsText = hn.getLocalization().get("credits");
         leadText = hn.getLocalization().get("creLead");
@@ -88,7 +91,7 @@ public class Credits implements Screen {
                 break;
 
             case 2:
-                //Gdx.net.openURI("http://<web page");
+                Gdx.net.openURI(hn.getLocalization().get("trashURL"));
                 entity.resetAction();
                 break;
 
@@ -98,12 +101,17 @@ public class Credits implements Screen {
                 break;
 
             case 4:
-                //Gdx.net.openURI("http://<web page");
+                Gdx.net.openURI("http://tiko.blogs.tamk.fi/");
                 entity.resetAction();
                 break;
 
             case 5:
                 Gdx.net.openURI(hn.getLocalization().get("vapriikkiURL"));
+                entity.resetAction();
+                break;
+
+            case 6:
+                Gdx.net.openURI(hn.getLocalization().get("lumuURL"));
                 entity.resetAction();
                 break;
         }
@@ -114,13 +122,13 @@ public class Credits implements Screen {
         if (gameIsOn){
             creditsStage.getBatch().begin();
             creditsStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
-            font.draw(batch, creditsText, 100, 450);
-            font.draw(batch, leadText + " Kaisa", 100, 400);
-            font.draw(batch, programmingText +" Joni", 100, 370);
-            font.draw(batch, programmingText + " Jyri", 100, 340);
-            font.draw(batch, graphicsText + " Severi", 100, 310);
+            font.draw(batch, creditsText, 50, 450);
+            font.draw(batch, leadText + " Kaisa Tikkanen", 50, 400);
+            font.draw(batch, programmingText +" Joni Tuominen", 50, 370);
+            font.draw(batch, programmingText + " Jyri Virtaranta", 50, 340);
+            font.draw(batch, graphicsText + " Severi Törmä", 50, 310);
 
-            font.draw(batch, collabText, 100, 220);
+            font.draw(batch, collabText, 50, 220);
 
             creditsStage.getBatch().end();
             creditsStage.act(Gdx.graphics.getDeltaTime());
@@ -131,6 +139,7 @@ public class Credits implements Screen {
             getEntityID(entity3);
             getEntityID(entity4);
             getEntityID(entity5);
+            getEntityID(entity6);
         }
     }
 

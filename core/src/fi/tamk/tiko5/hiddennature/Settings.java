@@ -26,14 +26,14 @@ public class Settings implements Screen {
         background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
         globalPrefs = Gdx.app.getPreferences("settings");
-    
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comic.ttf"));
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 32;
-        param.color = Color.DARK_GRAY;
+        param.color = Color.GOLDENROD;
         param.borderWidth = 2;
         font = generator.generateFont(param);
-        
+
         selectScreen();
     }
     

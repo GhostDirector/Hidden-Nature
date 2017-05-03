@@ -3,8 +3,6 @@ package fi.tamk.tiko5.hiddennature;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -22,9 +20,9 @@ public class Entity extends Actor {
     private boolean isButton;
     private String original, pressed;
     private boolean found;
-    private ParallelAction up, middle, left, right;
+    private ParallelAction up;
     private SequenceAction middleAndUp;
-    private MoveToAction moveUp, moveMiddle, moveLeft, moveRight;
+    private MoveToAction moveUp, moveMiddle;
     private RotateToAction rotateAction;
 
     public Entity(String file, float x, float y, int buttonID, float scale, boolean found) {
@@ -36,13 +34,8 @@ public class Entity extends Actor {
         this.buttonID = buttonID;
         moveUp = new MoveToAction();
         moveMiddle = new MoveToAction();
-        moveLeft = new MoveToAction();
-        moveRight = new MoveToAction();
         rotateAction = new RotateToAction();
         up = new ParallelAction();
-        middle = new ParallelAction();
-        left = new ParallelAction();
-        right = new ParallelAction();
         middleAndUp = new SequenceAction();
         createAnimations();
 
@@ -52,57 +45,11 @@ public class Entity extends Actor {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 if(count >= 2){
                     if (!Entity.this.found) {
-                        switch (2) {
-                            case 1:
-                                Entity.this.addAction(up);
-                                break;
-
-                            case 2:
-                                Entity.this.addAction(middleAndUp);
-                                break;
-
-                            case 3:
-                                Entity.this.addAction(left);
-                                break;
-
-                            case 4:
-                                Entity.this.addAction(right);
-                                break;
-                        }
+                        Entity.this.addAction(middleAndUp);
                         Entity.this.action = Entity.this.buttonID;
                     }
                 }
             }
-
-            /*
-            @Override
-            public boolean longPress(Actor actor, float x, float y) {
-
-                if (!Entity.this.found) {
-                    switch (2) {
-                        case 1:
-                            Entity.this.addAction(up);
-                            break;
-
-                        case 2:
-                            Entity.this.addAction(middleAndUp);
-                            break;
-
-                        case 3:
-                            Entity.this.addAction(left);
-                            break;
-
-                        case 4:
-                            Entity.this.addAction(right);
-                            break;
-                    }
-                    Entity.this.action = Entity.this.buttonID;
-                }
-                return true;
-            }
-            */
-
-
         });
     }
     
@@ -163,23 +110,8 @@ public class Entity extends Actor {
         moveMiddle.setPosition((800 - this.getWidth()) / 2, (480 - this.getHeight()) / 2);
         moveMiddle.setDuration(1f);
 
-//        middle.addAction(moveMiddle);
-//        middle.addAction(rotateAction);
-
         middleAndUp.addAction(moveMiddle);
         middleAndUp.addAction(up);
-
-        moveLeft.setPosition(this.getX() - 1000, this.getY());
-        moveLeft.setDuration(3f);
-
-        left.addAction(moveLeft);
-        left.addAction(rotateAction);
-
-        moveRight.setPosition(this.getX() + 1000, this.getY());
-        moveRight.setDuration(3f);
-
-        right.addAction(moveRight);
-        right.addAction(rotateAction);
     }
 
     public boolean isFound() {
@@ -200,16 +132,8 @@ public class Entity extends Actor {
         }
     }
     
-    public Texture getTexture(){
-        return texture;
-    }
-    
     public int getAction(){
         return action;
-    }
-    
-    public void setAction(int action) {
-        this.action = action;
     }
     
     public void resetAction(){

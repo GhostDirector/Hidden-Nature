@@ -9,11 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-
-/**
- * Created by ghost on 9.3.2017.
- */
-
 public class PauseMenu implements Screen {
 
     private HiddenNature hn;
@@ -21,7 +16,7 @@ public class PauseMenu implements Screen {
     private SpriteBatch batch;
     private Level level;
     private Texture background;
-    private Entity menuButton, returnButton, textureChange, helpButton, tutorialBox;
+    private Entity menuButton, returnButton, helpButton, tutorialBox;
     private Array<Entity>entities = new Array<Entity>();
     private Array<Entity>originals = new Array<Entity>();
     private Array<Entity>silhouettes = new Array<Entity>();
@@ -68,7 +63,9 @@ public class PauseMenu implements Screen {
         }
 
         for (Entity e : silhouettes) {
-            pauseStage.addActor(e);
+            if (!e.isFound()) {
+                pauseStage.addActor(e);
+            }
         }
 
         for (Entity e : originals) {
@@ -124,15 +121,11 @@ public class PauseMenu implements Screen {
 
     @Override
     public void render(float delta) {
-
-        //if (gameScreen.isMenuOpen() == true){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         pauseStage.getBatch().begin();
         pauseStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
-
 
         pauseStage.getBatch().end();
 
@@ -143,7 +136,6 @@ public class PauseMenu implements Screen {
         getEntityID(returnButton);
         getEntityID(helpButton);
         getEntityID(tutorialBox);
-        //}
     }
 
     @Override
