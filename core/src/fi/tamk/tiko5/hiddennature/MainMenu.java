@@ -114,12 +114,14 @@ public class MainMenu implements Screen {
 
     @Override
     public void pause() {
-
+        hn.music.pause();
     }
 
     @Override
     public void resume() {
-
+        if (hn.isSound() == true){
+            hn.music.play();
+        }
     }
 
     @Override

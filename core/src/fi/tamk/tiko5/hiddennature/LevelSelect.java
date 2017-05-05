@@ -66,7 +66,7 @@ public class LevelSelect implements Screen{
         start = new Entity("V.png", "vPushedButton.png", 690f, 20f, 4, true, 0.25f);
         levelButton = levels.get(currentLevel);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri1.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 32;
         param.color = Color.GOLDENROD;
@@ -179,6 +179,10 @@ public void selectScreen() {
             case 4: Gdx.app.log("LevelSelect", "Start");
                 globalPrefs.putBoolean("Reset", false);
                 loadLevel(currentLevel+1);
+                hn.music.pause();
+                if (hn.isSound() == true){
+                    hn.gameMusic.play();
+                }
                 hn.pauseMenu = new PauseMenu(hn, level);
                 hn.gameScreen = new GameScreen(hn, level, false);
                 entity.resetAction();
@@ -219,12 +223,14 @@ public void selectScreen() {
 
     @Override
     public void pause() {
-
+        hn.music.pause();
     }
 
     @Override
     public void resume() {
-
+        if (hn.isSound() == true){
+            hn.music.play();
+        }
     }
 
     @Override

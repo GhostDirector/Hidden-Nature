@@ -197,12 +197,14 @@ public class GameScreen extends MyAdapter implements Screen{
 
     @Override
     public void pause() {
-
+        hn.gameMusic.pause();
     }
 
     @Override
     public void resume() {
-
+        if (hn.isSound()){
+            hn.gameMusic.play();
+        }
     }
 
     @Override

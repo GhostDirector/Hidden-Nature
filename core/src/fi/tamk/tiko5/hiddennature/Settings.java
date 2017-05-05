@@ -27,7 +27,7 @@ public class Settings implements Screen {
         batch = hn.getBatch();
         globalPrefs = Gdx.app.getPreferences("settings");
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri1.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 32;
         param.color = Color.GOLDENROD;
@@ -73,9 +73,10 @@ public class Settings implements Screen {
                 entity.resetAction();
                 break;
 
-            case 1: Gdx.app.log("Settings", "");
-
+            case 1: Gdx.app.log("Settings", "sound");
+                hn.playMenuMusic();
                 entity.resetAction();
+                selectScreen();
                 break;
 
             case 2: Gdx.app.log("Settings", "Eng");
@@ -144,12 +145,14 @@ public class Settings implements Screen {
 
     @Override
     public void pause() {
-
+        hn.music.pause();
     }
 
     @Override
     public void resume() {
-
+        if (hn.isSound() == true){
+            hn.music.play();
+        }
     }
 
     @Override

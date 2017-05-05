@@ -35,7 +35,7 @@ public class Credits implements Screen {
         background = new Texture(Gdx.files.internal("background.jpg"));
         batch = hn.getBatch();
     
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri1.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
         param.size = 20;
         param.color = Color.GOLDENROD;
@@ -155,12 +155,16 @@ public class Credits implements Screen {
 
     @Override
     public void pause() {
+        hn.music.pause();
         gameIsOn = false;
     }
 
     @Override
     public void resume() {
         gameIsOn = true;
+        if (hn.isSound()){
+            hn.music.play();
+        }
     }
 
     @Override

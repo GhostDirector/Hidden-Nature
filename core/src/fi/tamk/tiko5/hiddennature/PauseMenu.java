@@ -98,6 +98,10 @@ public class PauseMenu implements Screen {
                 break;
 
             case 2:Gdx.app.log("pauseMenu", "back");
+                hn.gameMusic.pause();
+                if (hn.isSound() == true){
+                    hn.music.play();
+                }
                 hn.levelSelect.selectScreen();
                 entity.resetAction();
                 break;
@@ -145,12 +149,14 @@ public class PauseMenu implements Screen {
 
     @Override
     public void pause() {
-
+        hn.gameMusic.pause();
     }
 
     @Override
     public void resume() {
-
+        if (hn.isSound() == true){
+            hn.gameMusic.play();
+        }
     }
 
     @Override

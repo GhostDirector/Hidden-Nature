@@ -3,6 +3,7 @@ package fi.tamk.tiko5.hiddennature;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.I18NBundle;
 
@@ -22,6 +23,7 @@ public class HiddenNature extends Game {
     MainMenu mainMenu;
     Credits credits;
     Settings settings;
+    protected Music music, gameMusic;
 
     @Override
     public void dispose () {
@@ -30,12 +32,26 @@ public class HiddenNature extends Game {
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Menumusiikki.mp3"));
+        music.setVolume(0.5f);
+        music.setLooping(true);
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Tasomusiikki.mp3"));
+        gameMusic.setVolume(0.5f);
+        gameMusic.setLooping(true);
+        batch = new SpriteBatch();
         globalPrefs = Gdx.app.getPreferences("settings");
         defaultLocale = defaultLocale.getDefault();
         fin = new Locale("fi", "FI");
         eng = new Locale("en", "GB");
         int lang = globalPrefs.getInteger("localization", 1);
+        int mute = globalPrefs.getInteger("sound", 1);
+        switch (mute) {
+            case 1: music.play();
+                break;
+
+            case 2: music.pause();
+        }
+
         switch (lang){
             case 1: Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), defaultLocale);
                 break;
@@ -51,6 +67,20 @@ public class HiddenNature extends Game {
         
         sound = true;
         mainMenu.selectScreen();
+    }
+
+    public void playMenuMusic(){
+        if (globalPrefs.getInteger("sound", 1) == 1) {
+            globalPrefs.putInteger("sound", 2);
+            globalPrefs.flush();
+            music.pause();
+            sound = false;
+        } else {
+            globalPrefs.putInteger("sound", 1);
+            globalPrefs.flush();
+            music.play();
+            sound = true;
+        }
     }
 
     public Locale getFin(){
