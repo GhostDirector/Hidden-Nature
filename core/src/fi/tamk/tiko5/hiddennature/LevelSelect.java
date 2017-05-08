@@ -23,8 +23,8 @@ public class LevelSelect implements Screen{
     private String select, levelName;
     private BitmapFont font;
     private Preferences globalPrefs;
-    private Entity entity1, entity2, quit, start, levelButton, tmp;
-    private final byte LEVELCOUNT = 4;
+    private Entity leftArrow, rightArrow, quit, start, levelButton, tmp;
+    public final byte LEVELCOUNT = 5;
     private Array<Entity> levels;
     private Array<String> levelNames;
     private int levelText;
@@ -43,32 +43,33 @@ public class LevelSelect implements Screen{
         levelText = 1;
         currentLevel = 0;
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("background.jpg"));
+        background = hn.getAm().get("menu/background.jpg", Texture.class);
         batch = hn.getBatch();
 
-        entity1 = new Entity("NuoliVasen.png", "NuoliVasenPushedButton.png", 20f, 210, 1, true, 0.25f);
-        entity2 = new Entity("NuoliOikea.png", "NuoliOikeaPushedButton.png", 690f, 210, 2, true, 0.25f);
-        tmp = new Entity("roundBox.jpg", "roundBox.jpg", 150, 80, 4, false, 1f);
+        leftArrow = new Entity(hn.getAm().get("menu/NuoliVasen.png", Texture.class), hn.getAm().get("menu/NuoliVasenPushedButton.png", Texture.class), 20f, 210, 1, true, 0.25f);
+        rightArrow = new Entity(hn.getAm().get("menu/NuoliOikea.png", Texture.class), hn.getAm().get("menu/NuoliOikeaPushedButton.png", Texture.class), 690f, 210, 2, true, 0.25f);
+        tmp = new Entity(hn.getAm().get("menu/roundBox.jpg", Texture.class), hn.getAm().get("menu/roundBox.jpg", Texture.class), 150, 80, 4, false, 1f);
         tmp.setSize(hn.getWORLD_WIDTH() - 300, hn.getWORLD_HEIGHT() - 160);
 
         levels = new Array<Entity>();
 
-        levels.add(new Entity("l1/Taso1.jpg", "l1/Taso1.jpg", 160, 90, 4, true, 1f));
-        levels.add(new Entity("l2/Taso2.jpg", "l2/Taso2.jpg", 160, 90, 4, true, 1f));
-        levels.add(new Entity("l3/Taso3.jpg", "l3/Taso3.jpg", 160, 90, 4, true, 1f));
-        levels.add(new Entity("l4/Taso4.png", "l4/Taso4.png", 160, 90, 4, true, 1f));
+        levels.add(new Entity(hn.getAm().get("l1/Taso1.jpg", Texture.class), hn.getAm().get("l1/Taso1.jpg", Texture.class), 160, 90, 4, true, 1f));
+        levels.add(new Entity(hn.getAm().get("l2/Taso2.jpg", Texture.class), hn.getAm().get("l2/Taso2.jpg", Texture.class), 160, 90, 4, true, 1f));
+        levels.add(new Entity(hn.getAm().get("l3/Taso3.jpg", Texture.class), hn.getAm().get("l3/Taso3.jpg", Texture.class), 160, 90, 4, true, 1f));
+        levels.add(new Entity(hn.getAm().get("l4/Taso4.png", Texture.class), hn.getAm().get("l4/Taso4.png", Texture.class), 160, 90, 4, true, 1f));
+        levels.add(new Entity(hn.getAm().get("l5/Taso5.jpg", Texture.class), hn.getAm().get("l5/Taso5.jpg", Texture.class), 160, 90, 4, true, 1f));
 
         for (Entity e : levels) {
             e.setSize(hn.getWORLD_WIDTH() - 320, hn.getWORLD_HEIGHT() - 180);
         }
 
-        quit = new Entity("X.png", "xPushedButton.png", 690f, 390f, 3, true, 0.25f);
-        start = new Entity("V.png", "vPushedButton.png", 690f, 20f, 4, true, 0.25f);
+        quit = new Entity(hn.getAm().get("menu/X.png", Texture.class), hn.getAm().get("menu/xPushedButton.png", Texture.class), 690f, 390f, 3, true, 0.25f);
+        start = new Entity(hn.getAm().get("menu/V.png", Texture.class), hn.getAm().get("menu/vPushedButton.png", Texture.class), 690f, 20f, 4, true, 0.25f);
         levelButton = levels.get(currentLevel);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri1.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 32;
+        param.size = 30;
         param.color = Color.GOLDENROD;
         param.borderWidth = 2;
         font = generator.generateFont(param);
@@ -93,12 +94,14 @@ public void selectScreen() {
 
     select = hn.getLocalization().get("selLevelText");
 
-    mainStage.addActor(entity1);
-    mainStage.addActor(entity2);
+    mainStage.addActor(leftArrow);
+    mainStage.addActor(rightArrow);
     mainStage.addActor(quit);
     mainStage.addActor(start);
     mainStage.addActor(tmp);
     mainStage.addActor(levelButton);
+    
+    hideMenuArrows(currentLevel);
 
     Gdx.input.setInputProcessor(mainStage);
     hn.setScreen(this);
@@ -109,19 +112,23 @@ public void selectScreen() {
         switch (id){
 
             case 1:
-                level = new Level(1, "Kesäinen metsä", "l1/Taso1.jpg", hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                level = new Level(1, "Kesäinen metsä", hn.getAm().get("l1/Taso1.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 2:
-                level = new Level(2, "Talvinen metsä", "l2/Taso2.jpg", hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                level = new Level(2, "Talvinen metsä", hn.getAm().get("l2/Taso2.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 3:
-                level = new Level(3, "Syksy", "l3/Taso3.jpg", hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                level = new Level(3, "Syksy", hn.getAm().get("l3/Taso3.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 4:
-                level = new Level(4, "Ranta", "l4/Taso4.png", hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
+                level = new Level(4, "Ranta",hn.getAm().get("l4/Taso4.png", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
+                break;
+
+            case 5:
+                level = new Level(5, "yo",hn.getAm().get("l5/Taso5.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
         }
@@ -129,7 +136,6 @@ public void selectScreen() {
     }
 
     public void setLevel(int l){
-
         int tmp = currentLevel;
 
         if ((tmp + l) < 0){
@@ -139,8 +145,9 @@ public void selectScreen() {
         } else {
             tmp = tmp + l;
         }
-
+        
         currentLevel = tmp;
+        hideMenuArrows(currentLevel);
 
         if (currentLevel >= 0 && currentLevel < LEVELCOUNT){
             levelButton.remove();
@@ -150,6 +157,20 @@ public void selectScreen() {
         levelText = currentLevel+1;
         levelName = levelNames.get(currentLevel);
         Gdx.app.log("currentlevel", ""+ currentLevel);
+    }
+    
+    public void hideMenuArrows(int i) {
+        if (i == 0) {
+            leftArrow.setVisible(false);
+        } else {
+            leftArrow.setVisible(true);
+        }
+    
+        if (i == LEVELCOUNT -1) {
+            rightArrow.setVisible(false);
+        } else {
+            rightArrow.setVisible(true);
+        }
     }
 
     public void getEntityID(Entity entity){
@@ -180,13 +201,24 @@ public void selectScreen() {
                 globalPrefs.putBoolean("Reset", false);
                 loadLevel(currentLevel+1);
                 hn.music.pause();
-                if (hn.isSound() == true){
+                if (globalPrefs.getInteger("sound", 1) == 1){
                     hn.gameMusic.play();
                 }
                 hn.pauseMenu = new PauseMenu(hn, level);
-                hn.gameScreen = new GameScreen(hn, level, false);
+                hn.gameScreen = new GameScreen(hn, level);
                 entity.resetAction();
                 break;
+        }
+    }
+    
+    public void toNextLevel(int levelID) {
+        if (levelID < LEVELCOUNT) {
+            setLevel(1);
+            loadLevel(currentLevel + 1);
+            hn.pauseMenu = new PauseMenu(hn, level);
+            hn.gameScreen = new GameScreen(hn, level);
+        } else {
+            selectScreen();
         }
     }
 
@@ -204,8 +236,8 @@ public void selectScreen() {
         mainStage.act(Gdx.graphics.getDeltaTime());
         mainStage.draw();
 
-        getEntityID(entity1);
-        getEntityID(entity2);
+        getEntityID(leftArrow);
+        getEntityID(rightArrow);
         getEntityID(quit);
         getEntityID(start);
         getEntityID(levelButton);

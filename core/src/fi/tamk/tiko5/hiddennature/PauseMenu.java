@@ -1,6 +1,7 @@
 package fi.tamk.tiko5.hiddennature;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,7 @@ public class PauseMenu implements Screen {
     private SpriteBatch batch;
     private Level level;
     private Texture background;
+    private Preferences globalPrefs;
     private Entity menuButton, returnButton, helpButton, tutorialBox;
     private Array<Entity>entities = new Array<Entity>();
     private Array<Entity>originals = new Array<Entity>();
@@ -37,10 +39,11 @@ public class PauseMenu implements Screen {
         entities = level.getEntities();
         originals = level.getOriginals();
         silhouettes = level.getSilhouettes();
+        globalPrefs = Gdx.app.getPreferences("settings");
 
-        background = new Texture(Gdx.files.internal("PauseMenuFancy.jpg"));
-        menuButton = new Entity("X.png", "xPushedButton.png", 690f, 390f, 1, true, 0.25f);
-        helpButton = new Entity("HelpButton.png", "HelpPushedButton.png", 690f, 290f, 3, true, 0.25f);
+        background = hn.getAm().get("menu/PauseMenuFancy.jpg", Texture.class);
+        menuButton = new Entity(hn.getAm().get("menu/X.png", Texture.class), hn.getAm().get("menu/xPushedButton.png", Texture.class), 690f, 390f, 1, true, 0.25f);
+        helpButton = new Entity(hn.getAm().get("menu/HelpButton.png", Texture.class), hn.getAm().get("menu/HelpPushedButton.png", Texture.class), 690f, 290f, 3, true, 0.25f);
         
         selectScreen();
     }
@@ -51,8 +54,8 @@ public class PauseMenu implements Screen {
         }
 
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-        returnButton = new Entity(hn.getLocalization().get("returnToMenu"), hn.getLocalization().get("returnToMenuPressed"), 280f, 10f, 2, true, 0.50f);
-        tutorialBox = new Entity(hn.getLocalization().get("pauseTutBox"), hn.getLocalization().get("pauseTutBox"), 0f, 0f, 4, true, 1f);
+        returnButton = new Entity(hn.getAm().get(hn.getLocalization().get("returnToMenu"), Texture.class), hn.getAm().get(hn.getLocalization().get("returnToMenuPressed"), Texture.class), 280f, 10f, 2, true, 0.50f);
+        tutorialBox = new Entity(hn.getAm().get(hn.getLocalization().get("pauseTutBox"), Texture.class), hn.getAm().get(hn.getLocalization().get("pauseTutBox"), Texture.class), 0f, 0f, 4, true, 1f);
         tutorialBox.setSize(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
 
 
@@ -93,14 +96,14 @@ public class PauseMenu implements Screen {
                 level.setEntities(entities);
                 level.setOriginals(originals);
                 level.setSilhouettes(silhouettes);
-                hn.gameScreen.selectScreen(true);
+                hn.gameScreen.selectScreen();
                 entity.resetAction();
                 break;
 
             case 2:Gdx.app.log("pauseMenu", "back");
                 hn.gameMusic.pause();
-                if (hn.isSound() == true){
-                    hn.music.play();
+                if (globalPrefs.getInteger("sound", 1) == 1){
+                    hn.gameMusic.play();
                 }
                 hn.levelSelect.selectScreen();
                 entity.resetAction();

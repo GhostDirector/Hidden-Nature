@@ -23,7 +23,7 @@ public class Settings implements Screen {
 
     public Settings(HiddenNature hiddenNature){
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("background.jpg"));
+        background = new Texture(Gdx.files.internal("menu/background.jpg"));
         batch = hn.getBatch();
         globalPrefs = Gdx.app.getPreferences("settings");
 
@@ -43,16 +43,16 @@ public class Settings implements Screen {
         }
     
         if(hn.isSound() == true){
-            soundButton = new Entity(hn.getLocalization().get("soundButton"), hn.getLocalization().get("soundpressedButton"), 20f, 200f, 1, true, 0.80f);
+            soundButton = new Entity(hn.getAm().get(hn.getLocalization().get("soundButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("soundpressedButton"), Texture.class), 20f, 200f, 1, true, 0.80f);
         }
         else{
-            soundButton = new Entity(hn.getLocalization().get("soundOffButton"), hn.getLocalization().get("soundOffpressedButton"), 20f, 200f, 1, true, 0.80f);
+            soundButton = new Entity(hn.getAm().get(hn.getLocalization().get("soundOffButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("soundOffpressedButton"), Texture.class), 20f, 200f, 1, true, 0.80f);
         }
     
-        engButton = new Entity(hn.getLocalization().get("engButton"), hn.getLocalization().get("engButton"), 200f, 300f, 2, true, 0.80f);
-        finButton = new Entity(hn.getLocalization().get("finButton"), hn.getLocalization().get("finButton"), 20f, 300f, 3, true, 0.80f);
-        quitButton = new Entity("X.png", "xPushedButton.png", 690f, 390f, 5, true, 0.25f);
-        resetButton = new Entity(hn.getLocalization().get("resetButton"), hn.getLocalization().get("resetpressedButton"), 20f, 100f, 4, true, 0.80f);
+        engButton = new Entity(hn.getAm().get(hn.getLocalization().get("engButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("engButton"), Texture.class), 200f, 300f, 2, true, 0.80f);
+        finButton = new Entity(hn.getAm().get(hn.getLocalization().get("finButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("finButton"), Texture.class), 20f, 300f, 3, true, 0.80f);
+        quitButton = new Entity(hn.getAm().get("menu/X.png", Texture.class), hn.getAm().get("menu/xPushedButton.png", Texture.class), 690f, 390f, 5, true, 0.25f);
+        resetButton = new Entity(hn.getAm().get(hn.getLocalization().get("resetButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("resetpressedButton"), Texture.class), 20f, 100f, 4, true, 0.80f);
         
         settingStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
         
@@ -83,6 +83,7 @@ public class Settings implements Screen {
                 globalPrefs.putInteger("localization", 2);
                 globalPrefs.flush();
                 hn.setLocalization(hn.getEng());
+                hn.changeLang();
                 selectScreen();
                 entity.resetAction();
                 break;
@@ -91,6 +92,7 @@ public class Settings implements Screen {
                 globalPrefs.putInteger("localization", 3);
                 globalPrefs.flush();
                 hn.setLocalization(hn.getFin());
+                hn.changeLang();
                 selectScreen();
                 entity.resetAction();
                 break;

@@ -32,7 +32,7 @@ public class Credits implements Screen {
     public Credits(HiddenNature hiddenNature){
         gameIsOn = true;
         hn = hiddenNature;
-        background = new Texture(Gdx.files.internal("background.jpg"));
+        background = hn.getAm().get("menu/background.jpg", Texture.class);
         batch = hn.getBatch();
     
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri1.ttf"));
@@ -42,8 +42,8 @@ public class Credits implements Screen {
         param.borderWidth = 2;
         font = generator.generateFont(param);
     
-        entity1 = new Entity("X.png", "xPushedButton.png", 690f, 390f, 1, true, 0.25f);
-        entity6 = new Entity("Lumu.png", "Lumu.png", 530f, 240f, 6, true, 0.19f);
+        entity1 = new Entity(hn.getAm().get("menu/X.png", Texture.class), hn.getAm().get("menu/xPushedButton.png", Texture.class), 690f, 390f, 1, true, 0.25f);
+        entity6 = new Entity(hn.getAm().get("logos/Lumu.png", Texture.class), hn.getAm().get("logos/Lumu.png", Texture.class), 530f, 240f, 6, true, 0.19f);
         
         selectScreen();
     }
@@ -55,10 +55,10 @@ public class Credits implements Screen {
         
         creditsStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
     
-        entity2 = new Entity(hn.getLocalization().get("trashLogo"), hn.getLocalization().get("trashLogo"), 370f, 240f, 2, true, 0.15f);
-        entity3 = new Entity(hn.getLocalization().get("tamkLogo"), hn.getLocalization().get("tamkLogo"), 40f, 40f, 3, true, 0.07f);
-        entity4 = new Entity(hn.getLocalization().get("tikoLogo"), hn.getLocalization().get("tikoLogo"), 260f, 40f, 4, true, 0.35f);
-        entity5 = new Entity(hn.getLocalization().get("vapriikkiLogo"), hn.getLocalization().get("vapriikkiLogo"), 520f, 40f, 5, true, 0.35f);
+        entity2 = new Entity(hn.getAm().get(hn.getLocalization().get("trashLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("trashLogo"), Texture.class), 370f, 240f, 2, true, 0.15f);
+        entity3 = new Entity(hn.getAm().get(hn.getLocalization().get("tamkLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("tamkLogo"), Texture.class), 40f, 40f, 3, true, 0.07f);
+        entity4 = new Entity(hn.getAm().get(hn.getLocalization().get("tikoLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("tikoLogo"), Texture.class), 260f, 40f, 4, true, 0.35f);
+        entity5 = new Entity(hn.getAm().get(hn.getLocalization().get("vapriikkiLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("vapriikkiLogo"), Texture.class), 520f, 40f, 5, true, 0.35f);
 
 
         creditsStage.addActor(entity1);

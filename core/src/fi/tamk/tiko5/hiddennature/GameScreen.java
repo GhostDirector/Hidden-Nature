@@ -30,8 +30,9 @@ public class GameScreen extends MyAdapter implements Screen{
     private Array<Entity>silhouettes = new Array<Entity>();
     private PrefHandler prefs;
     private Preferences globalPrefs;
-    private boolean showTutorial;
-    private int counter;
+    private boolean showTutorial, completed;
+    private int counter, nextLevel;
+
 
     @Override
     public void dispose() {
@@ -41,7 +42,8 @@ public class GameScreen extends MyAdapter implements Screen{
         hn.dispose();
     }
 
-    public GameScreen(HiddenNature hiddenNature, Level l, boolean isPauseMenu) {
+    public GameScreen(HiddenNature hiddenNature, Level l) {
+
         level = l;
         diorama = level.getLevelDiorama();
         imp = new InputMultiplexer();
@@ -50,24 +52,32 @@ public class GameScreen extends MyAdapter implements Screen{
         entities = level.getEntities();
         originals = level.getOriginals();
         silhouettes = level.getSilhouettes();
-        prefs = new PrefHandler(level);
+        prefs = new PrefHandler(level, hn);
         gd = new GestureDetector(this);
 
         globalPrefs = Gdx.app.getPreferences("settings");
 
+        if (globalPrefs.getBoolean("Reset"+level.getLevelID(), false)) {
+            globalPrefs.putBoolean("Completed"+level.getLevelID(), false);
+        }
+
         globalPrefs.putBoolean("Reset"+level.getLevelID(), false);
+        completed = globalPrefs.getBoolean("Completed"+level.getLevelID(), false);
+
         showTutorial = globalPrefs.getBoolean("Tutorial", true);
         globalPrefs.putBoolean("Tutorial", false);
         globalPrefs.flush();
 
-        menuOpenButton = new Entity("PauseMenu.png", "PauseMenuPushedButton.png", 690f, 390f, 1, true, 0.25f);
+        menuOpenButton = new Entity(hn.getAm().get("menu/PauseMenu.png", Texture.class), hn.getAm().get("menu/PauseMenuPushedButton.png", Texture.class), 690f, 390f, 1, true, 0.25f);
 
         batch = hn.getBatch();
         
-        selectScreen(isPauseMenu);
+        selectScreen();
     }
 
-    public void selectScreen(boolean isPauseMenu) {
+
+
+    public void selectScreen() {
         if (gameStage != null) {
             gameStage.dispose();
         }
@@ -82,8 +92,8 @@ public class GameScreen extends MyAdapter implements Screen{
         }
 
         gameStage.addActor(menuOpenButton);
-        tutorialBox = new Entity(hn.getLocalization().get("tutBox"), hn.getLocalization().get("tutBox"), 120f, 0f, 2, true, 0.48f);
-        completeBox = new Entity(hn.getLocalization().get("completeBox"), hn.getLocalization().get("completeBox"), 0f, 0f, 1, true, 1f);
+        tutorialBox = new Entity(hn.getAm().get(hn.getLocalization().get("tutBox"), Texture.class), 120f, 600f, 2, true, 0.48f);
+        completeBox = new Entity(hn.getAm().get(hn.getLocalization().get("completeBox"), Texture.class), 0f, 600f, 3, true, 1f);
         completeBox.setSize(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
 
         if (showTutorial) {
@@ -96,11 +106,6 @@ public class GameScreen extends MyAdapter implements Screen{
 
         Gdx.input.setInputProcessor(imp);
 
-        if (isPauseMenu){
-
-            gameStage.getCamera().position.set(level.getCamPos());
-            ((OrthographicCamera) gameStage.getCamera()).zoom = level.getZoom();
-        }
         hn.setScreen(this);
     }
 
@@ -124,7 +129,12 @@ public class GameScreen extends MyAdapter implements Screen{
 
             case 2: showTutorial = false;
                 entity.resetAction();
-                selectScreen(false);
+                selectScreen();
+                break;
+
+            case 3: globalPrefs.putBoolean("Completed"+level.getLevelID(), true);
+                entity.resetAction();
+                hn.levelSelect.toNextLevel(level.getLevelID());
                 break;
         }
 
@@ -177,11 +187,16 @@ public class GameScreen extends MyAdapter implements Screen{
                     counter++;
                     System.out.println(counter);
                 }
-                if (counter == entities.size) {
+
+                if (counter == entities.size && !completed) {
                     gameStage.addActor(completeBox);
+                    completeBox.slide();
                 }
             }
+        }
 
+        if (showTutorial) {
+            tutorialBox.slide();
         }
     }
 

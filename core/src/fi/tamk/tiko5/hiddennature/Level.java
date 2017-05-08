@@ -19,13 +19,15 @@ public class Level extends Actor{
     private Vector3 camPos;
     private float zoom;
     private ObjectManager objectManager;
+    private HiddenNature hn;
 
-    public Level(int id, String name, String diorama, float width, float height){
+    public Level(int id, String name, Texture diorama, float width, float height, HiddenNature hiddenNature){
+        hn = hiddenNature;
         levelID = id;
         levelName = name;
-        levelDiorama = new Texture(Gdx.files.internal(diorama));
+        levelDiorama = diorama;
         setBounds(160, 90, width - 320, height - 180);
-        objectManager = new ObjectManager(this);
+        objectManager = new ObjectManager(this, hn);
 
         entities = objectManager.getEntities();
         originals = objectManager.getOriginals();

@@ -1,8 +1,8 @@
 package fi.tamk.tiko5.hiddennature;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,26 +18,23 @@ public class Entity extends Actor {
     private float scale;
     private int buttonID;
     private boolean isButton;
-    private String original, pressed;
+    private Texture original, pressed;
     private boolean found;
     private ParallelAction up;
     private SequenceAction middleAndUp;
-    private MoveToAction moveUp, moveMiddle;
+    private MoveToAction moveUp, moveMiddle, slideDown;
     private RotateToAction rotateAction;
+    String path;
 
-    public Entity(String file, float x, float y, int buttonID, float scale, boolean found) {
+    public Entity(Texture file, float x, float y, int buttonID, float scale, boolean found) {
+        path = ((FileTextureData)file.getTextureData()).getFileHandle().path();
+        System.out.println(path);
         this.scale = scale;
         this.found = found;
-        original = file;
-        texture = new Texture(Gdx.files.internal(original));
+        texture = file;
         setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
         this.buttonID = buttonID;
-        moveUp = new MoveToAction();
-        moveMiddle = new MoveToAction();
-        rotateAction = new RotateToAction();
-        up = new ParallelAction();
-        middleAndUp = new SequenceAction();
-        createAnimations();
+        objectAnimations();
 
         addListener(new ActorGestureListener() {
 
@@ -51,13 +48,15 @@ public class Entity extends Actor {
                 }
             }
         });
+
+
     }
-    
-    public Entity(String file, String filePressed, float x, float y , int buttonID, boolean isbutton, float scale) {
+
+    public Entity(Texture file, Texture filePressed, float x, float y , int buttonID, boolean isbutton, float scale) {
         found = false;
         original = file;
         pressed = filePressed;
-        texture = new Texture(Gdx.files.internal(original));
+        texture = file;
         this.isButton = isbutton;
         this.buttonID = buttonID;
         setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
@@ -70,14 +69,41 @@ public class Entity extends Actor {
 
                 return true;
             }
-            
+
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 releasedTexture();
                 action = ((Entity)event.getTarget()).buttonID;
             }
         });
     }
-    
+
+    public Entity(Texture file, float x, float y , int buttonID, boolean isbutton, float scale) {
+        found = false;
+        original = file;
+        texture = file;
+        this.isButton = isbutton;
+        this.buttonID = buttonID;
+        setBounds(x, y, texture.getWidth() * scale, texture.getHeight() * scale);
+        sliderAnimations();
+
+        addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+
+                action = ((Entity)event.getTarget()).buttonID;
+            }
+        });
+    }
+
+    public String getPath(){
+        return path;
+    }
+
     @Override
     public void draw(Batch batch, float alpha) {
         batch.draw(texture,
@@ -91,14 +117,21 @@ public class Entity extends Actor {
                 this.getRotation(),0,0,
                 texture.getWidth(), texture.getHeight(), false, false);
     }
-    
+
     @Override
     public void act(float delta) {
         super.act(delta);
 
     }
-    
-    public void createAnimations() {
+
+    public void objectAnimations() {
+        moveUp = new MoveToAction();
+        moveMiddle = new MoveToAction();
+        slideDown = new MoveToAction();
+        rotateAction = new RotateToAction();
+        up = new ParallelAction();
+        middleAndUp = new SequenceAction();
+
         moveUp.setPosition(400, 700);
         moveUp.setDuration(2f);
         rotateAction.setRotation(360f);
@@ -114,42 +147,53 @@ public class Entity extends Actor {
         middleAndUp.addAction(up);
     }
 
+    public void sliderAnimations() {
+        slideDown = new MoveToAction();
+
+        slideDown.setPosition(this.getX(), 0f);
+        slideDown.setDuration(30f);
+    }
+
+    public void slide() {
+        this.addAction(slideDown);
+    }
+
     public boolean isFound() {
         return found;
     }
-    
+
     public void setFound(boolean found) {
         this.found = found;
     }
-    
+
     public void pressedTexture(){
-        texture = new Texture(pressed);
+        texture = pressed;
     }
-    
+
     public void releasedTexture(){
         if (isButton) {
-            texture = new Texture(original);
+            texture = original;
         }
     }
-    
+
     public int getAction(){
         return action;
     }
-    
+
     public void resetAction(){
         if (action != 0) {
             this.action = 0;
         }
     }
-    
+
     public float getScale() {
         return scale;
     }
-    
-    public String getOriginal() {
+
+    public Texture getOriginal() {
         return original;
     }
-    
+
     public int getButtonID(){
         return  buttonID;
     }

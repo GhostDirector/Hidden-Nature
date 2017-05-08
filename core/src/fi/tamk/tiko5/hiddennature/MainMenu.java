@@ -24,12 +24,13 @@ public class MainMenu implements Screen {
     }
 
     public MainMenu(HiddenNature hiddenNature){
-        background = new Texture(Gdx.files.internal("background.jpg"));
+
         hn = hiddenNature;
+        background = hn.getAm().get("menu/background.jpg", Texture.class);
         batch = hn.getBatch();
         
-        entity4 = new Entity("SettingsButton.png", "SettingsPushedButton.png", 30f, 25f, 4, true, 0.28f);
-        entity5 = new Entity("title.png", "title.png", 20f, 270f, 6, false, 0.40f);
+        entity4 = new Entity(hn.getAm().get("menu/SettingsButton.png", Texture.class), hn.getAm().get("menu/SettingsPushedButton.png", Texture.class), 30f, 25f, 4, true, 0.28f);
+        entity5 = new Entity(hn.getAm().get("menu/title.png", Texture.class), hn.getAm().get("menu/title.png", Texture.class), 20f, 270f, 6, false, 0.40f);
 
         selectScreen();
     }
@@ -39,9 +40,9 @@ public class MainMenu implements Screen {
             mainStage.dispose();
         }
     
-        entity1 = new Entity(hn.getLocalization().get("playButton"), hn.getLocalization().get("playpressedButton"), 600f, 350f, 1, true, 0.65f);
-        entity2 = new Entity(hn.getLocalization().get("creditsButton"), hn.getLocalization().get("creditspressedButton") ,600f, 200f, 2, true, 0.65f);
-        entity3 = new Entity(hn.getLocalization().get("quitButton"), hn.getLocalization().get("quitpressedButton"), 600f, 50f, 3, true, 0.65f);
+        entity1 = new Entity(hn.getAm().get(hn.getLocalization().get("playButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("playpressedButton"), Texture.class), 600f, 350f, 1, true, 0.65f);
+        entity2 = new Entity(hn.getAm().get(hn.getLocalization().get("creditsButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("creditspressedButton"), Texture.class) ,600f, 200f, 2, true, 0.65f);
+        entity3 = new Entity(hn.getAm().get(hn.getLocalization().get("quitButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("quitpressedButton"), Texture.class), 600f, 50f, 3, true, 0.65f);
         
         mainStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
 
@@ -72,7 +73,8 @@ public class MainMenu implements Screen {
                 break;
 
             case 3:Gdx.app.log("MainMenu", "quit game");
-                System.exit(0);
+                Gdx.app.exit();
+                //System.exit(0);
                 entity.resetAction();
                 break;
 
