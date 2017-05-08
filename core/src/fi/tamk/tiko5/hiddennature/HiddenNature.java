@@ -5,31 +5,70 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import java.util.Locale;
 
+/**
+ * The Hidden nature.
+ *
+ * Acts as a host for game session.
+ */
 public class HiddenNature extends Game {
     private SpriteBatch batch;
-    final float WORLD_WIDTH = 800f;
-    final float WORLD_HEIGHT = 480f;
+    private final float WORLD_WIDTH = 800f;
+    private final float WORLD_HEIGHT = 480f;
     private Locale defaultLocale, fin, eng;
     private I18NBundle Localization;
     private boolean sound;
-    private Preferences globalPrefs;
+    /**
+     * The Global prefs.
+     *
+     * Provides information about sound, reset and localization for classes.
+     */
+    public Preferences globalPrefs;
+    /**
+     * The Game screen.
+     */
     GameScreen gameScreen;
+    /**
+     * The Pause menu.
+     */
     PauseMenu pauseMenu;
+    /**
+     * The Level select.
+     */
     LevelSelect levelSelect;
+    /**
+     * The Main menu.
+     */
     MainMenu mainMenu;
+    /**
+     * The Credits.
+     */
     Credits credits;
+    /**
+     * The Settings.
+     */
     Settings settings;
-    protected Music music, gameMusic;
+    /**
+     * The Music.
+     *
+     * Menu music for credits, settings, level select and main menu.
+     */
+    protected Music music,
+    /**
+     * The Game music.
+     *
+     * Music for game screen and pause menu.
+     */
+    gameMusic;
     private static AssetManager am;
-    private Texture background;
     private Loading loading;
+    private OrthographicCamera camera;
 
     @Override
     public void dispose () {
@@ -47,6 +86,9 @@ public class HiddenNature extends Game {
         gameMusic.setVolume(0.5f);
         gameMusic.setLooping(true);
         batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, WORLD_WIDTH, WORLD_HEIGHT);
+
         loading = new Loading(this);
         globalPrefs = Gdx.app.getPreferences("settings");
         defaultLocale = defaultLocale.getDefault();
@@ -54,13 +96,6 @@ public class HiddenNature extends Game {
         eng = new Locale("en", "GB");
 
         int lang = globalPrefs.getInteger("localization", 1);
-        int mute = globalPrefs.getInteger("sound", 1);
-        switch (mute) {
-            case 1: music.play();
-                break;
-
-            case 2: music.pause();
-        }
 
         switch (lang){
             case 1: Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), defaultLocale);
@@ -70,9 +105,6 @@ public class HiddenNature extends Game {
             case 3: Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), fin);
                 break;
         }
-
-
-
         
         sound = true;
 
@@ -84,6 +116,10 @@ public class HiddenNature extends Game {
 
     }
 
+    /**
+     * Loads assets for game using AssetManager.
+     *
+     */
     public void loadAssets(){
 
         //Universal Assets
@@ -325,6 +361,9 @@ public class HiddenNature extends Game {
 
     }
 
+    /**
+     * Creates instances for screens.
+     */
     public void createScreens(){
         levelSelect = new LevelSelect(this);
         mainMenu = new MainMenu(this);
@@ -332,6 +371,9 @@ public class HiddenNature extends Game {
         settings = new Settings(this);
     }
 
+    /**
+     * Loads assets for game by localization using AssetManager.
+     */
     public void changeLang(){
 
         am.load(Localization.get("trashLogo"), Texture.class);
@@ -362,39 +404,18 @@ public class HiddenNature extends Game {
         am.finishLoading();
     }
 
-    public void unload(){
-        am.unload(Localization.get("trashLogo"));
-        am.unload(Localization.get("tamkLogo"));
-        am.unload(Localization.get("tikoLogo"));
-        am.unload(Localization.get("vapriikkiLogo"));
-
-        am.unload(Localization.get("soundButton"));
-        am.unload(Localization.get("soundpressedButton"));
-        am.unload(Localization.get("soundOffButton"));
-        am.unload(Localization.get("soundOffpressedButton"));
-        am.unload(Localization.get("engButton"));
-        am.unload(Localization.get("finButton"));
-        am.unload(Localization.get("resetButton"));
-        am.unload(Localization.get("resetpressedButton"));
-
-        am.unload(Localization.get("playButton"));
-        am.unload(Localization.get("playpressedButton"));
-        am.unload(Localization.get("creditsButton"));
-        am.unload(Localization.get("creditspressedButton"));
-        am.unload(Localization.get("quitButton"));
-        am.unload(Localization.get("quitpressedButton"));
-
-        am.unload(Localization.get("returnToMenu"));
-        am.unload(Localization.get("returnToMenuPressed"));
-        am.unload(Localization.get("pauseTutBox"));
-
-        am.finishLoading();
-    }
-
+    /**
+     * Get am asset manager.
+     *
+     * @return the asset manager
+     */
     public AssetManager getAm(){
         return am;
     }
 
+    /**
+     * Play menu music. Checks whether music is muted or not.
+     */
     public void playMenuMusic(){
         if (globalPrefs.getInteger("sound", 1) == 1) {
             globalPrefs.putInteger("sound", 2);
@@ -409,22 +430,47 @@ public class HiddenNature extends Game {
         }
     }
 
+    /**
+     * Get finnish locale.
+     *
+     * @return the locale
+     */
     public Locale getFin(){
         return fin;
     }
 
+    /**
+     * Get english locale.
+     *
+     * @return the locale
+     */
     public Locale getEng(){
         return eng;
     }
 
+    /**
+     * Is sound boolean.
+     *
+     * @return the boolean
+     */
     public boolean isSound(){
         return sound;
     }
 
+    /**
+     * Gets localization.
+     *
+     * @return the localization
+     */
     public I18NBundle getLocalization() {
         return Localization;
     }
 
+    /**
+     * Sets localization.
+     *
+     * @param lang the lang
+     */
     public void setLocalization(Locale lang) {
         Localization = I18NBundle.createBundle(Gdx.files.internal("Localization"), lang);
     }
@@ -432,16 +478,32 @@ public class HiddenNature extends Game {
 	@Override
 	public void render () {
 		super.render();
+        batch.setProjectionMatrix(camera.combined);
 	}
     
+    /**
+     * Gets batch.
+     *
+     * @return the batch
+     */
     public SpriteBatch getBatch() {
         return batch;
     }
     
+    /**
+     * Get world width float.
+     *
+     * @return the float
+     */
     public float getWORLD_WIDTH(){
         return WORLD_WIDTH;
     }
     
+    /**
+     * Get world height float.
+     *
+     * @return the float
+     */
     public float getWORLD_HEIGHT(){
         return WORLD_HEIGHT;
     }

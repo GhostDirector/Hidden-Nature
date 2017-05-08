@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * The Settings. Provides buttons for language changing, game progress reset and mute.
+ */
 public class Settings implements Screen {
     private HiddenNature hn;
     private Texture background;
@@ -21,6 +24,11 @@ public class Settings implements Screen {
     private Preferences globalPrefs;
     private Entity quitButton, finButton, engButton, soundButton, resetButton;
 
+    /**
+     * Instantiates a new Settings.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     */
     public Settings(HiddenNature hiddenNature){
         hn = hiddenNature;
         background = new Texture(Gdx.files.internal("menu/background.jpg"));
@@ -37,12 +45,15 @@ public class Settings implements Screen {
         selectScreen();
     }
     
+    /**
+     * Select this screen. Reset stage. Set actors and listeners.
+     */
     public void selectScreen() {
         if (settingStage != null) {
             settingStage.dispose();
         }
     
-        if(hn.isSound() == true){
+        if(hn.isSound()){
             soundButton = new Entity(hn.getAm().get(hn.getLocalization().get("soundButton"), Texture.class), hn.getAm().get(hn.getLocalization().get("soundpressedButton"), Texture.class), 20f, 200f, 1, true, 0.80f);
         }
         else{
@@ -66,6 +77,11 @@ public class Settings implements Screen {
         hn.setScreen(this);
     }
 
+    /**
+     * Listens entities by id for actions
+     *
+     * @param entity the entity that was clicked.
+     */
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
@@ -98,10 +114,9 @@ public class Settings implements Screen {
                 break;
 
             case 4: Gdx.app.log("Settings", "reset");
-                globalPrefs.putBoolean("Reset1", true);
-                globalPrefs.putBoolean("Reset2", true);
-                globalPrefs.putBoolean("Reset3", true);
-                globalPrefs.putBoolean("Reset4", true);
+                for (int i = 1; i <= hn.levelSelect.LEVELCOUNT; i++) {
+                    globalPrefs.putBoolean("Reset"+i, true);
+                }
                 globalPrefs.putBoolean("Tutorial", true);
                 globalPrefs.flush();
                 entity.resetAction();
@@ -152,7 +167,7 @@ public class Settings implements Screen {
 
     @Override
     public void resume() {
-        if (hn.isSound() == true){
+        if (hn.globalPrefs.getInteger("sound", 1) == 1){
             hn.music.play();
         }
     }

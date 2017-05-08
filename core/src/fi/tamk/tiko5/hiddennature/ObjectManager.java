@@ -3,6 +3,9 @@ package fi.tamk.tiko5.hiddennature;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * The Object manager. Provides information for level objects.
+ */
 public class ObjectManager {
     private int id;
     private PrefHandler prefs;
@@ -12,6 +15,12 @@ public class ObjectManager {
     private Array<Entity> originals = new Array<Entity>();
     private HiddenNature hn;
 
+    /**
+     * Instantiates a new Object manager. Creates array of level objects by level id.
+     *
+     * @param level        the current level
+     * @param hiddenNature main. Contains asset manager.
+     */
     public ObjectManager(Level level, HiddenNature hiddenNature){
         hn = hiddenNature;
         prefs = new PrefHandler(level, hn);
@@ -185,15 +194,15 @@ public class ObjectManager {
                     originals.add(new Entity(hn.getAm().get("l5/siiliOrig.png", Texture.class), 0, 0, -9, 0.2f, false));
                     originals.add(new Entity(hn.getAm().get("l5/yokkonenOrig.png", Texture.class), 0, 0, -10, 0.2f, false));
 
-                    silhouettes.add(new Entity(hn.getAm().get("l5/hiiriSil.png", Texture.class), 80, 270f, -1, 0.2f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/hiiriSil.png", Texture.class), 60, 270f, -1, 0.1f, false));
                     silhouettes.add(new Entity(hn.getAm().get("l5/huuhkajaSil.png", Texture.class), 180f, 310f, -2, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/karhuSil.png", Texture.class), 320f, 310f, -3, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/konnaSil.png", Texture.class), 460f, 310f, -4, 0.15f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/LepakkoSil.png", Texture.class), 560f, 310f, -5, 0.2f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/karhuSil.png", Texture.class), 320f, 310f, -3, 0.3f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/konnaSil.png", Texture.class), 470f, 310f, -4, 0.2f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/LepakkoSil.png", Texture.class), 560f, 310f, -5, 0.3f, false));
                     silhouettes.add(new Entity(hn.getAm().get("l5/mayraSil.png", Texture.class), 80f, 130f, -6, 0.2f, false));
                     silhouettes.add(new Entity(hn.getAm().get("l5/minkkiSil.png", Texture.class), 200f, 130f, -7, 0.2f, false));
                     silhouettes.add(new Entity(hn.getAm().get("l5/naataSil.png", Texture.class), 320f, 130f, -8, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/siiliSil.png", Texture.class), 470f, 130f, -9, 0.2f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/siiliSil.png", Texture.class), 450f, 130f, -9, 0.2f, false));
                     silhouettes.add(new Entity(hn.getAm().get("l5/yokkonenSil.png", Texture.class), 560f, 130f, -10, 0.2f, false));
                     break;
             }
@@ -206,14 +215,29 @@ public class ObjectManager {
         }
     }
 
+    /**
+     * Gets originals.
+     *
+     * @return the originals
+     */
     public Array<Entity> getOriginals() {
         return originals;
     }
 
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
     public Array<Entity> getEntities() {
         return entities;
     }
 
+    /**
+     * Gets silhouettes.
+     *
+     * @return the silhouettes
+     */
     public Array<Entity> getSilhouettes() {
         return silhouettes;
     }

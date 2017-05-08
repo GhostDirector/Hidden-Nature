@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * The Credits screen.
+ */
 public class Credits implements Screen {
     private HiddenNature hn;
     private Texture background;
@@ -29,6 +32,11 @@ public class Credits implements Screen {
         hn.dispose();
     }
 
+    /**
+     * Instantiates a new Credits screen.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     */
     public Credits(HiddenNature hiddenNature){
         gameIsOn = true;
         hn = hiddenNature;
@@ -48,6 +56,9 @@ public class Credits implements Screen {
         selectScreen();
     }
     
+    /**
+     * Select this screen. Reset stage. Set actors and listeners.
+     */
     public void selectScreen() {
         if (creditsStage != null) {
             creditsStage.dispose();
@@ -79,6 +90,11 @@ public class Credits implements Screen {
         hn.setScreen(this);
     }
 
+    /**
+     * Listens entities by id for actions
+     *
+     * @param entity the entity that was clicked.
+     */
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
@@ -162,7 +178,7 @@ public class Credits implements Screen {
     @Override
     public void resume() {
         gameIsOn = true;
-        if (hn.isSound()){
+        if (hn.globalPrefs.getInteger("sound", 1) == 1){
             hn.music.play();
         }
     }

@@ -5,6 +5,9 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * The Pref handler. Provides saving and loading system for game progres.
+ */
 public class PrefHandler {
     private Preferences prefs, globalPrefs;
     private Level level;
@@ -14,6 +17,12 @@ public class PrefHandler {
     private Entity tmpEnt;
     private HiddenNature hn;
 
+    /**
+     * Instantiates a new Pref handler.
+     *
+     * @param l            the current level.
+     * @param hiddenNature main. Contains asset manager.
+     */
     public PrefHandler(Level l, HiddenNature hiddenNature){
         hn = hiddenNature;
         level = l;
@@ -21,6 +30,9 @@ public class PrefHandler {
 
     }
 
+    /**
+     * Saves status of level objects.
+     */
     public void save(){
         Array<Entity> saveEntities = level.getEntities();
         Array<Entity> saveOriginals = level.getOriginals();
@@ -64,6 +76,11 @@ public class PrefHandler {
         prefs.flush();
     }
 
+    /**
+     * Loads level objects from preferences.
+     *
+     * @return returns true of false depending whether loading was successful
+     */
     public boolean loadLevel() {
         boolean isLoad;
 
@@ -103,6 +120,12 @@ public class PrefHandler {
         return isLoad;
     }
 
+    /**
+     * Gets arrays.
+     *
+     * @param longStrings the long strings
+     * @return the arrays
+     */
     public Array<Entity> getArrays(String[] longStrings) {
         Array<Entity>array = new Array<Entity>();
 
@@ -124,14 +147,29 @@ public class PrefHandler {
         return array;
     }
 
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
     public Array<Entity> getEntities() {
         return entities;
     }
 
+    /**
+     * Gets originals.
+     *
+     * @return the originals
+     */
     public Array<Entity> getOriginals() {
         return originals;
     }
 
+    /**
+     * Gets silhouettes.
+     *
+     * @return the silhouettes
+     */
     public Array<Entity> getSilhouettes() {
         return silhouettes;
     }

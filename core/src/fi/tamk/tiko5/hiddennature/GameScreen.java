@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
@@ -13,7 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-
+/**
+ * The Game screen.
+ *
+ * Provides rendering and user interface for actual gameplay.
+ */
 public class GameScreen extends MyAdapter implements Screen{
 
     private HiddenNature hn;
@@ -31,7 +34,7 @@ public class GameScreen extends MyAdapter implements Screen{
     private PrefHandler prefs;
     private Preferences globalPrefs;
     private boolean showTutorial, completed;
-    private int counter, nextLevel;
+    private int counter;
 
 
     @Override
@@ -42,6 +45,12 @@ public class GameScreen extends MyAdapter implements Screen{
         hn.dispose();
     }
 
+    /**
+     * Instantiates a new Game screen.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     * @param l            Selected level
+     */
     public GameScreen(HiddenNature hiddenNature, Level l) {
 
         level = l;
@@ -76,7 +85,9 @@ public class GameScreen extends MyAdapter implements Screen{
     }
 
 
-
+    /**
+     * Select this screen. Reset stage. Set actors and listeners.
+     */
     public void selectScreen() {
         if (gameStage != null) {
             gameStage.dispose();
@@ -109,6 +120,11 @@ public class GameScreen extends MyAdapter implements Screen{
         hn.setScreen(this);
     }
 
+    /**
+     * Listens entities by id for actions
+     *
+     * @param entity the entity that was clicked.
+     */
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
@@ -120,8 +136,6 @@ public class GameScreen extends MyAdapter implements Screen{
                 level.setOriginals(originals);
                 level.setEntities(entities);
                 level.setSilhouettes(silhouettes);
-                level.setZoom(((OrthographicCamera) gameStage.getCamera()).zoom);
-                level.setCamPos(gameStage.getCamera().position);
                 prefs.save();
                 hn.pauseMenu.selectScreen();
                 entity.resetAction();
@@ -133,6 +147,10 @@ public class GameScreen extends MyAdapter implements Screen{
                 break;
 
             case 3: globalPrefs.putBoolean("Completed"+level.getLevelID(), true);
+                level.setOriginals(originals);
+                level.setEntities(entities);
+                level.setSilhouettes(silhouettes);
+                prefs.save();
                 entity.resetAction();
                 hn.levelSelect.toNextLevel(level.getLevelID());
                 break;
@@ -217,7 +235,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
     @Override
     public void resume() {
-        if (hn.isSound()){
+        if (globalPrefs.getInteger("sound", 1) == 1){
             hn.gameMusic.play();
         }
     }

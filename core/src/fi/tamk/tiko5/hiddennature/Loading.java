@@ -12,9 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
- * Created by ghost on 8.5.2017.
+ * The Loading. Provides loading screen while AssetManager loads assets.
  */
-
 public class Loading implements Screen {
 
     private HiddenNature hn;
@@ -23,13 +22,18 @@ public class Loading implements Screen {
     private Texture background, logo;
     private BitmapFont font;
 
+    /**
+     * Instantiates a new Loading.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     */
     public Loading(HiddenNature hiddenNature){
 
         hn = hiddenNature;
         batch = hn.getBatch();
         loadingStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
         background = new Texture(Gdx.files.internal("menu/backgroundLoading.jpg"));
-        logo = new Texture("logos/trashPandaTrans.png");
+        logo = new Texture("logos/tpg.png");
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Calibri1.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -39,9 +43,6 @@ public class Loading implements Screen {
         font = generator.generateFont(param);
 
     }
-
-
-
 
     @Override
     public void show() {
@@ -56,7 +57,7 @@ public class Loading implements Screen {
 
         loadingStage.getBatch().begin();
         loadingStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
-        loadingStage.getBatch().draw(logo, 270, 180, logo.getWidth() * 0.19f,  logo.getHeight() * 0.19f);
+        loadingStage.getBatch().draw(logo, 270, 180, logo.getWidth() * 0.53f,  logo.getHeight() * 0.53f);
 
         if (hn.getAm().update()){
             hn.createScreens();

@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * The Pause menu screen.
+ */
 public class PauseMenu implements Screen {
 
     private HiddenNature hn;
@@ -31,6 +34,12 @@ public class PauseMenu implements Screen {
         hn.dispose();
     }
 
+    /**
+     * Instantiates a new Pause menu.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     * @param l            the current level.
+     */
     public PauseMenu(HiddenNature hiddenNature, Level l){
 
         hn = hiddenNature;
@@ -48,6 +57,9 @@ public class PauseMenu implements Screen {
         selectScreen();
     }
 
+    /**
+     * Select this screen. Reset stage. Set actors and listeners.
+     */
     public void selectScreen() {
         if (pauseStage != null) {
             pauseStage.dispose();
@@ -85,6 +97,11 @@ public class PauseMenu implements Screen {
         hn.setScreen(this);
     }
 
+    /**
+     * Listens entities by id for actions
+     *
+     * @param entity the entity that was clicked.
+     */
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
@@ -103,7 +120,7 @@ public class PauseMenu implements Screen {
             case 2:Gdx.app.log("pauseMenu", "back");
                 hn.gameMusic.pause();
                 if (globalPrefs.getInteger("sound", 1) == 1){
-                    hn.gameMusic.play();
+                    hn.music.play();
                 }
                 hn.levelSelect.selectScreen();
                 entity.resetAction();
@@ -157,7 +174,7 @@ public class PauseMenu implements Screen {
 
     @Override
     public void resume() {
-        if (hn.isSound() == true){
+        if (globalPrefs.getInteger("sound", 1) == 1){
             hn.gameMusic.play();
         }
     }

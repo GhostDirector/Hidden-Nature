@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * The Main menu.
+ */
 public class MainMenu implements Screen {
     private HiddenNature hn;
     private Texture background;
@@ -23,9 +26,20 @@ public class MainMenu implements Screen {
         hn.dispose();
     }
 
+    /**
+     * Instantiates a new Main menu.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     */
     public MainMenu(HiddenNature hiddenNature){
-
         hn = hiddenNature;
+        int mute = hn.globalPrefs.getInteger("sound", 1);
+        switch (mute) {
+            case 1: hn.music.play();
+                break;
+
+            case 2: hn.music.pause();
+        }
         background = hn.getAm().get("menu/background.jpg", Texture.class);
         batch = hn.getBatch();
         
@@ -35,6 +49,9 @@ public class MainMenu implements Screen {
         selectScreen();
     }
 
+    /**
+     * Select this screen. Reset stage. Set actors and listeners.
+     */
     public void selectScreen() {
         if (mainStage != null) {
             mainStage.dispose();
@@ -56,6 +73,11 @@ public class MainMenu implements Screen {
         hn.setScreen(this);
     }
 
+    /**
+     * Listens entities by id for actions
+     *
+     * @param entity the entity that was clicked.
+     */
     public void getEntityID(Entity entity){
         switch (entity.getAction()){
 
@@ -121,7 +143,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void resume() {
-        if (hn.isSound() == true){
+        if (hn.globalPrefs.getInteger("sound", 1) == 1){
             hn.music.play();
         }
     }

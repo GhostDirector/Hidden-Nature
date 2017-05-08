@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 
+/**
+ * Entity. Can be a button or a game object.
+ */
 public class Entity extends Actor {
     private Texture texture;
     private int action;
@@ -24,8 +27,18 @@ public class Entity extends Actor {
     private SequenceAction middleAndUp;
     private MoveToAction moveUp, moveMiddle, slideDown;
     private RotateToAction rotateAction;
-    String path;
+    private String path;
 
+    /**
+     * Instantiates a new Entity for game objects.
+     *
+     * @param file     the texture of entity
+     * @param x        the x coordinate
+     * @param y        the y coordinate
+     * @param buttonID the button id that is returned when object is touched
+     * @param scale    the scale of entity
+     * @param found    if object is found or not
+     */
     public Entity(Texture file, float x, float y, int buttonID, float scale, boolean found) {
         path = ((FileTextureData)file.getTextureData()).getFileHandle().path();
         System.out.println(path);
@@ -52,6 +65,17 @@ public class Entity extends Actor {
 
     }
 
+    /**
+     * Instantiates a new Entity for menu buttons.
+     *
+     * @param file        the texture of entity
+     * @param filePressed the pressed texture of entity
+     * @param x           the x coordinate
+     * @param y           the y coordinate
+     * @param buttonID    the button id that is returned when object is touched
+     * @param isbutton    if this is a button or not
+     * @param scale       the scale of entity
+     */
     public Entity(Texture file, Texture filePressed, float x, float y , int buttonID, boolean isbutton, float scale) {
         found = false;
         original = file;
@@ -77,6 +101,16 @@ public class Entity extends Actor {
         });
     }
 
+    /**
+     * Instantiates a new Entity for text boxes.
+     *
+     * @param file     the texture of entity
+     * @param x        the x coordinate
+     * @param y        the y coordinate
+     * @param buttonID the button id that is returned when object is touched
+     * @param isbutton if this is a button or not
+     * @param scale    the scale of entity
+     */
     public Entity(Texture file, float x, float y , int buttonID, boolean isbutton, float scale) {
         found = false;
         original = file;
@@ -100,6 +134,11 @@ public class Entity extends Actor {
         });
     }
 
+    /**
+     * Provides path of texture for Prefhandler.
+     *
+     * @return path of texture
+     */
     public String getPath(){
         return path;
     }
@@ -124,6 +163,9 @@ public class Entity extends Actor {
 
     }
 
+    /**
+     * Creates object animations.
+     */
     public void objectAnimations() {
         moveUp = new MoveToAction();
         moveMiddle = new MoveToAction();
@@ -147,6 +189,9 @@ public class Entity extends Actor {
         middleAndUp.addAction(up);
     }
 
+    /**
+     * Creates slider animations.
+     */
     public void sliderAnimations() {
         slideDown = new MoveToAction();
 
@@ -154,46 +199,79 @@ public class Entity extends Actor {
         slideDown.setDuration(30f);
     }
 
+    /**
+     * Activate slide animation.
+     */
     public void slide() {
         this.addAction(slideDown);
     }
 
+    /**
+     * Is object found boolean.
+     *
+     * @return the boolean
+     */
     public boolean isFound() {
         return found;
     }
 
+    /**
+     * Sets object found boolean.
+     *
+     * @param found the found
+     */
     public void setFound(boolean found) {
         this.found = found;
     }
 
+    /**
+     * Pressed button texture.
+     */
     public void pressedTexture(){
         texture = pressed;
     }
 
+    /**
+     * Released button texture.
+     */
     public void releasedTexture(){
         if (isButton) {
             texture = original;
         }
     }
 
+    /**
+     * Get unique value assigned to this button. Only if button has been touched.
+     *
+     * @return unique value assigned to this button.
+     */
     public int getAction(){
         return action;
     }
 
+    /**
+     * Reset unique value assigned to this button.
+     */
     public void resetAction(){
         if (action != 0) {
             this.action = 0;
         }
     }
 
+    /**
+     * Gets object scale.
+     *
+     * @return the scale
+     */
     public float getScale() {
         return scale;
     }
 
-    public Texture getOriginal() {
-        return original;
-    }
-
+    /**
+     * Get unique value assigned to this button.
+     *
+     * @return unique value assigned to this button.
+     */
     public int getButtonID(){
         return  buttonID;
     }

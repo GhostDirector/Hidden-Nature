@@ -13,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * The screen Level select.
+ */
 public class LevelSelect implements Screen{
     private HiddenNature hn;
     private Texture background;
@@ -24,6 +27,9 @@ public class LevelSelect implements Screen{
     private BitmapFont font;
     private Preferences globalPrefs;
     private Entity leftArrow, rightArrow, quit, start, levelButton, tmp;
+    /**
+     * The Levelcount.
+     */
     public final byte LEVELCOUNT = 5;
     private Array<Entity> levels;
     private Array<String> levelNames;
@@ -38,6 +44,11 @@ public class LevelSelect implements Screen{
         hn.dispose();
     }
 
+    /**
+     * Instantiates a new Level select.
+     *
+     * @param hiddenNature main. Contains asset manager.
+     */
     public LevelSelect(HiddenNature hiddenNature) {
         globalPrefs = Gdx.app.getPreferences("settings");
         levelText = 1;
@@ -77,7 +88,10 @@ public class LevelSelect implements Screen{
         selectScreen();
 }
 
-public void selectScreen() {
+    /**
+     * Select this screen. Reset stage. Set actors and listeners.
+     */
+    public void selectScreen() {
     if (mainStage != null) {
         mainStage.dispose();
     }
@@ -107,34 +121,44 @@ public void selectScreen() {
     hn.setScreen(this);
 }
 
+    /**
+     * Loads level by level id.
+     *
+     * @param id the currently selected level.
+     */
     public void loadLevel(int id){
 
         switch (id){
 
             case 1:
-                level = new Level(1, "Kesäinen metsä", hn.getAm().get("l1/Taso1.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
+                level = new Level(1, hn.getAm().get("l1/Taso1.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 2:
-                level = new Level(2, "Talvinen metsä", hn.getAm().get("l2/Taso2.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
+                level = new Level(2, hn.getAm().get("l2/Taso2.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 3:
-                level = new Level(3, "Syksy", hn.getAm().get("l3/Taso3.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
+                level = new Level(3, hn.getAm().get("l3/Taso3.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 4:
-                level = new Level(4, "Ranta",hn.getAm().get("l4/Taso4.png", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
+                level = new Level(4,hn.getAm().get("l4/Taso4.png", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
             case 5:
-                level = new Level(5, "yo",hn.getAm().get("l5/Taso5.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
+                level = new Level(5,hn.getAm().get("l5/Taso5.jpg", Texture.class), hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT(), hn);
                 break;
 
         }
 
     }
 
+    /**
+     * Set thumbnail of selected level.
+     *
+     * @param l +1 or -1 depending on if right or left arrow was touched.
+     */
     public void setLevel(int l){
         int tmp = currentLevel;
 
@@ -159,6 +183,11 @@ public void selectScreen() {
         Gdx.app.log("currentlevel", ""+ currentLevel);
     }
     
+    /**
+     * Hide menu arrows when they do nothing. Example cant go left when at level 1 so don't show left arrow.
+     *
+     * @param i the current selected level.
+     */
     public void hideMenuArrows(int i) {
         if (i == 0) {
             leftArrow.setVisible(false);
@@ -173,6 +202,11 @@ public void selectScreen() {
         }
     }
 
+    /**
+     * Listens entities by id for actions
+     *
+     * @param entity the entity that was clicked.
+     */
     public void getEntityID(Entity entity){
         int caseID = entity.getAction();
 
@@ -201,9 +235,11 @@ public void selectScreen() {
                 globalPrefs.putBoolean("Reset", false);
                 loadLevel(currentLevel+1);
                 hn.music.pause();
+
                 if (globalPrefs.getInteger("sound", 1) == 1){
                     hn.gameMusic.play();
                 }
+
                 hn.pauseMenu = new PauseMenu(hn, level);
                 hn.gameScreen = new GameScreen(hn, level);
                 entity.resetAction();
@@ -211,6 +247,11 @@ public void selectScreen() {
         }
     }
     
+    /**
+     * Moves you to the next level after completing a level. Or moves you to credit screen after finishing game.
+     *
+     * @param levelID the level that was just completed.
+     */
     public void toNextLevel(int levelID) {
         if (levelID < LEVELCOUNT) {
             setLevel(1);
@@ -218,7 +259,7 @@ public void selectScreen() {
             hn.pauseMenu = new PauseMenu(hn, level);
             hn.gameScreen = new GameScreen(hn, level);
         } else {
-            selectScreen();
+            hn.credits.selectScreen();
         }
     }
 
@@ -260,7 +301,7 @@ public void selectScreen() {
 
     @Override
     public void resume() {
-        if (hn.isSound() == true){
+        if (hn.globalPrefs.getInteger("sound", 1) == 1){
             hn.music.play();
         }
     }
