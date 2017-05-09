@@ -13,9 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import java.util.Locale;
 
 /**
- * The Hidden nature.
- *
- * Acts as a host for game session.
+ * Hidden nature, acts as a host for game session.
  */
 public class HiddenNature extends Game {
     private SpriteBatch batch;
@@ -418,7 +416,7 @@ public class HiddenNature extends Game {
     }
 
     /**
-     * Play menu music. Checks whether music is muted or not.
+     * Play menu music, checks whether music is muted or not.
      */
     public void playMenuMusic(){
         if (globalPrefs.getInteger("sound", 1) == 1) {

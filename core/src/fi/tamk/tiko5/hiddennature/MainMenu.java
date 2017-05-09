@@ -50,7 +50,7 @@ public class MainMenu implements Screen {
     }
 
     /**
-     * Select this screen. Reset stage. Set actors and listeners.
+     * Select this screen, reset stage, set actors and listeners.
      */
     public void selectScreen() {
         if (mainStage != null) {

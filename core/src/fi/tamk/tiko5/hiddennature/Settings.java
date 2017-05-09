@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
- * The Settings. Provides buttons for language changing, game progress reset and mute.
+ * The Settings screen, provides buttons for language changing, game progress reset and mute.
  */
 public class Settings implements Screen {
     private HiddenNature hn;
@@ -46,7 +46,7 @@ public class Settings implements Screen {
     }
     
     /**
-     * Select this screen. Reset stage. Set actors and listeners.
+     * Select this screen, reset stage, set actors and listeners.
      */
     public void selectScreen() {
         if (settingStage != null) {

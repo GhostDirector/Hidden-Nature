@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
- * The Loading. Provides loading screen while AssetManager loads assets.
+ * Provides loading screen while AssetManager loads assets.
  */
 public class Loading implements Screen {
 

@@ -57,7 +57,7 @@ public class Credits implements Screen {
     }
     
     /**
-     * Select this screen. Reset stage. Set actors and listeners.
+     * Select this screen, reset stage, set actors and listeners.
      */
     public void selectScreen() {
         if (creditsStage != null) {
@@ -70,7 +70,6 @@ public class Credits implements Screen {
         entity3 = new Entity(hn.getAm().get(hn.getLocalization().get("tamkLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("tamkLogo"), Texture.class), 40f, 40f, 3, true, 0.07f);
         entity4 = new Entity(hn.getAm().get(hn.getLocalization().get("tikoLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("tikoLogo"), Texture.class), 260f, 40f, 4, true, 0.35f);
         entity5 = new Entity(hn.getAm().get(hn.getLocalization().get("vapriikkiLogo"), Texture.class), hn.getAm().get(hn.getLocalization().get("vapriikkiLogo"), Texture.class), 520f, 40f, 5, true, 0.35f);
-
 
         creditsStage.addActor(entity1);
         creditsStage.addActor(entity2);

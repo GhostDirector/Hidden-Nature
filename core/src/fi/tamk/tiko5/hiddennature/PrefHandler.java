@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * The Pref handler. Provides saving and loading system for game progres.
+ * The Pref handler, provides saving and loading system for game progress.
  */
 public class PrefHandler {
     private Preferences prefs, globalPrefs;

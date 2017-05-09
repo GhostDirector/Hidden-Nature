@@ -89,7 +89,7 @@ public class LevelSelect implements Screen{
 }
 
     /**
-     * Select this screen. Reset stage. Set actors and listeners.
+     * Select this screen, reset stage, set actors and listeners.
      */
     public void selectScreen() {
     if (mainStage != null) {
@@ -184,7 +184,7 @@ public class LevelSelect implements Screen{
     }
     
     /**
-     * Hide menu arrows when they do nothing. Example cant go left when at level 1 so don't show left arrow.
+     * Hide menu arrows when they do nothing, example cant go left when at level 1 so don't show left arrow.
      *
      * @param i the current selected level.
      */
@@ -248,7 +248,7 @@ public class LevelSelect implements Screen{
     }
     
     /**
-     * Moves you to the next level after completing a level. Or moves you to credit screen after finishing game.
+     * Moves you to the next level after completing a level or moves you to credit screen after finishing game.
      *
      * @param levelID the level that was just completed.
      */

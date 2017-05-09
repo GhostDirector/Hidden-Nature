@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * The Object manager. Provides information for level objects.
+ * The Object manager, provides information for level objects.
  */
 public class ObjectManager {
     private int id;
@@ -16,7 +16,7 @@ public class ObjectManager {
     private HiddenNature hn;
 
     /**
-     * Instantiates a new Object manager. Creates array of level objects by level id.
+     * Instantiates a new Object manager and creates array of level objects by level id.
      *
      * @param level        the current level
      * @param hiddenNature main. Contains asset manager.

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 
 /**
- * Entity. Can be a button or a game object.
+ * Entity, can be a button or a game object.
  */
 public class Entity extends Actor {
     private Texture texture;
@@ -240,7 +240,7 @@ public class Entity extends Actor {
     }
 
     /**
-     * Get unique value assigned to this button. Only if button has been touched.
+     * Get unique value assigned to this button, only if button has been touched.
      *
      * @return unique value assigned to this button.
      */

@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * The Level. Contains information for levels.
+ * The Level screen, contains information for levels.
  */
 public class Level extends Actor{
     private int levelID;

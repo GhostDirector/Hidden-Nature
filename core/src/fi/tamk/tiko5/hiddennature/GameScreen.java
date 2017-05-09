@@ -13,9 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
- * The Game screen.
- *
- * Provides rendering and user interface for actual gameplay.
+ * The Game screen, provides rendering and user interface for actual gameplay.
  */
 public class GameScreen extends MyAdapter implements Screen{
 
@@ -86,7 +84,7 @@ public class GameScreen extends MyAdapter implements Screen{
 
 
     /**
-     * Select this screen. Reset stage. Set actors and listeners.
+     * Select this screen, reset stage, set actors and listeners.
      */
     public void selectScreen() {
         if (gameStage != null) {
@@ -121,7 +119,7 @@ public class GameScreen extends MyAdapter implements Screen{
     }
 
     /**
-     * Listens entities by id for actions
+     * Listens entities by id for actions.
      *
      * @param entity the entity that was clicked.
      */
