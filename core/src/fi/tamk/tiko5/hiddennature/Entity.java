@@ -41,7 +41,6 @@ public class Entity extends Actor {
      */
     public Entity(Texture file, float x, float y, int buttonID, float scale, boolean found) {
         path = ((FileTextureData)file.getTextureData()).getFileHandle().path();
-        System.out.println(path);
         this.scale = scale;
         this.found = found;
         texture = file;

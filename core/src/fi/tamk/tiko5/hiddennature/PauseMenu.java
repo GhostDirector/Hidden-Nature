@@ -51,7 +51,7 @@ public class PauseMenu implements Screen {
         globalPrefs = Gdx.app.getPreferences("settings");
 
         background = hn.getAm().get("menu/PauseMenuFancy.jpg", Texture.class);
-        menuButton = new Entity(hn.getAm().get("menu/X.png", Texture.class), hn.getAm().get("menu/xPushedButton.png", Texture.class), 690f, 390f, 1, true, 0.25f);
+        menuButton = new Entity(hn.getAm().get("menu/ArrowBackButton.png", Texture.class), hn.getAm().get("menu/ArrowBackPushedButton.png", Texture.class), 690f, 390f, 1, true, 0.25f);
         helpButton = new Entity(hn.getAm().get("menu/HelpButton.png", Texture.class), hn.getAm().get("menu/HelpPushedButton.png", Texture.class), 690f, 290f, 3, true, 0.25f);
         
         selectScreen();
@@ -66,7 +66,7 @@ public class PauseMenu implements Screen {
         }
 
         pauseStage = new Stage(new FitViewport(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT()), batch);
-        returnButton = new Entity(hn.getAm().get(hn.getLocalization().get("returnToMenu"), Texture.class), hn.getAm().get(hn.getLocalization().get("returnToMenuPressed"), Texture.class), 280f, 10f, 2, true, 0.50f);
+        returnButton = new Entity(hn.getAm().get(hn.getLocalization().get("returnToMenu"), Texture.class), hn.getAm().get(hn.getLocalization().get("returnToMenuPressed"), Texture.class), 340f, 10f, 2, true, 0.50f);
         tutorialBox = new Entity(hn.getAm().get(hn.getLocalization().get("pauseTutBox"), Texture.class), hn.getAm().get(hn.getLocalization().get("pauseTutBox"), Texture.class), 0f, 0f, 4, true, 1f);
         tutorialBox.setSize(hn.getWORLD_WIDTH(), hn.getWORLD_HEIGHT());
 

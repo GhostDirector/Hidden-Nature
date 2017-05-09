@@ -57,15 +57,15 @@ public class Loading implements Screen {
 
         loadingStage.getBatch().begin();
         loadingStage.getBatch().draw(background, 0, 0, hn.getWORLD_WIDTH(),  hn.getWORLD_HEIGHT());
-        loadingStage.getBatch().draw(logo, 270, 180, logo.getWidth() * 0.53f,  logo.getHeight() * 0.53f);
+        loadingStage.getBatch().draw(logo, 280, 180, logo.getWidth() * 0.53f,  logo.getHeight() * 0.53f);
 
         if (hn.getAm().update()){
             hn.createScreens();
             hn.mainMenu.selectScreen();
         }
         else {
-            font.draw(batch, "Loading Assets", 280, 190);
-            font.draw(batch, "Progress: " + (int)(hn.getAm().getProgress() * 100) + "%", 290, 160);
+            font.draw(batch, "Loading Assets", 290, 190);
+            font.draw(batch, "Progress: " + (int)(hn.getAm().getProgress() * 100) + "%", 300, 160);
         }
         loadingStage.getBatch().end();
     }

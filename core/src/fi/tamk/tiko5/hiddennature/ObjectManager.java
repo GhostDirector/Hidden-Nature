@@ -35,7 +35,7 @@ public class ObjectManager {
                     entities.add(new Entity(hn.getAm().get("l1/HirviEnt.png", Texture.class), 282f, 78f, -1, 1f, false)); //1
                     entities.add(new Entity(hn.getAm().get("l1/JanisEnt.png", Texture.class), 281f, 30f, -2, 1f, false)); //2
                     entities.add(new Entity(hn.getAm().get("l1/KaapaEnt.png", Texture.class), 18f, 70f, -3, 0.7f, false)); //3
-                    entities.add(new Entity(hn.getAm().get("l1/KiipijaEntOrig.png", Texture.class), 115f, 435f, -4, 1f, false)); //4
+                    entities.add(new Entity(hn.getAm().get("l1/KiipijaEntOrig.png", Texture.class), 115f, 425f, -4, 1f, false)); //4
                     entities.add(new Entity(hn.getAm().get("l1/LehdokkiEntOrig.png", Texture.class), 487f, 5f, -5, 1f, false)); //5
                     entities.add(new Entity(hn.getAm().get("l1/LiitoOravaEnt.png", Texture.class), 457f, 400f, -6, 1f, false)); //6
                     entities.add(new Entity(hn.getAm().get("l1/OravaEnt.png", Texture.class), 90f, 360f, -7, 1f, false)); //7
@@ -107,7 +107,7 @@ public class ObjectManager {
                     entities.add(new Entity(hn.getAm().get("l3/supikoiraEnt.png", Texture.class), 251f, 93f, -3, 0.7f, false));
                     entities.add(new Entity(hn.getAm().get("l3/talitinttiEnt.png", Texture.class), 440f, 427f, -4, 0.6f, false));
                     entities.add(new Entity(hn.getAm().get("l3/tikkaEnt.png", Texture.class), 63f, 320f, -5, 0.60f, false));
-                    entities.add(new Entity(hn.getAm().get("l3/yokkonenEnt.png", Texture.class), 735f, 145f, -6, 0.55f, false));
+                    entities.add(new Entity(hn.getAm().get("l3/yokkonenEnt.png", Texture.class), 722f, 145f, -6, 0.55f, false));
                     entities.add(new Entity(hn.getAm().get("l3/haperoEnt.png", Texture.class), 100f, 110f, -7, 0.55f, false));
                     entities.add(new Entity(hn.getAm().get("l3/karpassieniEnt.png", Texture.class), 190f, 20f, -8, 0.55f, false));
                     entities.add(new Entity(hn.getAm().get("l3/tattiEnt.png", Texture.class), 58f, 78f, -9, 0.55f, false));
@@ -172,22 +172,22 @@ public class ObjectManager {
                     break;
 
                 case 5:
-                    entities.add(new Entity(hn.getAm().get("l5/hiiriEntYo.png", Texture.class), 350f, 300f, -1, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/huuhkajaEnt.png", Texture.class), 500f, 330f, -2, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/karhuEnt.png", Texture.class), 530f, 50f, -3, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/konnaEnt.png", Texture.class), 100f, 220f, -4, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/lepakkoEnt.png", Texture.class), 270f, 240f, -5, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/mayraEnt.png", Texture.class), 400f, 430f, -6, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/minkkiEnt.png", Texture.class), 265f, 90f, -7, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/naataEnt.png", Texture.class), 500f, 200f, -8, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/siiliEnt.png", Texture.class), 190f, 40f, -9, 0.75f, false));
-                    entities.add(new Entity(hn.getAm().get("l5/yokkonenEnt.png", Texture.class), 265f, 180f, -10, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/hiiriEntYo.png", Texture.class), 640f, 30f, -1, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/huuhkajaEnt.png", Texture.class), 320f, 300f, -2, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/karhuEnt.png", Texture.class), 107f, 180f, -3, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/konnaEnt.png", Texture.class), 280f, 40f, -4, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/lepakkoEnt.png", Texture.class), 600f, 400f, -5, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/mayraEnt.png", Texture.class), 500f, 110f, -6, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/minkkiEnt.png", Texture.class), 70f, 50f, -7, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/naataEnt.png", Texture.class), 430f, 130f, -8, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/siiliEnt.png", Texture.class), 350f, 80f, -9, 0.75f, false));
+                    entities.add(new Entity(hn.getAm().get("l5/yokkonenEnt.png", Texture.class), 310f, 150f, -10, 0.75f, false));
 
-                    originals.add(new Entity(hn.getAm().get("l5/hiiriOrig.png", Texture.class), 0, 0, -1, 0.2f, false));
+                    originals.add(new Entity(hn.getAm().get("l5/hiiriOrig.png", Texture.class), 0, 0, -1, 0.1f, false));
                     originals.add(new Entity(hn.getAm().get("l5/HuuhkajaOrig.png", Texture.class), 0, 0, -2, 0.3f, false));
-                    originals.add(new Entity(hn.getAm().get("l5/karhuOrig.png", Texture.class), 0, 0, -3, 0.4f, false));
-                    originals.add(new Entity(hn.getAm().get("l5/konnaOrig.png", Texture.class), 0, 0, -4, 0.15f, false));
-                    originals.add(new Entity(hn.getAm().get("l5/LepakkoOrig.png", Texture.class), 0, 0, -5, 0.2f, false));
+                    originals.add(new Entity(hn.getAm().get("l5/karhuOrig.png", Texture.class), 0, 0, -3, 0.3f, false));
+                    originals.add(new Entity(hn.getAm().get("l5/konnaOrig.png", Texture.class), 0, 0, -4, 0.2f, false));
+                    originals.add(new Entity(hn.getAm().get("l5/LepakkoOrig.png", Texture.class), 0, 0, -5, 0.3f, false));
                     originals.add(new Entity(hn.getAm().get("l5/mayraOrig.png", Texture.class), 0, 0, -6, 0.2f, false));
                     originals.add(new Entity(hn.getAm().get("l5/minkkiOrig.png", Texture.class), 0, 0, -7, 0.2f, false));
                     originals.add(new Entity(hn.getAm().get("l5/naataOrig.png", Texture.class), 0, 0, -8, 0.2f, false));

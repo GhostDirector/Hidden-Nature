@@ -140,6 +140,10 @@ public class HiddenNature extends Game {
         am.load("menu/tutorialPopupIsompi.png", Texture.class);
         am.load("menu/LevelPassPopup.png", Texture.class);
         am.load("menu/ohjePopupIsompi.png", Texture.class);
+        am.load("menu/ArrowBackButton.png", Texture.class);
+        am.load("menu/ArrowBackPushedButton.png", Texture.class);
+        am.load("menu/FinalPopup.png", Texture.class);
+        am.load("menu/LoppuPopup.png", Texture.class);
         am.load("menu/TasoLapaistyPopup.png", Texture.class);
 
         //Mainmenu Assets

@@ -259,7 +259,11 @@ public class LevelSelect implements Screen{
             hn.pauseMenu = new PauseMenu(hn, level);
             hn.gameScreen = new GameScreen(hn, level);
         } else {
-            hn.credits.selectScreen();
+            hn.gameMusic.pause();
+            if (globalPrefs.getInteger("sound", 1) == 1){
+                hn.music.play();
+            }
+            hn.levelSelect.selectScreen();
         }
     }
 
