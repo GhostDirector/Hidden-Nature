@@ -57,13 +57,13 @@ public class HiddenNature extends Game {
      *
      * Menu music for credits, settings, level select and main menu.
      */
-    protected Music music,
+    protected Music music;
     /**
      * The Game music.
      *
      * Music for game screen and pause menu.
      */
-    gameMusic;
+    protected Music gameMusic;
     private static AssetManager am;
     private Loading loading;
     private OrthographicCamera camera;
