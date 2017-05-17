@@ -196,7 +196,7 @@ public class GameScreen extends MyAdapter implements Screen{
                     }
                     for (Entity f : silhouettes) {
                         if (e.getButtonID() == f.getButtonID()) {
-                            f.setFound(true);
+                            f.setFound(false);
                         }
                     }
 

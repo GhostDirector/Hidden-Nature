@@ -54,16 +54,16 @@ public class ObjectManager {
                     originals.add(new Entity(hn.getAm().get("l1/TikkaEntOrig.png", Texture.class), 0, 0, -9, 1.45f, false)); //9
                     originals.add(new Entity(hn.getAm().get("l1/TinttiOrig.png", Texture.class), 0, 0, -10, 1.45f, false)); //10
 
-                    silhouettes.add(new Entity(hn.getAm().get("l1/HirviSil.png", Texture.class), 70f, 300f, -1, 0.60f, false)); //1
-                    silhouettes.add(new Entity(hn.getAm().get("l1/JanisSil.png", Texture.class), 230f, 310f, -2, 0.4f, false)); //2
-                    silhouettes.add(new Entity(hn.getAm().get("l1/KaapaSil.png", Texture.class), 340f, 310f, -3, 1.14f, false)); //3
-                    silhouettes.add(new Entity(hn.getAm().get("l1/KiipijaSil.png", Texture.class), 460f, 310f, -4, 1.45f, false)); //4
-                    silhouettes.add(new Entity(hn.getAm().get("l1/LehdokkiSil.png", Texture.class), 550f, 310f, -5, 1.3f, false)); //5
-                    silhouettes.add(new Entity(hn.getAm().get("l1/LiitoOravaSil.png", Texture.class), 70f, 120f, -6, 1.45f, false)); //6
-                    silhouettes.add(new Entity(hn.getAm().get("l1/OravaSil.png", Texture.class), 190f, 120f, -7, 1.2f, false)); //7
-                    silhouettes.add(new Entity(hn.getAm().get("l1/PerhonenSil.png", Texture.class), 340f, 120f, -8, 1.45f, false)); //8
-                    silhouettes.add(new Entity(hn.getAm().get("l1/TikkaSil.png", Texture.class), 460f, 120f, -9, 1.45f, false)); //9
-                    silhouettes.add(new Entity(hn.getAm().get("l1/TinttiSil.png", Texture.class), 550f, 120f, -10, 1.45f, false)); //10
+                    silhouettes.add(new Entity(hn.getAm().get("l1/HirviSil.png", Texture.class), 70f, 300f, -1, 0.60f, true)); //1
+                    silhouettes.add(new Entity(hn.getAm().get("l1/JanisSil.png", Texture.class), 230f, 310f, -2, 0.4f, true)); //2
+                    silhouettes.add(new Entity(hn.getAm().get("l1/KaapaSil.png", Texture.class), 340f, 310f, -3, 1.14f, true)); //3
+                    silhouettes.add(new Entity(hn.getAm().get("l1/KiipijaSil.png", Texture.class), 460f, 310f, -4, 1.45f, true)); //4
+                    silhouettes.add(new Entity(hn.getAm().get("l1/LehdokkiSil.png", Texture.class), 550f, 310f, -5, 1.3f, true)); //5
+                    silhouettes.add(new Entity(hn.getAm().get("l1/LiitoOravaSil.png", Texture.class), 70f, 120f, -6, 1.45f, true)); //6
+                    silhouettes.add(new Entity(hn.getAm().get("l1/OravaSil.png", Texture.class), 190f, 120f, -7, 1.2f, true)); //7
+                    silhouettes.add(new Entity(hn.getAm().get("l1/PerhonenSil.png", Texture.class), 340f, 120f, -8, 1.45f, true)); //8
+                    silhouettes.add(new Entity(hn.getAm().get("l1/TikkaSil.png", Texture.class), 460f, 120f, -9, 1.45f, true)); //9
+                    silhouettes.add(new Entity(hn.getAm().get("l1/TinttiSil.png", Texture.class), 550f, 120f, -10, 1.45f, true)); //10
                     break;
 
                 case 2:
@@ -89,16 +89,16 @@ public class ObjectManager {
                     originals.add(new Entity(hn.getAm().get("l2/TiainenOrig.png", Texture.class), 0, 0, -9, 0.4f, false));
                     originals.add(new Entity(hn.getAm().get("l2/TulkkuOrig.png", Texture.class), 0, 0, -10, 0.4f, false));
 
-                    silhouettes.add(new Entity(hn.getAm().get("l2/HiiriSil.png", Texture.class), 70f, 310f, -1, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/JanisSil.png", Texture.class), 200f, 310f, -2, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/KorppiSil.png", Texture.class), 300f, 310f, -3, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/LumikkoSil.png", Texture.class), 430f, 310f, -4, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/PolloSil.png", Texture.class), 540f, 310f, -5, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/PyySil.png", Texture.class), 70f, 120f, -6, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/KettuSil.png", Texture.class), 190f, 120f, -7, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/NaataSil.png", Texture.class), 320f, 120f, -8, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/TiainenSil.png", Texture.class), 440f, 120f, -9, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l2/TulkkuSil.png", Texture.class), 550f, 120f, -10, 0.4f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/HiiriSil.png", Texture.class), 70f, 310f, -1, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/JanisSil.png", Texture.class), 200f, 310f, -2, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/KorppiSil.png", Texture.class), 300f, 310f, -3, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/LumikkoSil.png", Texture.class), 430f, 310f, -4, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/PolloSil.png", Texture.class), 540f, 310f, -5, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/PyySil.png", Texture.class), 70f, 120f, -6, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/KettuSil.png", Texture.class), 190f, 120f, -7, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/NaataSil.png", Texture.class), 320f, 120f, -8, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/TiainenSil.png", Texture.class), 440f, 120f, -9, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l2/TulkkuSil.png", Texture.class), 550f, 120f, -10, 0.4f, true));
                     break;
 
                 case 3:
@@ -124,16 +124,16 @@ public class ObjectManager {
                     originals.add(new Entity(hn.getAm().get("l3/tattiOrig.png", Texture.class), 0, 0, -9, 0.3f, false));
                     originals.add(new Entity(hn.getAm().get("l3/uikkuOrig.png", Texture.class), 0, 0, -10, 0.6f, false));
 
-                    silhouettes.add(new Entity(hn.getAm().get("l3/myyraSil.png", Texture.class), 70f, 310f, -1, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/sorsaSil.png", Texture.class), 190f, 310f, -2, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/supikoiraSil.png", Texture.class), 340f, 310f, -3, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/talitinttiSil.png", Texture.class), 450f, 310f, -4, 0.5f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/tikkaSil.png", Texture.class), 580f, 310f, -5, 0.5f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/yokkonenSil.png", Texture.class), 70f, 120f, -6, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/haperoSil.png", Texture.class), 190f, 120f, -7, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/karpassieniSil.png", Texture.class), 330f, 120f, -8, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/tattiSil.png", Texture.class), 460f, 120f, -9, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l3/uikkuSil.png", Texture.class), 560f, 120f, -10, 0.6f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/myyraSil.png", Texture.class), 70f, 310f, -1, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/sorsaSil.png", Texture.class), 190f, 310f, -2, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/supikoiraSil.png", Texture.class), 340f, 310f, -3, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/talitinttiSil.png", Texture.class), 450f, 310f, -4, 0.5f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/tikkaSil.png", Texture.class), 580f, 310f, -5, 0.5f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/yokkonenSil.png", Texture.class), 70f, 120f, -6, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/haperoSil.png", Texture.class), 190f, 120f, -7, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/karpassieniSil.png", Texture.class), 330f, 120f, -8, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/tattiSil.png", Texture.class), 460f, 120f, -9, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l3/uikkuSil.png", Texture.class), 560f, 120f, -10, 0.6f, true));
                     break;
 
                 case 4:
@@ -159,16 +159,16 @@ public class ObjectManager {
                     originals.add(new Entity(hn.getAm().get("l4/vastarakkiOrig.png", Texture.class), 0, 0, -9, 0.2f, false));
                     originals.add(new Entity(hn.getAm().get("l4/sammakkoOrig.png", Texture.class), 0, 0, -10, 0.2f, false));
 
-                    silhouettes.add(new Entity(hn.getAm().get("l4/haikaraSil.png", Texture.class), 80, 270f, -1, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/harmaalokkiSil.png", Texture.class), 180f, 310f, -2, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/haukiSil.png", Texture.class), 320f, 310f, -3, 0.4f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/kerttunenSil.png", Texture.class), 460f, 310f, -4, 0.15f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/korentoSil.png", Texture.class), 560f, 310f, -5, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/lokkiSil.png", Texture.class), 80f, 130f, -6, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/myyraSil.png", Texture.class), 200f, 130f, -7, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/sorsaSil.png", Texture.class), 320f, 130f, -8, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/vastarakkiSil.png", Texture.class), 470f, 130f, -9, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l4/sammakkoSil.png", Texture.class), 560f, 130f, -10, 0.2f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/haikaraSil.png", Texture.class), 80, 270f, -1, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/harmaalokkiSil.png", Texture.class), 180f, 310f, -2, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/haukiSil.png", Texture.class), 320f, 310f, -3, 0.4f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/kerttunenSil.png", Texture.class), 460f, 310f, -4, 0.15f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/korentoSil.png", Texture.class), 560f, 310f, -5, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/lokkiSil.png", Texture.class), 80f, 130f, -6, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/myyraSil.png", Texture.class), 200f, 130f, -7, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/sorsaSil.png", Texture.class), 320f, 130f, -8, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/vastarakkiSil.png", Texture.class), 470f, 130f, -9, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l4/sammakkoSil.png", Texture.class), 560f, 130f, -10, 0.2f, true));
                     break;
 
                 case 5:
@@ -194,16 +194,16 @@ public class ObjectManager {
                     originals.add(new Entity(hn.getAm().get("l5/siiliOrig.png", Texture.class), 0, 0, -9, 0.2f, false));
                     originals.add(new Entity(hn.getAm().get("l5/yokkonenOrig.png", Texture.class), 0, 0, -10, 0.2f, false));
 
-                    silhouettes.add(new Entity(hn.getAm().get("l5/hiiriSil.png", Texture.class), 60, 270f, -1, 0.1f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/huuhkajaSil.png", Texture.class), 180f, 310f, -2, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/karhuSil.png", Texture.class), 320f, 310f, -3, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/konnaSil.png", Texture.class), 470f, 310f, -4, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/LepakkoSil.png", Texture.class), 560f, 310f, -5, 0.3f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/mayraSil.png", Texture.class), 80f, 130f, -6, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/minkkiSil.png", Texture.class), 200f, 130f, -7, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/naataSil.png", Texture.class), 320f, 130f, -8, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/siiliSil.png", Texture.class), 450f, 130f, -9, 0.2f, false));
-                    silhouettes.add(new Entity(hn.getAm().get("l5/yokkonenSil.png", Texture.class), 560f, 130f, -10, 0.2f, false));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/hiiriSil.png", Texture.class), 60, 270f, -1, 0.1f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/huuhkajaSil.png", Texture.class), 180f, 310f, -2, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/karhuSil.png", Texture.class), 320f, 310f, -3, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/konnaSil.png", Texture.class), 470f, 310f, -4, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/LepakkoSil.png", Texture.class), 560f, 310f, -5, 0.3f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/mayraSil.png", Texture.class), 80f, 130f, -6, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/minkkiSil.png", Texture.class), 200f, 130f, -7, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/naataSil.png", Texture.class), 320f, 130f, -8, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/siiliSil.png", Texture.class), 450f, 130f, -9, 0.2f, true));
+                    silhouettes.add(new Entity(hn.getAm().get("l5/yokkonenSil.png", Texture.class), 560f, 130f, -10, 0.2f, true));
                     break;
             }
         } else {

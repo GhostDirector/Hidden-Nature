@@ -78,7 +78,7 @@ public class PauseMenu implements Screen {
         }
 
         for (Entity e : silhouettes) {
-            if (!e.isFound()) {
+            if (e.isFound()) {
                 pauseStage.addActor(e);
             }
         }

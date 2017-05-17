@@ -78,10 +78,10 @@ public class HiddenNature extends Game {
 
         am = new AssetManager();
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Menumusiikki.mp3"));
-        music.setVolume(0.5f);
+        music.setVolume(0.7f);
         music.setLooping(true);
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Tasomusiikki.mp3"));
-        gameMusic.setVolume(0.5f);
+        gameMusic.setVolume(0.7f);
         gameMusic.setLooping(true);
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
