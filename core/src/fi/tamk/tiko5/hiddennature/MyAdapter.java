@@ -4,6 +4,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Custom adapter implementing GestureListener and InputProcessor.
+ */
 public class MyAdapter implements GestureListener, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {

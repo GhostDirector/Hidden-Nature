@@ -1,97 +1,55 @@
 package fi.tamk.tiko5.hiddennature;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * The Level screen, contains information for levels.
+ */
 public class Level extends Actor{
-
     private int levelID;
-    private String levelName, dioString;
     private Texture levelDiorama;
-    private int entitiesFound;
-    private Array<Entity> objects, pauseObjects, foundEntities;
+    private Array<Entity>originals = new Array<Entity>();
+    private Array<Entity>silhouettes = new Array<Entity>();
+    private Array<Entity>entities = new Array<Entity>();
     private Vector3 camPos;
-
-    public Level(int id, String name, String diorama, int found, float width, float height){
-        dioString = diorama;
-        levelID = id;
-        objectManager = new ObjectManager(levelID);
-        levelName = name;
-        levelDiorama = new Texture(Gdx.files.internal(diorama));
-        entitiesFound = found;
-        setBounds(160, 90, width - 320, height - 180);
-
-        objects = objectManager.getObjects();
-        pauseObjects = objectManager.getPauseEntities();
-        foundEntities = objectManager.getOriginals();
-    }
-
     private float zoom;
-
-    public String getdioString(){
-        return dioString;
-    }
-
     private ObjectManager objectManager;
+    private HiddenNature hn;
 
-    public Array<Entity> getFoundEntities() {
-        return foundEntities;
-    }
+    /**
+     * Instantiates a new Level.
+     *
+     * @param id           the id
+     * @param diorama      the diorama
+     * @param width        the width
+     * @param height       the height
+     * @param hiddenNature the hidden nature
+     */
+    public Level(int id, Texture diorama, float width, float height, HiddenNature hiddenNature){
+        hn = hiddenNature;
+        levelID = id;
+        levelDiorama = diorama;
+        setBounds(160, 90, width - 320, height - 180);
+        objectManager = new ObjectManager(this, hn);
 
-    public void setFoundEntities(Array<Entity> foundEntities) {
-        this.foundEntities = foundEntities;
-    }
+        entities = objectManager.getEntities();
+        originals = objectManager.getOriginals();
+        silhouettes = objectManager.getSilhouettes();
 
-    public Array<Entity> getPauseObjects() {
-        return pauseObjects;
-    }
+        addListener(new InputListener() {
 
-    public void setPauseObjects(Array<Entity> pauseObjects) {
-        this.pauseObjects = pauseObjects;
-    }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
-    public Array<Entity> getObjects() {
-        return objects;
-    }
-
-    public void setObjects(Array<Entity> objects) {
-        this.objects = objects;
-    }
-
-    public void setZoom(float z){
-        zoom = z;
-    }
-
-    public float getZoom(){
-        return zoom;
-    }
-
-    public void setCamPos(Vector3 pos){
-        camPos = pos;
-    }
-
-    public Vector3 getCamPos(){
-        return camPos;
-    }
-
-    public Texture getLevelDiorama(){
-        return levelDiorama;
-    }
-
-    public int getLevelID(){
-        return levelID;
-    }
-
-    public String getLevelName(){
-        return levelName;
-    }
-
-    public int getEntitiesFound(){
-        return entitiesFound;
+                return true;
+            }
+        });
     }
 
     @Override
@@ -113,5 +71,77 @@ public class Level extends Actor{
         super.act(delta);
 
     }
-    
+
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
+    public Array<Entity> getEntities() {
+        return entities;
+    }
+
+    /**
+     * Sets entities.
+     *
+     * @param foundEntities the found entities
+     */
+    public void setEntities(Array<Entity> foundEntities) {
+        this.entities = foundEntities;
+    }
+
+    /**
+     * Gets silhouettes.
+     *
+     * @return the silhouettes
+     */
+    public Array<Entity> getSilhouettes() {
+        return silhouettes;
+    }
+
+    /**
+     * Sets silhouettes.
+     *
+     * @param pauseSilhouettes the pause silhouettes
+     */
+    public void setSilhouettes(Array<Entity> pauseSilhouettes) {
+        this.silhouettes = pauseSilhouettes;
+    }
+
+    /**
+     * Gets originals.
+     *
+     * @return the originals
+     */
+    public Array<Entity> getOriginals() {
+        return originals;
+    }
+
+    /**
+     * Sets originals.
+     *
+     * @param originals the originals
+     */
+    public void setOriginals(Array<Entity> originals) {
+        this.originals = originals;
+    }
+
+    /**
+     * Get level diorama texture.
+     *
+     * @return the texture
+     */
+    public Texture getLevelDiorama(){
+        return levelDiorama;
+    }
+
+    /**
+     * Get level id int.
+     *
+     * @return the int
+     */
+    public int getLevelID(){
+        return levelID;
+    }
+
 }

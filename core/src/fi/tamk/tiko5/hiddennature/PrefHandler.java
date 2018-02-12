@@ -2,57 +2,175 @@ package fi.tamk.tiko5.hiddennature;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * The Pref handler, provides saving and loading system for game progress.
+ */
 public class PrefHandler {
+    private Preferences prefs, globalPrefs;
+    private Level level;
+    private Array<Entity>entities = new Array<Entity>();
+    private Array<Entity>silhouettes = new Array<Entity>();
+    private Array<Entity>originals = new Array<Entity>();
+    private Entity tmpEnt;
+    private HiddenNature hn;
 
-    Preferences prefs;
-    Level level;
-
-    public PrefHandler(Level l){
-
+    /**
+     * Instantiates a new Pref handler.
+     *
+     * @param l            the current level.
+     * @param hiddenNature main. Contains asset manager.
+     */
+    public PrefHandler(Level l, HiddenNature hiddenNature){
+        hn = hiddenNature;
         level = l;
-
-        prefs = Gdx.app.getPreferences("savedLevel"+l.getLevelID());
+        prefs = Gdx.app.getPreferences("savedLevel"+level.getLevelID());
 
     }
-    
+
+    /**
+     * Saves status of level objects.
+     */
     public void save(){
-        Array<Entity>entities = level.getFoundEntities();
-        Array<Entity>originals = level.getFoundEntities();
-        Array<Entity>pauseEntities = level.getFoundEntities();
+        Array<Entity> saveEntities = level.getEntities();
+        Array<Entity> saveOriginals = level.getOriginals();
+        Array<Entity> saveSilhouettes = level.getSilhouettes();
 
-        for(int i = 0; i < entities.size; i++){
-            prefs.putString("Entity" + entities.get(i).getButtonID(),
-                    entities.get(i).getButtonID() +
-                            "::"+ entities.get(i).getOriginal().toString() +
-                            "::"+ entities.get(i).getX() +
-                            "::"+ entities.get(i).getY() +
-                            "::"+ entities.get(i).isFound());
-            prefs.flush();
+        String entity = "";
+        String original = "";
+        String silhouette = "";
+
+        for(int i = 0; i < saveEntities.size; i++){
+            entity += saveEntities.get(i).getButtonID() +
+                    "::"+ saveEntities.get(i).getPath() +
+                    "::"+ saveEntities.get(i).getX() +
+                    "::"+ saveEntities.get(i).getY() +
+                    "::"+ saveEntities.get(i).getScale() +
+                    "::"+ String.valueOf(saveEntities.get(i).isFound()) + ":;:";
+
         }
-        for(int i = 0; i < originals.size; i++){
-            prefs.putString("originals" + originals.get(i).getButtonID(),
-                    originals.get(i).getButtonID() +
-                            "::"+ originals.get(i).getOriginal().toString() +
-                            "::"+ originals.get(i).getX() +
-                            "::"+ originals.get(i).getY() +
-                            "::"+ originals.get(i).isFound());
-            prefs.flush();
+
+        for(int i = 0; i < saveOriginals.size; i++){
+            original += saveOriginals.get(i).getButtonID() +
+                    "::"+ saveOriginals.get(i).getPath() +
+                    "::"+ saveOriginals.get(i).getX() +
+                    "::"+ saveOriginals.get(i).getY() +
+                    "::"+ saveOriginals.get(i).getScale() +
+                    "::"+ String.valueOf(saveOriginals.get(i).isFound()) + ":;:";
         }
-        for(int i = 0; i < pauseEntities.size; i++){
-            prefs.putString("pauseEntities" + pauseEntities.get(i).getButtonID(),
-                    pauseEntities.get(i).getButtonID() +
-                            "::"+ pauseEntities.get(i).getOriginal().toString() +
-                            "::"+ pauseEntities.get(i).getX() +
-                            "::"+ pauseEntities.get(i).getY() +
-                            "::"+ pauseEntities.get(i).isFound());
-            prefs.flush();
+
+        for(int i = 0; i < saveSilhouettes.size; i++){
+            silhouette += saveSilhouettes.get(i).getButtonID() +
+                    "::"+ saveSilhouettes.get(i).getPath() +
+                    "::"+ saveSilhouettes.get(i).getX() +
+                    "::"+ saveSilhouettes.get(i).getY() +
+                    "::"+ saveSilhouettes.get(i).getScale() +
+                    "::"+ String.valueOf(saveSilhouettes.get(i).isFound()) + ":;:";
         }
+
+        prefs.putString("Entity", ""+entity);
+        prefs.putString("Original", ""+original);
+        prefs.putString("Silhouette", ""+silhouette);
+        prefs.flush();
     }
 
-    public Array<Entity> load(){
-        return null;
+    /**
+     * Loads level objects from preferences.
+     *
+     * @return returns true of false depending whether loading was successful
+     */
+    public boolean loadLevel() {
+        boolean isLoad;
+
+        try {
+            globalPrefs = Gdx.app.getPreferences("settings");
+            prefs = Gdx.app.getPreferences("savedLevel"+level.getLevelID());
+
+            boolean reset = globalPrefs.getBoolean("Reset"+level.getLevelID(), true);
+
+            String entity = prefs.getString("Entity", "true");
+            String original = prefs.getString("Original", "true");
+            String silhouette = prefs.getString("Silhouette", "true");
+
+            if (Boolean.valueOf(entity) ||
+                    Boolean.valueOf(original) ||
+                    Boolean.valueOf(silhouette) || reset){
+
+                isLoad = false;
+
+
+            } else {
+                String[] entitiesString = entity.split(":;:");
+                String[] originalsString = original.split(":;:");
+                String[] silhouettesString = silhouette.split(":;:");
+
+                entities = getArrays(entitiesString);
+                originals = getArrays(originalsString);
+                silhouettes = getArrays(silhouettesString);
+
+                isLoad = true;
+            }
+
+        } catch (Exception e){
+            isLoad = false;
+        }
+
+        return isLoad;
+    }
+
+    /**
+     * Gets arrays.
+     *
+     * @param longStrings the long strings
+     * @return the arrays
+     */
+    public Array<Entity> getArrays(String[] longStrings) {
+        Array<Entity>array = new Array<Entity>();
+
+        for(int i = 0; i < longStrings.length; i++){
+            String[] shortStrings = longStrings[i].split("::");
+
+            String file = shortStrings[1];
+            float x = Float.valueOf(shortStrings[2]);
+            float y = Float.valueOf(shortStrings[3]);
+            int ID = Integer.valueOf(shortStrings[0]);
+            float scale = Float.valueOf(shortStrings[4]);
+            boolean found = Boolean.valueOf(shortStrings[5]);
+
+            tmpEnt = new Entity(hn.getAm().get(file, Texture.class), x, y, ID, scale, found);
+
+            array.add(tmpEnt);
+        }
+
+        return array;
+    }
+
+    /**
+     * Gets entities.
+     *
+     * @return the entities
+     */
+    public Array<Entity> getEntities() {
+        return entities;
+    }
+
+    /**
+     * Gets originals.
+     *
+     * @return the originals
+     */
+    public Array<Entity> getOriginals() {
+        return originals;
+    }
+
+    /**
+     * Gets silhouettes.
+     *
+     * @return the silhouettes
+     */
+    public Array<Entity> getSilhouettes() {
+        return silhouettes;
     }
 }
-
